@@ -1,0 +1,40 @@
+[project]
+name = "velo-sdk"
+requires-python = ">=3.11"
+version = "0.0.1"
+description = "Python SDK for accessing the VELO API for climate risk data, asset information, companies, and market indexes"
+authors = [
+    {name = "Chris Hampu", email = "champu@riskthinking.ai"},
+    {name = "RiskThinking.AI", email = "velo@riskthinking.ai"}
+]
+readme = "README.md"
+keywords = ["climate", "risk", "finance", "assets", "api"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Financial and Insurance Industry",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Office/Business :: Financial",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+]
+dependencies = [
+  "httpx>=0.28.1",
+  "pydantic>=2.10.6",
+  "polars>=1.26",
+  "backoff>=2.2.1"
+]
+
+[project.urls]
+"Homepage" = "https://riskthinking.ai"
+"Documentation" = "https://api.docs.riskthinking.ai"
+"Source" = "https://github.com/RiskThinking/velo-sdk"
+"Bug Tracker" = "https://github.com/RiskThinking/velo-sdk/issues"
+
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["velo_sdk*"]
+namespaces = false
