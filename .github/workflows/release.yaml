@@ -2,20 +2,18 @@ name: Package release
 on:
   push:
     tags:
-      - 'v*'
+      - "v*"
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
 jobs:
   deploy:
     name: Release
+    environment: production
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
-      - uses: 'google-github-actions/auth@v2'
-        with:
-          credentials_json: '${{ secrets.ARTIFACT_REGISTRY_GCP_CREDENTIALS }}'
 
       - name: Install uv
         uses: astral-sh/setup-uv@v5
@@ -25,7 +23,17 @@ jobs:
       - name: Build
         run: uv build
 
-      - name: Publish artifacts
-        run: |
-          pip install --upgrade twine keyrings.google-artifactregistry-auth requests PyOpenSSL cryptography ndg-httpsclient
-          python -m twine upload --skip-existing --verbose --repository-url https://northamerica-northeast1-python.pkg.dev/earnest-math-277914/ecofusion-py/ dist/*
+      - name: Create release
+        uses: softprops/action-gh-release@v1
+        with:
+          generate_release_notes: true
+          fail_on_unmatched_files: true
+          draft: false
+          prerelease: false
+          files: dist/*
+
+      - name: Publish package distributions to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          attestations: false
+          password: ${{ secrets.PYPI_API_TOKEN }}

@@ -65,7 +65,6 @@ class PaginatedIterator(Generic[T], Iterator[T]):
     def fetch_page(self) -> list[T]:
         """
         Fetches the next page of results and returns them as a list.
-        This provides lower-level access if the user only wants a single page.
         """
         if not self.buffer and not self.finished:
             self._fetch_next_page()

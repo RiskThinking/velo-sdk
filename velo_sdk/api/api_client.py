@@ -13,6 +13,11 @@ class APIClient(BaseClient):
     ):
         super().__init__(api_key, timeout, base_url)
 
+        # Company endpoints
         self.companies = Companies(self)
+
+        # Asset endpoints
         self.assets = Assets(self)
+
+        # Market endpoints
         self.markets = Markets(self)

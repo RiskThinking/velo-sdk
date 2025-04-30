@@ -20,10 +20,16 @@ class Companies:
         self.client = client
 
     def get_company(self, company_id: str) -> Company:
+        """
+        Get a company by its unique ID.
+        """
         response = self.client._request_sync("GET", f"/companies/{company_id}")
         return Company(**response)
 
     async def get_company_async(self, company_id: str) -> Company:
+        """
+        Get a company by its unique ID asynchronously.
+        """
         response = await self.client._request_async("GET", f"/companies/{company_id}")
         return Company(**response)
 
@@ -33,6 +39,9 @@ class Companies:
         scope: Optional[str] = None,
         **extra_params: Any,
     ) -> PaginatedIterator[Company]:
+        """
+        List all companies.
+        """
         params: Dict[str, Any] = {}
         if scope is not None:
             params["scope"] = scope
@@ -45,6 +54,9 @@ class Companies:
         scope: Optional[str] = None,
         **extra_params: Any,
     ) -> AsyncPaginatedIterator[Company]:
+        """
+        List all companies asynchronously.
+        """
         params: Dict[str, Any] = {}
         if scope is not None:
             params["scope"] = scope
@@ -59,6 +71,9 @@ class Companies:
         name: Optional[str] = None,
         **extra_params: Any,
     ) -> list[Company]:
+        """
+        Search for companies by name.
+        """
         params: Dict[str, Any] = {}
         if name is not None:
             params["name"] = name
@@ -73,6 +88,9 @@ class Companies:
         name: Optional[str] = None,
         **extra_params: Any,
     ) -> list[Company]:
+        """
+        Search for companies by name asynchronously.
+        """
         params: Dict[str, Any] = {}
         if name is not None:
             params["name"] = name
@@ -88,6 +106,9 @@ class Companies:
         company_id: str,
         **extra_params: Any,
     ) -> PaginatedIterator[Asset]:
+        """
+        List all assets for a company.
+        """
         return PaginatedIterator(
             self.client,
             f"/companies/{company_id}/assets",
@@ -100,6 +121,9 @@ class Companies:
         company_id: str,
         **extra_params: Any,
     ) -> AsyncPaginatedIterator[Asset]:
+        """
+        List all assets for a company asynchronously.
+        """
         return AsyncPaginatedIterator(
             self.client,
             f"/companies/{company_id}/assets",
@@ -110,6 +134,9 @@ class Companies:
     def get_company_climate_scores(
         self, company_id: str, pathway: str, horizon: int
     ) -> ClimateScore:
+        """
+        Get the climate scores for a company.
+        """
         response = self.client._request_sync(
             "GET",
             f"/companies/{company_id}/climate/scores",
@@ -123,6 +150,9 @@ class Companies:
     async def get_company_climate_scores_async(
         self, company_id: str, pathway: str, horizon: int
     ) -> ClimateScore:
+        """
+        Get the climate scores for a company asynchronously.
+        """
         response = await self.client._request_async(
             "GET",
             f"/companies/{company_id}/climate/scores",
@@ -136,6 +166,9 @@ class Companies:
     def get_company_impact_scores(
         self, company_id: str, pathway: str, horizon: int
     ) -> StaticListIterator[ImpactScore]:
+        """
+        Get the impact scores for a company.
+        """
         return StaticListIterator(
             self.client,
             f"/companies/{company_id}/climate/impacts",
@@ -149,6 +182,9 @@ class Companies:
     async def get_company_impact_scores_async(
         self, company_id: str, pathway: str, horizon: int
     ) -> StaticListIterator[ImpactScore]:
+        """
+        Get the impact scores for a company asynchronously.
+        """
         return StaticListIterator(
             self.client,
             f"/companies/{company_id}/climate/impacts",
@@ -166,10 +202,15 @@ class Companies:
         horizon: int,
         **extra_params: Any,
     ) -> PaginatedIterator[AssetClimateScore]:
+        """
+        Get the climate scores for all assets of a company.
+        """
         params: Dict[str, Any] = {}
         params["pathway"] = pathway
         params["horizon"] = horizon
-        params["metric"] = "cvar_99,var_99,cvar_95,var_95,cvar_50,var_50,expected_impact"
+        params["metric"] = (
+            "cvar_99,var_99,cvar_95,var_95,cvar_50,var_50,expected_impact"
+        )
         params.update(extra_params)
         return PaginatedIterator(
             self.client,
@@ -185,10 +226,15 @@ class Companies:
         horizon: int,
         **extra_params: Any,
     ) -> AsyncPaginatedIterator[AssetClimateScore]:
+        """
+        Get the climate scores for all assets of a company asynchronously.
+        """
         params: Dict[str, Any] = {}
         params["pathway"] = pathway
         params["horizon"] = horizon
-        params["metric"] = "cvar_99,var_99,cvar_95,var_95,cvar_50,var_50,expected_impact"
+        params["metric"] = (
+            "cvar_99,var_99,cvar_95,var_95,cvar_50,var_50,expected_impact"
+        )
         params.update(extra_params)
         return AsyncPaginatedIterator(
             self.client,
@@ -204,10 +250,15 @@ class Companies:
         horizon: int,
         **extra_params: Any,
     ) -> PaginatedIterator[AssetImpactScore]:
+        """
+        Get the impact scores for all assets of a company.
+        """
         params: Dict[str, Any] = {}
         params["pathway"] = pathway
         params["horizon"] = horizon
-        params["metric"] = "cvar_99,var_99,cvar_95,var_95,cvar_50,var_50,expected_impact"
+        params["metric"] = (
+            "cvar_99,var_99,cvar_95,var_95,cvar_50,var_50,expected_impact"
+        )
         params.update(extra_params)
         return PaginatedIterator(
             self.client,
@@ -223,10 +274,15 @@ class Companies:
         horizon: int,
         **extra_params: Any,
     ) -> AsyncPaginatedIterator[AssetImpactScore]:
+        """
+        Get the impact scores for all assets of a company asynchronously.
+        """
         params: Dict[str, Any] = {}
         params["pathway"] = pathway
         params["horizon"] = horizon
-        params["metric"] = "cvar_99,var_99,cvar_95,var_95,cvar_50,var_50,expected_impact"
+        params["metric"] = (
+            "cvar_99,var_99,cvar_95,var_95,cvar_50,var_50,expected_impact"
+        )
         params.update(extra_params)
         return AsyncPaginatedIterator(
             self.client,
@@ -238,6 +294,9 @@ class Companies:
     def aggregate_company_asset_climate_scores_by_country(
         self, company_id: str, pathway: str, horizon: int
     ) -> StaticListIterator[CountryClimateScore]:
+        """
+        Get the climate scores for all assets of a company aggregated by country.
+        """
         return StaticListIterator(
             self.client,
             f"/companies/{company_id}/assets/climate/scores/aggregation",
@@ -253,6 +312,9 @@ class Companies:
     async def aggregate_company_asset_climate_scores_by_country_async(
         self, company_id: str, pathway: str, horizon: int
     ) -> StaticListIterator[CountryClimateScore]:
+        """
+        Get the climate scores for all assets of a company aggregated by country asynchronously.
+        """
         return StaticListIterator(
             self.client,
             f"/companies/{company_id}/assets/climate/scores/aggregation",
@@ -268,6 +330,9 @@ class Companies:
     def aggregate_company_asset_impact_scores_by_country(
         self, company_id: str, pathway: str, horizon: int
     ) -> StaticListIterator[CountryImpactScore]:
+        """
+        Get the impact scores for all assets of a company aggregated by country.
+        """
         return StaticListIterator(
             self.client,
             f"/companies/{company_id}/assets/climate/impacts/aggregation",
@@ -283,6 +348,9 @@ class Companies:
     async def aggregate_company_asset_impact_scores_by_country_async(
         self, company_id: str, pathway: str, horizon: int
     ) -> StaticListIterator[CountryImpactScore]:
+        """
+        Get the impact scores for all assets of a company aggregated by country asynchronously.
+        """
         return StaticListIterator(
             self.client,
             f"/companies/{company_id}/assets/climate/impacts/aggregation",

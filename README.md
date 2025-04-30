@@ -1,11 +1,14 @@
 # VELO Python SDK
 
-The VELO Python SDK provides a streamlined interface for interacting with the VELO API, enabling businesses to access and analyze climate risk data, asset information, and market indexes.
+The VELO Python SDK provides a streamlined interface for interacting with the VELO API, enabling businesses to access and analyze climate risk data for companies, assets, and market indexes.
+
+For complete API documentation visit our [API docs](https://api.docs.riskthinking.ai).
 
 ## Installation
 
 ```bash
-pip install velo-sdk
+pip install keyring keyrings.google-artifactregistry-auth 
+pip install velo-sdk --extra-index-url https://northamerica-northeast1-python.pkg.dev/earnest-math-277914/ecofusion-py/simple/
 ```
 
 ## Requirements
@@ -21,6 +24,8 @@ from velo_sdk.api import APIClient
 
 client = APIClient(api_key="your-api-key")
 ```
+
+If the `api_key` parameter is not provided, the API key will be inferred from the `RISKTHINKING_API_KEY` environment variable instead.
 
 ## Features
 
@@ -104,6 +109,28 @@ for country_score in client.markets.aggregate_index_asset_climate_scores_by_coun
     print(f"{country_score.country}: {country_score.dcr_score}")
 ```
 
+### Direct API Access
+
+For advanced use cases, you can make direct HTTP requests to any endpoint while still using your authentication credentials:
+
+```python
+# Make a GET request with query parameters
+response = client.get("/custom/endpoint", params={"param1": "value1"})
+
+# Make a POST request with JSON body
+response = client.post(
+    "/custom/endpoint", 
+    json={"key": "value"}
+)
+
+# Async API calls are also supported
+async def make_request():
+    response = await client.get_async("/custom/endpoint")
+    print(response)
+```
+
+These methods (get, post, put, delete) and their async variants allow you to interact with any API endpoint not explicitly covered by the SDK's high-level methods.
+
 ## Async Support
 
 The SDK provides async versions of all API methods:
@@ -146,5 +173,5 @@ except APIError as e:
 
 ## Support
 
-For questions or support, please contact support@riskthinking.ai.
+For questions or support, please contact velo@riskthinking.ai.
 

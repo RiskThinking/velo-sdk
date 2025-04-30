@@ -20,31 +20,37 @@ class BaseClient:
         if api_key is None:
             raise Exception("API key is required to initialize the sdk")
 
-        self.api_key = api_key
+        self._api_key = api_key
 
-        self.base_url = BASE_URL if not base_url else base_url
-        if not self.base_url.endswith("/v3"):
-            self.base_url = self.base_url + "/v3"
+        self._base_url = BASE_URL if not base_url else base_url
+        if not self._base_url.endswith("/v3"):
+            self._base_url = self._base_url + "/v3"
 
         headers = {
-            "Authorization": f"Bearer {self.api_key}",
+            "Authorization": f"Bearer {self._api_key}",
             "Content-Type": "application/json",
         }
-        self.sync_client = httpx.Client(
-            base_url=self.base_url, headers=headers, timeout=timeout
+        self._sync_client = httpx.Client(
+            base_url=self._base_url, headers=headers, timeout=timeout
         )
-        self.async_client = httpx.AsyncClient(
-            base_url=self.base_url, headers=headers, timeout=timeout
+        self._async_client = httpx.AsyncClient(
+            base_url=self._base_url, headers=headers, timeout=timeout
         )
 
     @backoff.on_exception(backoff.expo, RateLimitError, max_tries=5)
     def _request_sync(self, method: str, path: str, **kwargs) -> Dict[str, Any]:
-        response = self.sync_client.request(method, path, **kwargs)
+        # Remove the /v3 prefix since it's part of the base URL
+        if path.startswith("/v3"):
+            path = path[3:]
+        response = self._sync_client.request(method, path, **kwargs)
         return self._handle_response_sync(response)
 
     @backoff.on_exception(backoff.expo, RateLimitError, max_tries=5)
     async def _request_async(self, method: str, path: str, **kwargs) -> Dict[str, Any]:
-        response = await self.async_client.request(method, path, **kwargs)
+        # Remove the /v3 prefix since it's part of the base URL
+        if path.startswith("/v3"):
+            path = path[3:]
+        response = await self._async_client.request(method, path, **kwargs)
         return await self._handle_response_async(response)
 
     def _handle_response_sync(self, response: httpx.Response) -> Dict[str, Any]:
@@ -79,3 +85,165 @@ class BaseClient:
                 timestamp=error.get("timestamp"),
             )
         return await response.json()
+
+    # Generic HTTP methods
+    def get(
+        self, path: str, params: Dict[str, Any] = dict(), **kwargs
+    ) -> Dict[str, Any]:
+        """
+        Make a GET request to the API.
+        The version /v3 is automatically added to the path.
+
+        Args:
+            path: API endpoint path
+            params: Query parameters
+            **kwargs: Additional arguments to pass to the request
+
+        Returns:
+            API response data as JSON deserialized into a dictionary
+        """
+        return self._request_sync("GET", path, params=params, **kwargs)
+
+    async def get_async(
+        self, path: str, params: Dict[str, Any] = dict(), **kwargs
+    ) -> Dict[str, Any]:
+        """
+        Make an asynchronous GET request to the API.
+        The version /v3 is automatically added to the path.
+
+        Args:
+            path: API endpoint path
+            params: Query parameters
+            **kwargs: Additional arguments to pass to the request
+
+        Returns:
+            API response data as JSON deserialized into a dictionary
+        """
+        return await self._request_async("GET", path, params=params, **kwargs)
+
+    def post(
+        self, path: str, json: Dict[str, Any] = dict(), **kwargs
+    ) -> Dict[str, Any]:
+        """
+        Make a POST request to the API.
+        The version /v3 is automatically added to the path.
+        Args:
+            path: API endpoint path
+            json: JSON body data
+            **kwargs: Additional arguments to pass to the request
+
+        Returns:
+            API response data as JSON deserialized into a dictionary
+        """
+        return self._request_sync("POST", path, json=json, **kwargs)
+
+    async def post_async(
+        self, path: str, json: Dict[str, Any] = dict(), **kwargs
+    ) -> Dict[str, Any]:
+        """
+        Make an asynchronous POST request to the API.
+        The version /v3 is automatically added to the path.
+
+        Args:
+            path: API endpoint path
+            json: JSON body data
+            **kwargs: Additional arguments to pass to the request
+
+        Returns:
+            API response data as JSON deserialized into a dictionary
+        """
+        return await self._request_async("POST", path, json=json, **kwargs)
+
+    def put(self, path: str, json: Dict[str, Any] = dict(), **kwargs) -> Dict[str, Any]:
+        """
+        Make a PUT request to the API.
+        The version /v3 is automatically added to the path.
+
+        Args:
+            path: API endpoint path
+            json: JSON body data
+            **kwargs: Additional arguments to pass to the request
+
+        Returns:
+            API response data as JSON deserialized into a dictionary
+        """
+        return self._request_sync("PUT", path, json=json, **kwargs)
+
+    async def put_async(
+        self, path: str, json: Dict[str, Any] = dict(), **kwargs
+    ) -> Dict[str, Any]:
+        """
+        Make an asynchronous PUT request to the API.
+        The version /v3 is automatically added to the path.
+
+        Args:
+            path: API endpoint path
+            json: JSON body data
+            **kwargs: Additional arguments to pass to the request
+
+        Returns:
+            API response data as JSON deserialized into a dictionary
+        """
+        return await self._request_async("PUT", path, json=json, **kwargs)
+
+    def delete(self, path: str, **kwargs) -> Dict[str, Any]:
+        """
+        Make a DELETE request to the API.
+        The version /v3 is automatically added to the path.
+
+        Args:
+            path: API endpoint path
+            **kwargs: Additional arguments to pass to the request
+
+        Returns:
+            API response data as JSON deserialized into a dictionary
+        """
+        return self._request_sync("DELETE", path, **kwargs)
+
+    async def delete_async(self, path: str, **kwargs) -> Dict[str, Any]:
+        """
+        Make an asynchronous DELETE request to the API.
+        The version /v3 is automatically added to the path.
+
+        Args:
+            path: API endpoint path
+            **kwargs: Additional arguments to pass to the request
+
+        Returns:
+            API response data as JSON deserialized into a dictionary
+        """
+        return await self._request_async("DELETE", path, **kwargs)
+
+    def patch(
+        self, path: str, json: Dict[str, Any] = dict(), **kwargs
+    ) -> Dict[str, Any]:
+        """
+        Make a PATCH request to the API.
+        The version /v3 is automatically added to the path.
+
+        Args:
+            path: API endpoint path
+            json: JSON body data
+            **kwargs: Additional arguments to pass to the request
+
+        Returns:
+            API response data as JSON deserialized into a dictionary
+        """
+        return self._request_sync("PATCH", path, json=json, **kwargs)
+
+    async def patch_async(
+        self, path: str, json: Dict[str, Any] = dict(), **kwargs
+    ) -> Dict[str, Any]:
+        """
+        Make an asynchronous PATCH request to the API.
+        The version /v3 is automatically added to the path.
+
+        Args:
+            path: API endpoint path
+            json: JSON body data
+            **kwargs: Additional arguments to pass to the request
+
+        Returns:
+            API response data as JSON deserialized into a dictionary
+        """
+        return await self._request_async("PATCH", path, json=json, **kwargs)
