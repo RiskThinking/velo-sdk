@@ -113,6 +113,21 @@ class CountryImpactScore(ImpactScore):
     asset_count: int
     country: str
 
+class AssetTypeClimateScore(ClimateScore):
+    """
+    Climate risk metrics aggregated for an asset type.
+    """
+    asset_count: int
+    asset_type: str
+
+
+class AssetTypeImpactScore(ImpactScore):
+    """
+    Impact risk metrics aggregated for an asset type.
+    """
+    asset_count: int
+    asset_type: str
+
 class AssetClimateScore(ClimateScore):
     """
     Climate risk metrics for an asset.

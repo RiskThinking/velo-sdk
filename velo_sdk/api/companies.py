@@ -3,6 +3,8 @@ from typing import Any, Dict, Optional
 from .base import BaseClient
 from .types import (
     AssetClimateScore,
+    AssetTypeClimateScore,
+    AssetTypeImpactScore,
     Company,
     Asset,
     ClimateScore,
@@ -361,4 +363,76 @@ class Companies:
                 "metric": "cvar_99,var_99,cvar_95,var_95,cvar_50,var_50,expected_impact",
             },
             item_class=CountryImpactScore,
+        )
+
+    def aggregate_company_asset_climate_scores_by_asset_type(
+        self, company_id: str, pathway: str, horizon: int
+    ) -> StaticListIterator[AssetTypeClimateScore]:
+        """
+        Get the climate scores for all assets of a company aggregated by asset type.
+        """
+        return StaticListIterator(
+            self.client,
+            f"/companies/{company_id}/assets/climate/scores/aggregation",
+            {
+                "by": "asset_type",
+                "pathway": pathway,
+                "horizon": horizon,
+                "metric": "dcr_score,cvar_99,var_99,cvar_95,var_95,cvar_50,var_50,expected_impact",
+            },
+            item_class=AssetTypeClimateScore,
+        )
+
+    async def aggregate_company_asset_climate_scores_by_asset_type_async(
+        self, company_id: str, pathway: str, horizon: int
+    ) -> StaticListIterator[AssetTypeClimateScore]:
+        """
+        Get the climate scores for all assets of a company aggregated by asset type asynchronously.
+        """
+        return StaticListIterator(
+            self.client,
+            f"/companies/{company_id}/assets/climate/scores/aggregation",
+            {
+                "by": "asset_type",
+                "pathway": pathway,
+                "horizon": horizon,
+                "metric": "dcr_score,cvar_99,var_99,cvar_95,var_95,cvar_50,var_50,expected_impact",
+            },
+            item_class=AssetTypeClimateScore,
+        )
+
+    def aggregate_company_asset_impact_scores_by_asset_type(
+        self, company_id: str, pathway: str, horizon: int
+    ) -> StaticListIterator[AssetTypeImpactScore]:
+        """
+        Get the impact scores for all assets of a company aggregated by asset type.
+        """
+        return StaticListIterator(
+            self.client,
+            f"/companies/{company_id}/assets/climate/impacts/aggregation",
+            {
+                "by": "asset_type",
+                "pathway": pathway,
+                "horizon": horizon,
+                "metric": "cvar_99,var_99,cvar_95,var_95,cvar_50,var_50,expected_impact",
+            },
+            item_class=AssetTypeImpactScore,
+        )
+
+    async def aggregate_company_asset_impact_scores_by_asset_type_async(
+        self, company_id: str, pathway: str, horizon: int
+    ) -> StaticListIterator[AssetTypeImpactScore]:
+        """
+        Get the impact scores for all assets of a company aggregated by asset type asynchronously.
+        """
+        return StaticListIterator(
+            self.client,
+            f"/companies/{company_id}/assets/climate/impacts/aggregation",
+            {
+                "by": "asset_type",
+                "pathway": pathway,
+                "horizon": horizon,
+                "metric": "cvar_99,var_99,cvar_95,var_95,cvar_50,var_50,expected_impact",
+            },
+            item_class=AssetTypeImpactScore,
         )
