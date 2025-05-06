@@ -7,8 +7,7 @@ For complete API documentation visit our [API docs](https://api.docs.riskthinkin
 ## Installation
 
 ```bash
-pip install keyring keyrings.google-artifactregistry-auth 
-pip install velo-sdk --extra-index-url https://northamerica-northeast1-python.pkg.dev/earnest-math-277914/ecofusion-py/simple/
+pip install velo-sdk
 ```
 
 ## Requirements
