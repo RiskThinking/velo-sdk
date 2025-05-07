@@ -133,6 +133,100 @@ class Companies:
             item_class=Asset,
         )
 
+    def list_uninsurable_company_assets(
+        self,
+        company_id: str,
+        pathway: str,
+        horizon: int,
+        **extra_params: Any,
+    ) -> PaginatedIterator[AssetClimateScore]:
+        """
+        List all uninsurable assets for a company.
+        """
+        params: Dict[str, Any] = {}
+        params["pathway"] = pathway
+        params["horizon"] = horizon
+        params["metric"] = "var_95"
+        params["min_risk"] = 0.35
+        params["max_risk"] = 0.75
+        params.update(extra_params)
+        return PaginatedIterator(
+            self.client,
+            f"/companies/{company_id}/assets/climate/scores",
+            params,
+            item_class=AssetClimateScore,
+        )
+
+    async def list_uninsurable_company_assets_async(
+        self,
+        company_id: str,
+        pathway: str,
+        horizon: int,
+        **extra_params: Any,
+    ) -> AsyncPaginatedIterator[AssetClimateScore]:
+        """
+        List all uninsurable assets for a company asynchronously.
+        """
+        params: Dict[str, Any] = {}
+        params["pathway"] = pathway
+        params["horizon"] = horizon
+        params["metric"] = "var_95"
+        params["min_risk"] = 0.35
+        params["max_risk"] = 0.75
+        params.update(extra_params)
+        return AsyncPaginatedIterator(
+            self.client,
+            f"/companies/{company_id}/assets/climate/scores",
+            params,
+            item_class=AssetClimateScore,
+        )
+    
+    def list_stranded_company_assets(
+        self,
+        company_id: str,
+        pathway: str,
+        horizon: int,
+        **extra_params: Any,
+    ) -> PaginatedIterator[AssetClimateScore]:
+        """
+        List all stranded assets for a company.
+        """
+        params: Dict[str, Any] = {}
+        params["pathway"] = pathway
+        params["horizon"] = horizon
+        params["metric"] = "var_95"
+        params["min_risk"] = 0.75
+        params.update(extra_params)
+        return PaginatedIterator(
+            self.client,
+            f"/companies/{company_id}/assets/climate/scores",
+            params,
+            item_class=AssetClimateScore,
+        )
+
+    async def list_stranded_company_assets_async(
+        self,
+        company_id: str,
+        pathway: str,
+        horizon: int,
+        **extra_params: Any,
+    ) -> AsyncPaginatedIterator[AssetClimateScore]:
+        """
+        List all stranded assets for a company asynchronously.
+        """
+        params: Dict[str, Any] = {}
+        params["pathway"] = pathway
+        params["horizon"] = horizon
+        params["metric"] = "var_95"
+        params["min_risk"] = 0.75
+        params.update(extra_params)
+        return AsyncPaginatedIterator(
+            self.client,
+            f"/companies/{company_id}/assets/climate/scores",
+            params,
+            item_class=AssetClimateScore,
+        )
+
     def get_company_climate_scores(
         self, company_id: str, pathway: str, horizon: int
     ) -> ClimateScore:
