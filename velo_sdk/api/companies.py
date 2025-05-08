@@ -148,7 +148,6 @@ class Companies:
         params["horizon"] = horizon
         params["metric"] = "var_95"
         params["min_risk"] = 0.35
-        params["max_risk"] = 0.75
         params.update(extra_params)
         return PaginatedIterator(
             self.client,
@@ -172,7 +171,6 @@ class Companies:
         params["horizon"] = horizon
         params["metric"] = "var_95"
         params["min_risk"] = 0.35
-        params["max_risk"] = 0.75
         params.update(extra_params)
         return AsyncPaginatedIterator(
             self.client,
