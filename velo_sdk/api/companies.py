@@ -146,7 +146,7 @@ class Companies:
         params: Dict[str, Any] = {}
         params["pathway"] = pathway
         params["horizon"] = horizon
-        params["metric"] = "var_95"
+        params["metric"] = "cvar_95"
         params["min_risk"] = 0.35
         params.update(extra_params)
         return PaginatedIterator(
@@ -169,7 +169,7 @@ class Companies:
         params: Dict[str, Any] = {}
         params["pathway"] = pathway
         params["horizon"] = horizon
-        params["metric"] = "var_95"
+        params["metric"] = "cvar_95"
         params["min_risk"] = 0.35
         params.update(extra_params)
         return AsyncPaginatedIterator(
@@ -192,7 +192,7 @@ class Companies:
         params: Dict[str, Any] = {}
         params["pathway"] = pathway
         params["horizon"] = horizon
-        params["metric"] = "var_95"
+        params["metric"] = "cvar_95"
         params["min_risk"] = 0.75
         params.update(extra_params)
         return PaginatedIterator(
@@ -215,7 +215,7 @@ class Companies:
         params: Dict[str, Any] = {}
         params["pathway"] = pathway
         params["horizon"] = horizon
-        params["metric"] = "var_95"
+        params["metric"] = "cvar_95"
         params["min_risk"] = 0.75
         params.update(extra_params)
         return AsyncPaginatedIterator(
