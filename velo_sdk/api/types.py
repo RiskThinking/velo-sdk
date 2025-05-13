@@ -33,8 +33,6 @@ class Asset(BaseModel):
     id: str
     name: str
     asset_type: str
-    asset_function: str
-    asset_category: str
     city: str
     state: str
     latitude: float

@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Literal
 
 from .base import BaseClient
 from .types import Asset, Company
@@ -58,3 +58,71 @@ class Assets:
             "GET", f"/assets/{asset_id}/ownership"
         )
         return Company(**response)
+
+    def search_assets(
+        self,
+        query: str,
+        scope: Literal["public", "company", "organization"] = "public",
+        company_id: str | None = None,
+        **extra_params: Any,
+    ) -> PaginatedIterator[Asset]:
+        """
+        Search for assets.
+
+        Parameters:
+            query: The search query string. Asset names and addresses are searched for.
+            scope: The scope of the search. Can be "public", "company", or "organization".
+                   "public" is the default scope and searches all available assets in VELO.
+                   "organization" searches all private assets uploaded to the organization.
+                   If "company" is selected, `company_id` must also be provided.
+            company_id: The ID of the company to scope the search to.
+                        Required if `scope` is "company".
+            **extra_params: Additional parameters to pass to the API.
+
+        Returns:
+            A paginated iterator of assets matching the search criteria.
+        """
+        params = {
+            "query": query,
+            "scope": scope,
+            "company_id": company_id,
+            **extra_params,
+        }
+        # Filter out None values from params before sending
+        params = {k: v for k, v in params.items() if v is not None}
+        return PaginatedIterator(
+            self.client, "/assets/search", params, item_class=Asset
+        )
+
+    async def search_assets_async(
+        self,
+        query: str,
+        scope: Literal["public", "company", "organization"] = "public",
+        company_id: str | None = None,
+        **extra_params: Any,
+    ) -> AsyncPaginatedIterator[Asset]:
+        """
+        Search for assets asynchronously.
+
+        Parameters:
+            query: The search query string. Asset names and addresses are searched for.
+            scope: The scope of the search. Can be "public", "company", or "organization".
+                   "public" is the default scope and searches all available assets in VELO.
+                   "organization" searches all private assets uploaded to the organization.
+                   If "company" is selected, `company_id` must also be provided.
+            company_id: The ID of the company to scope the search to.
+                        Required if `scope` is "company".
+            **extra_params: Additional parameters to pass to the API.
+
+        Returns:
+            A paginated iterator of assets matching the search criteria.
+        """
+        params = {
+            "query": query,
+            "scope": scope,
+            "company_id": company_id,
+            **extra_params,
+        }
+        return AsyncPaginatedIterator(
+            self.client, "/assets/search", params, item_class=Asset
+        )
