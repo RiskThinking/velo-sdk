@@ -73,9 +73,16 @@ Retrieve and analyze physical assets and their climate risk scores:
 # Get asset details
 asset = client.assets.get_asset("asset-id")
 
-# List all assets with pagination
-for asset in client.assets.list_assets():
-    print(f"{asset.name} ({asset.asset_type})")
+# Search for assets with automated pagination
+search = client.assets.search_assets(query="New York")
+for asset in search: # Iterating with automated pagination
+    print(f"{asset.address} ({asset.asset_type})")
+
+# Manual pagination is supported as well
+search = client.assets.search_assets(query="California")
+first_page = search.fetch_page() # Load a page of search results
+first_result = first_page.pop() # Grab the first result in this page
+print(f"{first_result.address} ({first_result.asset_type})")
 
 # Get the owner of an asset
 owner = client.assets.get_asset_owner("asset-id")
