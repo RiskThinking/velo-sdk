@@ -2,6 +2,7 @@
 
 The VELO Python SDK provides a streamlined interface for interacting with the VELO API, enabling businesses to access and analyze climate risk data for companies, assets, and market indexes.
 
+To view the package documentation see the [API reference](https://github.com/RiskThinking/velo-sdk/blob/main/API.md)
 For complete API documentation visit our [API docs](https://api.docs.riskthinking.ai).
 
 ## Installation

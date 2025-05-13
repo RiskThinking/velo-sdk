@@ -1,0 +1,41 @@
+name: Generate API Reference
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build-and-push-docs:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install pydoc-markdown
+        run: pip install pydoc-markdown
+
+      - name: Generate API.md
+        run: |
+          pydoc-markdown \
+            -p velo_sdk.api \
+          > API.md
+
+      - name: Commit and push API.md
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "docs: update API reference [skip ci]"
+          file_pattern: "API.md"
+          branch: main
+          github_token: ${{ secrets.GITHUB_TOKEN }}
