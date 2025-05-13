@@ -88,7 +88,6 @@ class Assets:
             "company_id": company_id,
             **extra_params,
         }
-        # Filter out None values from params before sending
         params = {k: v for k, v in params.items() if v is not None}
         return PaginatedIterator(
             self.client, "/assets/search", params, item_class=Asset
@@ -123,6 +122,7 @@ class Assets:
             "company_id": company_id,
             **extra_params,
         }
+        params = {k: v for k, v in params.items() if v is not None}
         return AsyncPaginatedIterator(
             self.client, "/assets/search", params, item_class=Asset
         )
