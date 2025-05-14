@@ -2,7 +2,7 @@ from .companies import Companies
 from .assets import Assets
 from .base import BaseClient
 from .markets import Markets
-
+from .climate import Climate
 
 class APIClient(BaseClient):
     def __init__(
@@ -21,3 +21,6 @@ class APIClient(BaseClient):
 
         # Market endpoints
         self.markets = Markets(self)
+
+        # Climate endpoints
+        self.climate = Climate(self)
