@@ -8,7 +8,7 @@ class APIClient(BaseClient):
     def __init__(
         self,
         api_key: str | None = None,
-        timeout: float = 10.0,
+        timeout: float = 15.0,
         base_url: str | None = None,
     ):
         super().__init__(api_key, timeout, base_url)

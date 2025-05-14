@@ -1,3 +1,4 @@
+from .types import Pathway
 from .base import BaseClient
 
 
@@ -11,7 +12,7 @@ class Climate:
         """
         return list(range(2025, 2100, 5))
 
-    def list_pathways(self) -> list[str]:
+    def list_pathways(self) -> list[Pathway]:
         """
         List the available pathways for climate analysis.
         """

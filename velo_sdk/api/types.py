@@ -1,10 +1,24 @@
 from pydantic import BaseModel
+from typing import Literal
+
+Pathway = Literal[
+    "SV",
+    "ssp126",
+    "ssp245",
+    "ssp370",
+    "ssp585",
+    "<2 degrees",
+    "2-3 degrees",
+    "3-4 degrees",
+    ">4 degrees",
+]
 
 
 class Company(BaseModel):
     """
     A company is an entity that has assets and identifying information.
     """
+
     id: str
     name: str
     slug: str
@@ -30,6 +44,7 @@ class Asset(BaseModel):
     """
     An asset represents aphysical asset that is subject to climate risk.
     """
+
     id: str
     name: str
     asset_type: str
@@ -52,6 +67,7 @@ class MarketIndex(BaseModel):
     """
     A market index is a collection of companies.
     """
+
     id: str
     name: str
     sectors: list[str]
@@ -64,6 +80,7 @@ class ClimateScore(BaseModel):
     """
     The cimate risk metrics that represent the likelihood of a company or asset to be impacted by climate risk.
     """
+
     dcr_score: float | None = None
     expected_impact: float | None = None
     cvar_99: float | None = None
@@ -79,6 +96,7 @@ class ImpactScore(BaseModel):
     The impact risk metrics that represent the potential impact of a company or asset to be impacted by climate risk.
     These metrics represent an individual risk factor and its attribution to the total climate risk metrics.
     """
+
     index_name: str
     index_impact_cvar_50: float | None = None
     index_impact_cvar_95: float | None = None
@@ -100,6 +118,7 @@ class CountryClimateScore(ClimateScore):
     """
     Climate risk metrics aggregated for a country.
     """
+
     asset_count: int
     country: str
 
@@ -108,13 +127,16 @@ class CountryImpactScore(ImpactScore):
     """
     Impact risk metrics aggregated for a country.
     """
+
     asset_count: int
     country: str
+
 
 class AssetTypeClimateScore(ClimateScore):
     """
     Climate risk metrics aggregated for an asset type.
     """
+
     asset_count: int
     asset_type: str
 
@@ -123,13 +145,16 @@ class AssetTypeImpactScore(ImpactScore):
     """
     Impact risk metrics aggregated for an asset type.
     """
+
     asset_count: int
     asset_type: str
+
 
 class AssetClimateScore(ClimateScore):
     """
     Climate risk metrics for an asset.
     """
+
     asset_id: str
     asset_type: str
     country: str
@@ -137,9 +162,11 @@ class AssetClimateScore(ClimateScore):
     city: str
     address: str
 
+
 class AssetImpactScore(BaseModel):
     """
     Impact risk metrics for an asset.
     """
+
     asset_id: str
     index_risks: list[ImpactScore]

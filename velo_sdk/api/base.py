@@ -12,7 +12,7 @@ class BaseClient:
     def __init__(
         self,
         api_key: str | None = None,
-        timeout: float = 10.0,
+        timeout: float = 15.0,
         base_url: str | None = None,
     ):
         if api_key is None:
