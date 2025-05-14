@@ -38,4 +38,3 @@ jobs:
           commit_message: "docs: update API reference [skip ci]"
           file_pattern: "API.md"
           branch: main
-          github_token: ${{ secrets.GITHUB_TOKEN }}
