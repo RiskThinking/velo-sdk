@@ -12,6 +12,7 @@ from .types import (
     Company,
     ClimateScore,
     Pathway,
+    HorizonYear,
 )
 from .pagination import PaginatedIterator, AsyncPaginatedIterator
 from .static_list import StaticListIterator
@@ -116,7 +117,7 @@ class Markets:
         )
 
     def get_index_climate_scores(
-        self, index_id: str, pathway: Pathway, horizon: int
+        self, index_id: str, pathway: Pathway, horizon: HorizonYear
     ) -> ClimateScore:
         """
         Get the climate scores for a market index.
@@ -132,7 +133,7 @@ class Markets:
         return ClimateScore(**response)
 
     async def get_index_climate_scores_async(
-        self, index_id: str, pathway: Pathway, horizon: int
+        self, index_id: str, pathway: Pathway, horizon: HorizonYear
     ) -> ClimateScore:
         """
         Get the climate scores for a market index asynchronously.
@@ -148,7 +149,7 @@ class Markets:
         return ClimateScore(**response)
 
     def get_index_impact_scores(
-        self, index_id: str, pathway: Pathway, horizon: int
+        self, index_id: str, pathway: Pathway, horizon: HorizonYear
     ) -> StaticListIterator[ImpactScore]:
         """
         Get the impact scores for a market index.
@@ -164,7 +165,7 @@ class Markets:
         )
 
     async def get_index_impact_scores_async(
-        self, index_id: str, pathway: Pathway, horizon: int
+        self, index_id: str, pathway: Pathway, horizon: HorizonYear
     ) -> StaticListIterator[ImpactScore]:
         """
         Get the impact scores for a market index asynchronously.
@@ -184,7 +185,7 @@ class Markets:
         self,
         index_id: str,
         pathway: Pathway,
-        horizon: int,
+        horizon: HorizonYear,
         **extra_params: Any,
     ) -> PaginatedIterator[AssetImpactScore]:
         """
@@ -215,7 +216,7 @@ class Markets:
         self,
         index_id: str,
         pathway: Pathway,
-        horizon: int,
+        horizon: HorizonYear,
         **extra_params: Any,
     ) -> PaginatedIterator[AssetClimateScore]:
         """
@@ -239,7 +240,7 @@ class Markets:
         self,
         index_id: str,
         pathway: Pathway,
-        horizon: int,
+        horizon: HorizonYear,
         **extra_params: Any,
     ) -> AsyncPaginatedIterator[AssetClimateScore]:
         """
@@ -263,7 +264,7 @@ class Markets:
         self,
         index_id: str,
         pathway: Pathway,
-        horizon: int,
+        horizon: HorizonYear,
         **extra_params: Any,
     ) -> AsyncPaginatedIterator[AssetImpactScore]:
         """
@@ -291,7 +292,7 @@ class Markets:
         )
 
     def aggregate_index_asset_climate_scores_by_country(
-        self, index_id: str, pathway: Pathway, horizon: int
+        self, index_id: str, pathway: Pathway, horizon: HorizonYear
     ) -> StaticListIterator[CountryClimateScore]:
         """
         Get the climate scores for all assets in a market index aggregated by country.
@@ -309,7 +310,7 @@ class Markets:
         )
 
     async def aggregate_index_asset_climate_scores_by_country_async(
-        self, index_id: str, pathway: Pathway, horizon: int
+        self, index_id: str, pathway: Pathway, horizon: HorizonYear
     ) -> StaticListIterator[CountryClimateScore]:
         """
         Get the climate scores for all assets in a market index aggregated by country asynchronously.
@@ -327,7 +328,7 @@ class Markets:
         )
 
     def aggregate_index_asset_impact_scores_by_country(
-        self, index_id: str, pathway: Pathway, horizon: int
+        self, index_id: str, pathway: Pathway, horizon: HorizonYear
     ) -> StaticListIterator[CountryImpactScore]:
         """
         Get the impact scores for all assets in a market index aggregated by country.
@@ -345,7 +346,7 @@ class Markets:
         )
 
     async def aggregate_index_asset_impact_scores_by_country_async(
-        self, index_id: str, pathway: Pathway, horizon: int
+        self, index_id: str, pathway: Pathway, horizon: HorizonYear
     ) -> StaticListIterator[CountryImpactScore]:
         """
         Get the impact scores for all assets in a market index aggregated by country asynchronously.
@@ -363,7 +364,7 @@ class Markets:
         )
 
     def aggregate_index_asset_climate_scores_by_asset_type(
-        self, index_id: str, pathway: Pathway, horizon: int
+        self, index_id: str, pathway: Pathway, horizon: HorizonYear
     ) -> StaticListIterator[AssetTypeClimateScore]:
         """
         Get the climate scores for all assets in a market index aggregated by asset type.
@@ -381,7 +382,7 @@ class Markets:
         )
 
     async def aggregate_index_asset_climate_scores_by_asset_type_async(
-        self, index_id: str, pathway: Pathway, horizon: int
+        self, index_id: str, pathway: Pathway, horizon: HorizonYear
     ) -> StaticListIterator[AssetTypeClimateScore]:
         """
         Get the climate scores for all assets in a market index aggregated by asset type asynchronously.
@@ -399,7 +400,7 @@ class Markets:
         )
 
     def aggregate_index_asset_impact_scores_by_asset_type(
-        self, index_id: str, pathway: Pathway, horizon: int
+        self, index_id: str, pathway: Pathway, horizon: HorizonYear
     ) -> StaticListIterator[AssetTypeImpactScore]:
         """
         Get the impact scores for all assets in a market index aggregated by asset type.
@@ -417,7 +418,7 @@ class Markets:
         )
 
     async def aggregate_index_asset_impact_scores_by_asset_type_async(
-        self, index_id: str, pathway: Pathway, horizon: int
+        self, index_id: str, pathway: Pathway, horizon: HorizonYear
     ) -> StaticListIterator[AssetTypeImpactScore]:
         """
         Get the impact scores for all assets in a market index aggregated by asset type asynchronously.

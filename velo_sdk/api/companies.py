@@ -13,6 +13,7 @@ from .types import (
     CountryImpactScore,
     AssetImpactScore,
     Pathway,
+    HorizonYear,
 )
 from .pagination import PaginatedIterator, AsyncPaginatedIterator
 from .static_list import StaticListIterator
@@ -138,7 +139,7 @@ class Companies:
         self,
         company_id: str,
         pathway: Pathway,
-        horizon: int,
+        horizon: HorizonYear,
         **extra_params: Any,
     ) -> PaginatedIterator[AssetClimateScore]:
         """
@@ -161,7 +162,7 @@ class Companies:
         self,
         company_id: str,
         pathway: Pathway,
-        horizon: int,
+        horizon: HorizonYear,
         **extra_params: Any,
     ) -> AsyncPaginatedIterator[AssetClimateScore]:
         """
@@ -184,7 +185,7 @@ class Companies:
         self,
         company_id: str,
         pathway: Pathway,
-        horizon: int,
+        horizon: HorizonYear,
         **extra_params: Any,
     ) -> PaginatedIterator[AssetClimateScore]:
         """
@@ -207,7 +208,7 @@ class Companies:
         self,
         company_id: str,
         pathway: Pathway,
-        horizon: int,
+        horizon: HorizonYear,
         **extra_params: Any,
     ) -> AsyncPaginatedIterator[AssetClimateScore]:
         """
@@ -227,7 +228,7 @@ class Companies:
         )
 
     def get_company_climate_scores(
-        self, company_id: str, pathway: Pathway, horizon: int
+        self, company_id: str, pathway: Pathway, horizon: HorizonYear
     ) -> ClimateScore:
         """
         Get the climate scores for a company.
@@ -243,7 +244,7 @@ class Companies:
         return ClimateScore(**response)
 
     async def get_company_climate_scores_async(
-        self, company_id: str, pathway: Pathway, horizon: int
+        self, company_id: str, pathway: Pathway, horizon: HorizonYear
     ) -> ClimateScore:
         """
         Get the climate scores for a company asynchronously.
@@ -259,7 +260,7 @@ class Companies:
         return ClimateScore(**response)
 
     def get_company_impact_scores(
-        self, company_id: str, pathway: Pathway, horizon: int
+        self, company_id: str, pathway: Pathway, horizon: HorizonYear
     ) -> StaticListIterator[ImpactScore]:
         """
         Get the impact scores for a company.
@@ -275,7 +276,7 @@ class Companies:
         )
 
     async def get_company_impact_scores_async(
-        self, company_id: str, pathway: Pathway, horizon: int
+        self, company_id: str, pathway: Pathway, horizon: HorizonYear
     ) -> StaticListIterator[ImpactScore]:
         """
         Get the impact scores for a company asynchronously.
@@ -294,7 +295,7 @@ class Companies:
         self,
         company_id: str,
         pathway: Pathway,
-        horizon: int,
+        horizon: HorizonYear,
         **extra_params: Any,
     ) -> PaginatedIterator[AssetClimateScore]:
         """
@@ -318,7 +319,7 @@ class Companies:
         self,
         company_id: str,
         pathway: Pathway,
-        horizon: int,
+        horizon: HorizonYear,
         **extra_params: Any,
     ) -> AsyncPaginatedIterator[AssetClimateScore]:
         """
@@ -342,7 +343,7 @@ class Companies:
         self,
         company_id: str,
         pathway: Pathway,
-        horizon: int,
+        horizon: HorizonYear,
         **extra_params: Any,
     ) -> PaginatedIterator[AssetImpactScore]:
         """
@@ -373,7 +374,7 @@ class Companies:
         self,
         company_id: str,
         pathway: Pathway,
-        horizon: int,
+        horizon: HorizonYear,
         **extra_params: Any,
     ) -> AsyncPaginatedIterator[AssetImpactScore]:
         """
@@ -401,7 +402,7 @@ class Companies:
         )
 
     def aggregate_company_asset_climate_scores_by_country(
-        self, company_id: str, pathway: Pathway, horizon: int
+        self, company_id: str, pathway: Pathway, horizon: HorizonYear
     ) -> StaticListIterator[CountryClimateScore]:
         """
         Get the climate scores for all assets of a company aggregated by country.
@@ -419,7 +420,7 @@ class Companies:
         )
 
     async def aggregate_company_asset_climate_scores_by_country_async(
-        self, company_id: str, pathway: Pathway, horizon: int
+        self, company_id: str, pathway: Pathway, horizon: HorizonYear
     ) -> StaticListIterator[CountryClimateScore]:
         """
         Get the climate scores for all assets of a company aggregated by country asynchronously.
@@ -437,7 +438,7 @@ class Companies:
         )
 
     def aggregate_company_asset_impact_scores_by_country(
-        self, company_id: str, pathway: Pathway, horizon: int
+        self, company_id: str, pathway: Pathway, horizon: HorizonYear
     ) -> StaticListIterator[CountryImpactScore]:
         """
         Get the impact scores for all assets of a company aggregated by country.
@@ -455,7 +456,7 @@ class Companies:
         )
 
     async def aggregate_company_asset_impact_scores_by_country_async(
-        self, company_id: str, pathway: Pathway, horizon: int
+        self, company_id: str, pathway: Pathway, horizon: HorizonYear
     ) -> StaticListIterator[CountryImpactScore]:
         """
         Get the impact scores for all assets of a company aggregated by country asynchronously.
@@ -473,7 +474,7 @@ class Companies:
         )
 
     def aggregate_company_asset_climate_scores_by_asset_type(
-        self, company_id: str, pathway: Pathway, horizon: int
+        self, company_id: str, pathway: Pathway, horizon: HorizonYear
     ) -> StaticListIterator[AssetTypeClimateScore]:
         """
         Get the climate scores for all assets of a company aggregated by asset type.
@@ -491,7 +492,7 @@ class Companies:
         )
 
     async def aggregate_company_asset_climate_scores_by_asset_type_async(
-        self, company_id: str, pathway: Pathway, horizon: int
+        self, company_id: str, pathway: Pathway, horizon: HorizonYear
     ) -> StaticListIterator[AssetTypeClimateScore]:
         """
         Get the climate scores for all assets of a company aggregated by asset type asynchronously.
@@ -509,7 +510,7 @@ class Companies:
         )
 
     def aggregate_company_asset_impact_scores_by_asset_type(
-        self, company_id: str, pathway: Pathway, horizon: int
+        self, company_id: str, pathway: Pathway, horizon: HorizonYear
     ) -> StaticListIterator[AssetTypeImpactScore]:
         """
         Get the impact scores for all assets of a company aggregated by asset type.
@@ -527,7 +528,7 @@ class Companies:
         )
 
     async def aggregate_company_asset_impact_scores_by_asset_type_async(
-        self, company_id: str, pathway: Pathway, horizon: int
+        self, company_id: str, pathway: Pathway, horizon: HorizonYear
     ) -> StaticListIterator[AssetTypeImpactScore]:
         """
         Get the impact scores for all assets of a company aggregated by asset type asynchronously.

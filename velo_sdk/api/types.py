@@ -13,6 +13,24 @@ Pathway = Literal[
     ">4 degrees",
 ]
 
+HorizonYear = Literal[
+    2025,
+    2030,
+    2035,
+    2040,
+    2045,
+    2050,
+    2055,
+    2060,
+    2065,
+    2070,
+    2075,
+    2080,
+    2085,
+    2090,
+    2095,
+]
+
 
 class Company(BaseModel):
     """
