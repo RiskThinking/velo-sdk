@@ -30,6 +30,13 @@ class Markets:
     ) -> list[MarketIndex]:
         """
         Search for market indexes by name.
+
+        Parameters:
+            name (Optional[str]): The name of the market index to search for.
+            **extra_params (Any): Additional parameters to pass to the API.
+
+        Returns:
+            list[MarketIndex]: A list of MarketIndex objects matching the search criteria.
         """
         params: Dict[str, Any] = {}
         if name is not None:
@@ -49,6 +56,13 @@ class Markets:
     ) -> list[MarketIndex]:
         """
         Search for market indexes by name asynchronously.
+
+        Parameters:
+            name (Optional[str]): The name of the market index to search for.
+            **extra_params (Any): Additional parameters to pass to the API.
+
+        Returns:
+            list[MarketIndex]: A list of MarketIndex objects matching the search criteria.
         """
         params: Dict[str, Any] = {}
         if name is not None:
@@ -63,6 +77,9 @@ class Markets:
     def list_indexes(self) -> PaginatedIterator[MarketIndex]:
         """
         List all market indexes.
+
+        Returns:
+            PaginatedIterator[MarketIndex]: An iterator over MarketIndex objects.
         """
         return PaginatedIterator(
             self.client, "/markets/indexes", {}, item_class=MarketIndex
@@ -71,6 +88,9 @@ class Markets:
     async def list_indexes_async(self) -> AsyncPaginatedIterator[MarketIndex]:
         """
         List all market indexes asynchronously.
+
+        Returns:
+            AsyncPaginatedIterator[MarketIndex]: An asynchronous iterator over MarketIndex objects.
         """
         return AsyncPaginatedIterator(
             self.client, "/markets/indexes", {}, item_class=MarketIndex
@@ -79,6 +99,12 @@ class Markets:
     def get_index(self, index_id: str) -> MarketIndex:
         """
         Get a market index by its unique ID.
+
+        Parameters:
+            index_id (str): The unique identifier of the market index.
+
+        Returns:
+            MarketIndex: The MarketIndex object.
         """
         response = self.client._request_sync("GET", f"/markets/indexes/{index_id}")
         return MarketIndex(**response)
@@ -86,6 +112,12 @@ class Markets:
     async def get_index_async(self, index_id: str) -> MarketIndex:
         """
         Get a market index by its unique ID asynchronously.
+
+        Parameters:
+            index_id (str): The unique identifier of the market index.
+
+        Returns:
+            MarketIndex: The MarketIndex object.
         """
         response = await self.client._request_async(
             "GET", f"/markets/indexes/{index_id}"
@@ -95,6 +127,12 @@ class Markets:
     def get_index_companies(self, index_id: str) -> PaginatedIterator[Company]:
         """
         Get all companies in a market index.
+
+        Parameters:
+            index_id (str): The unique identifier of the market index.
+
+        Returns:
+            PaginatedIterator[Company]: An iterator over Company objects in the index.
         """
         return PaginatedIterator(
             self.client,
@@ -108,6 +146,12 @@ class Markets:
     ) -> AsyncPaginatedIterator[Company]:
         """
         Get all companies in a market index asynchronously.
+
+        Parameters:
+            index_id (str): The unique identifier of the market index.
+
+        Returns:
+            AsyncPaginatedIterator[Company]: An asynchronous iterator over Company objects in the index.
         """
         return AsyncPaginatedIterator(
             self.client,
@@ -121,6 +165,14 @@ class Markets:
     ) -> ClimateScore:
         """
         Get the climate scores for a market index.
+
+        Parameters:
+            index_id (str): The unique identifier of the market index.
+            pathway (Pathway): Climate scenario pathway powered by Climate Earth Digital Twin.
+            horizon (HorizonYear): Climatology year representing a decadal period.
+
+        Returns:
+            ClimateScore: The ClimateScore object for the market index.
         """
         response = self.client._request_sync(
             "GET",
@@ -137,6 +189,14 @@ class Markets:
     ) -> ClimateScore:
         """
         Get the climate scores for a market index asynchronously.
+
+        Parameters:
+            index_id (str): The unique identifier of the market index.
+            pathway (Pathway): Climate scenario pathway powered by Climate Earth Digital Twin.
+            horizon (HorizonYear): Climatology year representing a decadal period.
+
+        Returns:
+            ClimateScore: The ClimateScore object for the market index.
         """
         response = await self.client._request_async(
             "GET",
@@ -153,6 +213,14 @@ class Markets:
     ) -> StaticListIterator[ImpactScore]:
         """
         Get the impact scores for a market index.
+
+        Parameters:
+            index_id (str): The unique identifier of the market index.
+            pathway (Pathway): Climate scenario pathway powered by Climate Earth Digital Twin.
+            horizon (HorizonYear): Climatology year representing a decadal period.
+
+        Returns:
+            StaticListIterator[ImpactScore]: An iterator over ImpactScore objects for the market index.
         """
         return StaticListIterator(
             self.client,
@@ -169,6 +237,14 @@ class Markets:
     ) -> StaticListIterator[ImpactScore]:
         """
         Get the impact scores for a market index asynchronously.
+
+        Parameters:
+            index_id (str): The unique identifier of the market index.
+            pathway (Pathway): Climate scenario pathway powered by Climate Earth Digital Twin.
+            horizon (HorizonYear): Climatology year representing a decadal period.
+
+        Returns:
+            StaticListIterator[ImpactScore]: An asynchronous iterator over ImpactScore objects for the market index.
         """
         return StaticListIterator(
             self.client,
@@ -179,7 +255,6 @@ class Markets:
             },
             item_class=ImpactScore,
         )
-    
 
     def list_index_asset_impact_scores(
         self,
@@ -190,6 +265,15 @@ class Markets:
     ) -> PaginatedIterator[AssetImpactScore]:
         """
         Get the impact scores for all assets of a market index.
+
+        Parameters:
+            index_id (str): The unique identifier of the market index.
+            pathway (Pathway): Climate scenario pathway powered by Climate Earth Digital Twin.
+            horizon (HorizonYear): Climatology year representing a decadal period.
+            **extra_params (Any): Additional parameters to pass to the API.
+
+        Returns:
+            PaginatedIterator[AssetImpactScore]: An iterator over AssetImpactScore objects for the index's assets.
         """
         params: Dict[str, Any] = {}
         params["pathway"] = pathway
@@ -203,15 +287,17 @@ class Markets:
             f"/markets/indexes/{index_id}/assets/climate/impacts",
             params,
             item_class=AssetImpactScore,
-            df_transform=lambda asset: [{
-                "asset_id": asset.asset_id,
-                **{
-                    f"index_{risk.index_name}": risk.index_impact_cvar_50
-                    for risk in asset.index_risks
-                },
-            }],
+            df_transform=lambda asset: [
+                {
+                    "asset_id": asset.asset_id,
+                    **{
+                        f"index_{risk.index_name}": risk.index_impact_cvar_50
+                        for risk in asset.index_risks
+                    },
+                }
+            ],
         )
-    
+
     def list_index_asset_climate_scores(
         self,
         index_id: str,
@@ -221,6 +307,15 @@ class Markets:
     ) -> PaginatedIterator[AssetClimateScore]:
         """
         Get the climate scores for all assets of a market index.
+
+        Parameters:
+            index_id (str): The unique identifier of the market index.
+            pathway (Pathway): Climate scenario pathway powered by Climate Earth Digital Twin.
+            horizon (HorizonYear): Climatology year representing a decadal period.
+            **extra_params (Any): Additional parameters to pass to the API.
+
+        Returns:
+            PaginatedIterator[AssetClimateScore]: An iterator over AssetClimateScore objects for the index's assets.
         """
         params: Dict[str, Any] = {}
         params["pathway"] = pathway
@@ -245,6 +340,15 @@ class Markets:
     ) -> AsyncPaginatedIterator[AssetClimateScore]:
         """
         Get the climate scores for all assets of a market index asynchronously.
+
+        Parameters:
+            index_id (str): The unique identifier of the market index.
+            pathway (Pathway): Climate scenario pathway powered by Climate Earth Digital Twin.
+            horizon (HorizonYear): Climatology year representing a decadal period.
+            **extra_params (Any): Additional parameters to pass to the API.
+
+        Returns:
+            AsyncPaginatedIterator[AssetClimateScore]: An asynchronous iterator over AssetClimateScore objects for the index's assets.
         """
         params: Dict[str, Any] = {}
         params["pathway"] = pathway
@@ -269,6 +373,15 @@ class Markets:
     ) -> AsyncPaginatedIterator[AssetImpactScore]:
         """
         Get the impact scores for all assets of a market index asynchronously.
+
+        Parameters:
+            index_id (str): The unique identifier of the market index.
+            pathway (Pathway): Climate scenario pathway powered by Climate Earth Digital Twin.
+            horizon (HorizonYear): Climatology year representing a decadal period.
+            **extra_params (Any): Additional parameters to pass to the API.
+
+        Returns:
+            AsyncPaginatedIterator[AssetImpactScore]: An asynchronous iterator over AssetImpactScore objects for the index's assets.
         """
         params: Dict[str, Any] = {}
         params["pathway"] = pathway
@@ -282,13 +395,15 @@ class Markets:
             f"/markets/indexes/{index_id}/assets/climate/impacts",
             params,
             item_class=AssetImpactScore,
-            df_transform=lambda asset: [{
-                "asset_id": asset.asset_id,
-                **{
-                    f"index_{risk.index_name}": risk.index_impact_cvar_50
-                    for risk in asset.index_risks
-                },
-            }],
+            df_transform=lambda asset: [
+                {
+                    "asset_id": asset.asset_id,
+                    **{
+                        f"index_{risk.index_name}": risk.index_impact_cvar_50
+                        for risk in asset.index_risks
+                    },
+                }
+            ],
         )
 
     def aggregate_index_asset_climate_scores_by_country(
@@ -296,6 +411,14 @@ class Markets:
     ) -> StaticListIterator[CountryClimateScore]:
         """
         Get the climate scores for all assets in a market index aggregated by country.
+
+        Parameters:
+            index_id (str): The unique identifier of the market index.
+            pathway (Pathway): Climate scenario pathway powered by Climate Earth Digital Twin.
+            horizon (HorizonYear): Climatology year representing a decadal period.
+
+        Returns:
+            StaticListIterator[CountryClimateScore]: An iterator over CountryClimateScore objects, aggregated by country.
         """
         return StaticListIterator(
             self.client,
@@ -314,6 +437,14 @@ class Markets:
     ) -> StaticListIterator[CountryClimateScore]:
         """
         Get the climate scores for all assets in a market index aggregated by country asynchronously.
+
+        Parameters:
+            index_id (str): The unique identifier of the market index.
+            pathway (Pathway): Climate scenario pathway powered by Climate Earth Digital Twin.
+            horizon (HorizonYear): Climatology year representing a decadal period.
+
+        Returns:
+            StaticListIterator[CountryClimateScore]: An asynchronous iterator over CountryClimateScore objects, aggregated by country.
         """
         return StaticListIterator(
             self.client,
@@ -332,6 +463,14 @@ class Markets:
     ) -> StaticListIterator[CountryImpactScore]:
         """
         Get the impact scores for all assets in a market index aggregated by country.
+
+        Parameters:
+            index_id (str): The unique identifier of the market index.
+            pathway (Pathway): Climate scenario pathway powered by Climate Earth Digital Twin.
+            horizon (HorizonYear): Climatology year representing a decadal period.
+
+        Returns:
+            StaticListIterator[CountryImpactScore]: An iterator over CountryImpactScore objects, aggregated by country.
         """
         return StaticListIterator(
             self.client,
@@ -350,6 +489,14 @@ class Markets:
     ) -> StaticListIterator[CountryImpactScore]:
         """
         Get the impact scores for all assets in a market index aggregated by country asynchronously.
+
+        Parameters:
+            index_id (str): The unique identifier of the market index.
+            pathway (Pathway): Climate scenario pathway powered by Climate Earth Digital Twin.
+            horizon (HorizonYear): Climatology year representing a decadal period.
+
+        Returns:
+            StaticListIterator[CountryImpactScore]: An asynchronous iterator over CountryImpactScore objects, aggregated by country.
         """
         return StaticListIterator(
             self.client,
@@ -368,6 +515,14 @@ class Markets:
     ) -> StaticListIterator[AssetTypeClimateScore]:
         """
         Get the climate scores for all assets in a market index aggregated by asset type.
+
+        Parameters:
+            index_id (str): The unique identifier of the market index.
+            pathway (Pathway): Climate scenario pathway powered by Climate Earth Digital Twin.
+            horizon (HorizonYear): Climatology year representing a decadal period.
+
+        Returns:
+            StaticListIterator[AssetTypeClimateScore]: An iterator over AssetTypeClimateScore objects, aggregated by asset type.
         """
         return StaticListIterator(
             self.client,
@@ -386,6 +541,14 @@ class Markets:
     ) -> StaticListIterator[AssetTypeClimateScore]:
         """
         Get the climate scores for all assets in a market index aggregated by asset type asynchronously.
+
+        Parameters:
+            index_id (str): The unique identifier of the market index.
+            pathway (Pathway): Climate scenario pathway powered by Climate Earth Digital Twin.
+            horizon (HorizonYear): Climatology year representing a decadal period.
+
+        Returns:
+            StaticListIterator[AssetTypeClimateScore]: An asynchronous iterator over AssetTypeClimateScore objects, aggregated by asset type.
         """
         return StaticListIterator(
             self.client,
@@ -404,6 +567,14 @@ class Markets:
     ) -> StaticListIterator[AssetTypeImpactScore]:
         """
         Get the impact scores for all assets in a market index aggregated by asset type.
+
+        Parameters:
+            index_id (str): The unique identifier of the market index.
+            pathway (Pathway): Climate scenario pathway powered by Climate Earth Digital Twin.
+            horizon (HorizonYear): Climatology year representing a decadal period.
+
+        Returns:
+            StaticListIterator[AssetTypeImpactScore]: An iterator over AssetTypeImpactScore objects, aggregated by asset type.
         """
         return StaticListIterator(
             self.client,
@@ -422,6 +593,14 @@ class Markets:
     ) -> StaticListIterator[AssetTypeImpactScore]:
         """
         Get the impact scores for all assets in a market index aggregated by asset type asynchronously.
+
+        Parameters:
+            index_id (str): The unique identifier of the market index.
+            pathway (Pathway): Climate scenario pathway powered by Climate Earth Digital Twin.
+            horizon (HorizonYear): Climatology year representing a decadal period.
+
+        Returns:
+            StaticListIterator[AssetTypeImpactScore]: An asynchronous iterator over AssetTypeImpactScore objects, aggregated by asset type.
         """
         return StaticListIterator(
             self.client,

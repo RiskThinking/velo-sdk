@@ -1,4 +1,4 @@
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Literal, Optional
 
 from .base import BaseClient
 from .types import (
@@ -26,6 +26,12 @@ class Companies:
     def get_company(self, company_id: str) -> Company:
         """
         Get a company by its unique ID.
+
+        Parameters:
+            company_id (str): The unique identifier of the company.
+
+        Returns:
+            Company: The Company object.
         """
         response = self.client._request_sync("GET", f"/companies/{company_id}")
         return Company(**response)
@@ -33,6 +39,12 @@ class Companies:
     async def get_company_async(self, company_id: str) -> Company:
         """
         Get a company by its unique ID asynchronously.
+
+        Parameters:
+            company_id (str): The unique identifier of the company.
+
+        Returns:
+            Company: The Company object.
         """
         response = await self.client._request_async("GET", f"/companies/{company_id}")
         return Company(**response)
@@ -40,30 +52,46 @@ class Companies:
     def list_companies(
         self,
         *,
-        scope: Optional[str] = None,
+        scope: Literal["public", "organization"] = "public",
         **extra_params: Any,
     ) -> PaginatedIterator[Company]:
         """
         List all companies.
+
+        Parameters:
+            scope (Literal["public", "organization"]): The scope to filter companies by
+                   "public" is the default scope and searches all available companies in VELO.
+                   "organization" searches all private companies uploaded to the organization.
+            **extra_params (Any): Additional parameters to pass to the API.
+
+        Returns:
+            PaginatedIterator[Company]: An iterator over Company objects.
         """
         params: Dict[str, Any] = {}
-        if scope is not None:
-            params["scope"] = scope
+        params["scope"] = scope
         params.update(extra_params)
         return PaginatedIterator(self.client, "/companies", params, item_class=Company)
 
     async def list_companies_async(
         self,
         *,
-        scope: Optional[str] = None,
+        scope: Literal["public", "organization"] = "public",
         **extra_params: Any,
     ) -> AsyncPaginatedIterator[Company]:
         """
         List all companies asynchronously.
+
+        Parameters:
+            scope (Literal["public", "organization"]): The scope to filter companies by
+                   "public" is the default scope and searches all available companies in VELO.
+                   "organization" searches all private companies uploaded to the organization.
+            **extra_params (Any): Additional parameters to pass to the API.
+
+        Returns:
+            AsyncPaginatedIterator[Company]: An asynchronous iterator over Company objects.
         """
         params: Dict[str, Any] = {}
-        if scope is not None:
-            params["scope"] = scope
+        params["scope"] = scope
         params.update(extra_params)
         return AsyncPaginatedIterator(
             self.client, "/companies", params, item_class=Company
@@ -77,6 +105,13 @@ class Companies:
     ) -> list[Company]:
         """
         Search for companies by name.
+
+        Parameters:
+            name (Optional[str]): The name of the company to search for.
+            **extra_params (Any): Additional parameters to pass to the API.
+
+        Returns:
+            list[Company]: A list of Company objects matching the search criteria.
         """
         params: Dict[str, Any] = {}
         if name is not None:
@@ -94,6 +129,13 @@ class Companies:
     ) -> list[Company]:
         """
         Search for companies by name asynchronously.
+
+        Parameters:
+            name (Optional[str]): The name of the company to search for.
+            **extra_params (Any): Additional parameters to pass to the API.
+
+        Returns:
+            list[Company]: A list of Company objects matching the search criteria.
         """
         params: Dict[str, Any] = {}
         if name is not None:
@@ -112,6 +154,13 @@ class Companies:
     ) -> PaginatedIterator[Asset]:
         """
         List all assets for a company.
+
+        Parameters:
+            company_id (str): The unique identifier of the company.
+            **extra_params (Any): Additional parameters to pass to the API.
+
+        Returns:
+            PaginatedIterator[Asset]: An iterator over Asset objects belonging to the company.
         """
         return PaginatedIterator(
             self.client,
@@ -127,6 +176,13 @@ class Companies:
     ) -> AsyncPaginatedIterator[Asset]:
         """
         List all assets for a company asynchronously.
+
+        Parameters:
+            company_id (str): The unique identifier of the company.
+            **extra_params (Any): Additional parameters to pass to the API.
+
+        Returns:
+            AsyncPaginatedIterator[Asset]: An asynchronous iterator over Asset objects belonging to the company.
         """
         return AsyncPaginatedIterator(
             self.client,
@@ -144,6 +200,16 @@ class Companies:
     ) -> PaginatedIterator[AssetClimateScore]:
         """
         List all uninsurable assets for a company.
+        Uninsurable assets are defined as those with cvar_95 >= 0.35.
+
+        Parameters:
+            company_id (str): The unique identifier of the company.
+            pathway (Pathway): Climate scenario pathway powered by Climate Earth Digital Twin.
+            horizon (HorizonYear): Climatology year representing a decadal period.
+            **extra_params (Any): Additional parameters to pass to the API.
+
+        Returns:
+            PaginatedIterator[AssetClimateScore]: An iterator over AssetClimateScore objects for uninsurable assets.
         """
         params: Dict[str, Any] = {}
         params["pathway"] = pathway
@@ -167,6 +233,16 @@ class Companies:
     ) -> AsyncPaginatedIterator[AssetClimateScore]:
         """
         List all uninsurable assets for a company asynchronously.
+        Uninsurable assets are defined as those with cvar_95 >= 0.35.
+
+        Parameters:
+            company_id (str): The unique identifier of the company.
+            pathway (Pathway): Climate scenario pathway powered by Climate Earth Digital Twin.
+            horizon (HorizonYear): Climatology year representing a decadal period.
+            **extra_params (Any): Additional parameters to pass to the API.
+
+        Returns:
+            AsyncPaginatedIterator[AssetClimateScore]: An asynchronous iterator over AssetClimateScore objects for uninsurable assets.
         """
         params: Dict[str, Any] = {}
         params["pathway"] = pathway
@@ -190,6 +266,16 @@ class Companies:
     ) -> PaginatedIterator[AssetClimateScore]:
         """
         List all stranded assets for a company.
+        Stranded assets are defined as those with cvar_95 >= 0.75.
+
+        Parameters:
+            company_id (str): The unique identifier of the company.
+            pathway (Pathway): Climate scenario pathway powered by Climate Earth Digital Twin.
+            horizon (HorizonYear): Climatology year representing a decadal period.
+            **extra_params (Any): Additional parameters to pass to the API.
+
+        Returns:
+            PaginatedIterator[AssetClimateScore]: An iterator over AssetClimateScore objects for stranded assets.
         """
         params: Dict[str, Any] = {}
         params["pathway"] = pathway
@@ -213,6 +299,16 @@ class Companies:
     ) -> AsyncPaginatedIterator[AssetClimateScore]:
         """
         List all stranded assets for a company asynchronously.
+        Stranded assets are defined as those with cvar_95 >= 0.75.
+
+        Parameters:
+            company_id (str): The unique identifier of the company.
+            pathway (Pathway): Climate scenario pathway powered by Climate Earth Digital Twin.
+            horizon (HorizonYear): Climatology year representing a decadal period.
+            **extra_params (Any): Additional parameters to pass to the API.
+
+        Returns:
+            AsyncPaginatedIterator[AssetClimateScore]: An asynchronous iterator over AssetClimateScore objects for stranded assets.
         """
         params: Dict[str, Any] = {}
         params["pathway"] = pathway
@@ -232,6 +328,14 @@ class Companies:
     ) -> ClimateScore:
         """
         Get the climate scores for a company.
+
+        Parameters:
+            company_id (str): The unique identifier of the company.
+            pathway (Pathway): Climate scenario pathway powered by Climate Earth Digital Twin.
+            horizon (HorizonYear): Climatology year representing a decadal period.
+
+        Returns:
+            ClimateScore: The ClimateScore object for the company.
         """
         response = self.client._request_sync(
             "GET",
@@ -248,6 +352,14 @@ class Companies:
     ) -> ClimateScore:
         """
         Get the climate scores for a company asynchronously.
+
+        Parameters:
+            company_id (str): The unique identifier of the company.
+            pathway (Pathway): Climate scenario pathway powered by Climate Earth Digital Twin.
+            horizon (HorizonYear): Climatology year representing a decadal period.
+
+        Returns:
+            ClimateScore: The ClimateScore object for the company.
         """
         response = await self.client._request_async(
             "GET",
@@ -264,6 +376,14 @@ class Companies:
     ) -> StaticListIterator[ImpactScore]:
         """
         Get the impact scores for a company.
+
+        Parameters:
+            company_id (str): The unique identifier of the company.
+            pathway (Pathway): Climate scenario pathway powered by Climate Earth Digital Twin.
+            horizon (HorizonYear): Climatology year representing a decadal period.
+
+        Returns:
+            StaticListIterator[ImpactScore]: An iterator over ImpactScore objects for the company.
         """
         return StaticListIterator(
             self.client,
@@ -280,6 +400,14 @@ class Companies:
     ) -> StaticListIterator[ImpactScore]:
         """
         Get the impact scores for a company asynchronously.
+
+        Parameters:
+            company_id (str): The unique identifier of the company.
+            pathway (Pathway): Climate scenario pathway powered by Climate Earth Digital Twin.
+            horizon (HorizonYear): Climatology year representing a decadal period.
+
+        Returns:
+            StaticListIterator[ImpactScore]: An asynchronous iterator over ImpactScore objects for the company.
         """
         return StaticListIterator(
             self.client,
@@ -300,6 +428,15 @@ class Companies:
     ) -> PaginatedIterator[AssetClimateScore]:
         """
         Get the climate scores for all assets of a company.
+
+        Parameters:
+            company_id (str): The unique identifier of the company.
+            pathway (Pathway): Climate scenario pathway powered by Climate Earth Digital Twin.
+            horizon (HorizonYear): Climatology year representing a decadal period.
+            **extra_params (Any): Additional parameters to pass to the API.
+
+        Returns:
+            PaginatedIterator[AssetClimateScore]: An iterator over AssetClimateScore objects for the company's assets.
         """
         params: Dict[str, Any] = {}
         params["pathway"] = pathway
@@ -324,6 +461,15 @@ class Companies:
     ) -> AsyncPaginatedIterator[AssetClimateScore]:
         """
         Get the climate scores for all assets of a company asynchronously.
+
+        Parameters:
+            company_id (str): The unique identifier of the company.
+            pathway (Pathway): Climate scenario pathway powered by Climate Earth Digital Twin.
+            horizon (HorizonYear): Climatology year representing a decadal period.
+            **extra_params (Any): Additional parameters to pass to the API.
+
+        Returns:
+            AsyncPaginatedIterator[AssetClimateScore]: An asynchronous iterator over AssetClimateScore objects for the company's assets.
         """
         params: Dict[str, Any] = {}
         params["pathway"] = pathway
@@ -348,6 +494,15 @@ class Companies:
     ) -> PaginatedIterator[AssetImpactScore]:
         """
         Get the impact scores for all assets of a company.
+
+        Parameters:
+            company_id (str): The unique identifier of the company.
+            pathway (Pathway): Climate scenario pathway powered by Climate Earth Digital Twin.
+            horizon (HorizonYear): Climatology year representing a decadal period.
+            **extra_params (Any): Additional parameters to pass to the API.
+
+        Returns:
+            PaginatedIterator[AssetImpactScore]: An iterator over AssetImpactScore objects for the company's assets.
         """
         params: Dict[str, Any] = {}
         params["pathway"] = pathway
@@ -361,13 +516,15 @@ class Companies:
             f"/companies/{company_id}/assets/climate/impacts",
             params,
             item_class=AssetImpactScore,
-            df_transform=lambda asset: [{
-                "asset_id": asset.asset_id,
-                **{
-                    f"index_{risk.index_name}": risk.index_impact_cvar_50
-                    for risk in asset.index_risks
-                },
-            }],
+            df_transform=lambda asset: [
+                {
+                    "asset_id": asset.asset_id,
+                    **{
+                        f"index_{risk.index_name}": risk.index_impact_cvar_50
+                        for risk in asset.index_risks
+                    },
+                }
+            ],
         )
 
     async def list_company_asset_impact_scores_async(
@@ -379,6 +536,15 @@ class Companies:
     ) -> AsyncPaginatedIterator[AssetImpactScore]:
         """
         Get the impact scores for all assets of a company asynchronously.
+
+        Parameters:
+            company_id (str): The unique identifier of the company.
+            pathway (Pathway): Climate scenario pathway powered by Climate Earth Digital Twin.
+            horizon (HorizonYear): Climatology year representing a decadal period.
+            **extra_params (Any): Additional parameters to pass to the API.
+
+        Returns:
+            AsyncPaginatedIterator[AssetImpactScore]: An asynchronous iterator over AssetImpactScore objects for the company's assets.
         """
         params: Dict[str, Any] = {}
         params["pathway"] = pathway
@@ -392,13 +558,15 @@ class Companies:
             f"/companies/{company_id}/assets/climate/impacts",
             params,
             item_class=AssetImpactScore,
-            df_transform=lambda asset: [{
-                "asset_id": asset.asset_id,
-                **{
-                    f"index_{risk.index_name}": risk.index_impact_cvar_50
-                    for risk in asset.index_risks
-                },
-            }],
+            df_transform=lambda asset: [
+                {
+                    "asset_id": asset.asset_id,
+                    **{
+                        f"index_{risk.index_name}": risk.index_impact_cvar_50
+                        for risk in asset.index_risks
+                    },
+                }
+            ],
         )
 
     def aggregate_company_asset_climate_scores_by_country(
@@ -406,6 +574,14 @@ class Companies:
     ) -> StaticListIterator[CountryClimateScore]:
         """
         Get the climate scores for all assets of a company aggregated by country.
+
+        Parameters:
+            company_id (str): The unique identifier of the company.
+            pathway (Pathway): Climate scenario pathway powered by Climate Earth Digital Twin.
+            horizon (HorizonYear): Climatology year representing a decadal period.
+
+        Returns:
+            StaticListIterator[CountryClimateScore]: An iterator over CountryClimateScore objects, aggregated by country.
         """
         return StaticListIterator(
             self.client,
@@ -424,6 +600,14 @@ class Companies:
     ) -> StaticListIterator[CountryClimateScore]:
         """
         Get the climate scores for all assets of a company aggregated by country asynchronously.
+
+        Parameters:
+            company_id (str): The unique identifier of the company.
+            pathway (Pathway): Climate scenario pathway powered by Climate Earth Digital Twin.
+            horizon (HorizonYear): Climatology year representing a decadal period.
+
+        Returns:
+            StaticListIterator[CountryClimateScore]: An asynchronous iterator over CountryClimateScore objects, aggregated by country.
         """
         return StaticListIterator(
             self.client,
@@ -442,6 +626,14 @@ class Companies:
     ) -> StaticListIterator[CountryImpactScore]:
         """
         Get the impact scores for all assets of a company aggregated by country.
+
+        Parameters:
+            company_id (str): The unique identifier of the company.
+            pathway (Pathway): Climate scenario pathway powered by Climate Earth Digital Twin.
+            horizon (HorizonYear): Climatology year representing a decadal period.
+
+        Returns:
+            StaticListIterator[CountryImpactScore]: An iterator over CountryImpactScore objects, aggregated by country.
         """
         return StaticListIterator(
             self.client,
@@ -460,6 +652,14 @@ class Companies:
     ) -> StaticListIterator[CountryImpactScore]:
         """
         Get the impact scores for all assets of a company aggregated by country asynchronously.
+
+        Parameters:
+            company_id (str): The unique identifier of the company.
+            pathway (Pathway): Climate scenario pathway powered by Climate Earth Digital Twin.
+            horizon (HorizonYear): Climatology year representing a decadal period.
+
+        Returns:
+            StaticListIterator[CountryImpactScore]: An asynchronous iterator over CountryImpactScore objects, aggregated by country.
         """
         return StaticListIterator(
             self.client,
@@ -478,6 +678,14 @@ class Companies:
     ) -> StaticListIterator[AssetTypeClimateScore]:
         """
         Get the climate scores for all assets of a company aggregated by asset type.
+
+        Parameters:
+            company_id (str): The unique identifier of the company.
+            pathway (Pathway): Climate scenario pathway powered by Climate Earth Digital Twin.
+            horizon (HorizonYear): Climatology year representing a decadal period.
+
+        Returns:
+            StaticListIterator[AssetTypeClimateScore]: An iterator over AssetTypeClimateScore objects, aggregated by asset type.
         """
         return StaticListIterator(
             self.client,
@@ -496,6 +704,14 @@ class Companies:
     ) -> StaticListIterator[AssetTypeClimateScore]:
         """
         Get the climate scores for all assets of a company aggregated by asset type asynchronously.
+
+        Parameters:
+            company_id (str): The unique identifier of the company.
+            pathway (Pathway): Climate scenario pathway powered by Climate Earth Digital Twin.
+            horizon (HorizonYear): Climatology year representing a decadal period.
+
+        Returns:
+            StaticListIterator[AssetTypeClimateScore]: An asynchronous iterator over AssetTypeClimateScore objects, aggregated by asset type.
         """
         return StaticListIterator(
             self.client,
@@ -514,6 +730,14 @@ class Companies:
     ) -> StaticListIterator[AssetTypeImpactScore]:
         """
         Get the impact scores for all assets of a company aggregated by asset type.
+
+        Parameters:
+            company_id (str): The unique identifier of the company.
+            pathway (Pathway): Climate scenario pathway powered by Climate Earth Digital Twin.
+            horizon (HorizonYear): Climatology year representing a decadal period.
+
+        Returns:
+            StaticListIterator[AssetTypeImpactScore]: An iterator over AssetTypeImpactScore objects, aggregated by asset type.
         """
         return StaticListIterator(
             self.client,
@@ -532,6 +756,14 @@ class Companies:
     ) -> StaticListIterator[AssetTypeImpactScore]:
         """
         Get the impact scores for all assets of a company aggregated by asset type asynchronously.
+
+        Parameters:
+            company_id (str): The unique identifier of the company.
+            pathway (Pathway): Climate scenario pathway powered by Climate Earth Digital Twin.
+            horizon (HorizonYear): Climatology year representing a decadal period.
+
+        Returns:
+            StaticListIterator[AssetTypeImpactScore]: An asynchronous iterator over AssetTypeImpactScore objects, aggregated by asset type.
         """
         return StaticListIterator(
             self.client,

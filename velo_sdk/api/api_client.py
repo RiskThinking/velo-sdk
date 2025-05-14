@@ -4,6 +4,7 @@ from .base import BaseClient
 from .markets import Markets
 from .climate import Climate
 
+
 class APIClient(BaseClient):
     def __init__(
         self,

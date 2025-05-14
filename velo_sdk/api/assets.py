@@ -12,6 +12,12 @@ class Assets:
     def get_asset(self, asset_id: str) -> Asset:
         """
         Get an asset by its unique ID.
+
+        Parameters:
+            asset_id (str): The unique identifier of the asset.
+
+        Returns:
+            Asset: The Asset object.
         """
         response = self.client._request_sync("GET", f"/assets/{asset_id}")
         return Asset(**response)
@@ -19,6 +25,12 @@ class Assets:
     async def get_asset_async(self, asset_id: str) -> Asset:
         """
         Get an asset by its unique ID asynchronously.
+
+        Parameters:
+            asset_id (str): The unique identifier of the asset.
+
+        Returns:
+            Asset: The Asset object.
         """
         response = await self.client._request_async("GET", f"/assets/{asset_id}")
         return Asset(**response)
@@ -29,6 +41,12 @@ class Assets:
     ) -> PaginatedIterator[Asset]:
         """
         List all assets.
+
+        Parameters:
+            **extra_params (Any): Additional parameters to pass to the API.
+
+        Returns:
+            PaginatedIterator[Asset]: An iterator over Asset objects.
         """
         return PaginatedIterator(self.client, "/assets", extra_params, item_class=Asset)
 
@@ -38,6 +56,12 @@ class Assets:
     ) -> AsyncPaginatedIterator[Asset]:
         """
         List all assets asynchronously.
+
+        Parameters:
+            **extra_params (Any): Additional parameters to pass to the API.
+
+        Returns:
+            AsyncPaginatedIterator[Asset]: An asynchronous iterator over Asset objects.
         """
         return AsyncPaginatedIterator(
             self.client, "/assets", extra_params, item_class=Asset
@@ -46,6 +70,12 @@ class Assets:
     def get_asset_owner(self, asset_id: str) -> Company:
         """
         Get the company that owns an asset.
+
+        Parameters:
+            asset_id (str): The unique identifier of the asset.
+
+        Returns:
+            Company: The Company object that owns the asset.
         """
         response = self.client._request_sync("GET", f"/assets/{asset_id}/ownership")
         return Company(**response)
@@ -53,6 +83,12 @@ class Assets:
     async def get_asset_owner_async(self, asset_id: str) -> Company:
         """
         Get the company that owns an asset asynchronously.
+
+        Parameters:
+            asset_id (str): The unique identifier of the asset.
+
+        Returns:
+            Company: The Company object that owns the asset.
         """
         response = await self.client._request_async(
             "GET", f"/assets/{asset_id}/ownership"
@@ -70,17 +106,17 @@ class Assets:
         Search for assets.
 
         Parameters:
-            query: The search query string. Asset names and addresses are searched for.
-            scope: The scope of the search. Can be "public", "company", or "organization".
+            query (str): The search query string. Asset names and addresses are searched for.
+            scope (Literal["public", "company", "organization"]): The scope of the search.
                    "public" is the default scope and searches all available assets in VELO.
                    "organization" searches all private assets uploaded to the organization.
                    If "company" is selected, `company_id` must also be provided.
-            company_id: The ID of the company to scope the search to.
+            company_id (Optional[str]): The ID of the company to scope the search to.
                         Required if `scope` is "company".
-            **extra_params: Additional parameters to pass to the API.
+            **extra_params (Any): Additional parameters to pass to the API.
 
         Returns:
-            A paginated iterator of assets matching the search criteria.
+            PaginatedIterator[Asset]: A paginated iterator of assets matching the search criteria.
         """
         params = {
             "query": query,
@@ -104,17 +140,17 @@ class Assets:
         Search for assets asynchronously.
 
         Parameters:
-            query: The search query string. Asset names and addresses are searched for.
-            scope: The scope of the search. Can be "public", "company", or "organization".
+            query (str): The search query string. Asset names and addresses are searched for.
+            scope (Literal["public", "company", "organization"]): The scope of the search.
                    "public" is the default scope and searches all available assets in VELO.
                    "organization" searches all private assets uploaded to the organization.
                    If "company" is selected, `company_id` must also be provided.
-            company_id: The ID of the company to scope the search to.
+            company_id (Optional[str]): The ID of the company to scope the search to.
                         Required if `scope` is "company".
-            **extra_params: Additional parameters to pass to the API.
+            **extra_params (Any): Additional parameters to pass to the API.
 
         Returns:
-            A paginated iterator of assets matching the search criteria.
+            AsyncPaginatedIterator[Asset]: An asynchronous paginated iterator of assets matching the search criteria.
         """
         params = {
             "query": query,

@@ -75,7 +75,7 @@ class PaginatedIterator(Generic[T], Iterator[T]):
         page = self.buffer.copy()
         self.buffer.clear()  # Clear the buffer after returning the page.
         return page
-    
+
     def to_polars(self) -> pl.DataFrame:
         """
         Fetches all items from all pages, applies an optional transformation,
@@ -106,7 +106,7 @@ class PaginatedIterator(Generic[T], Iterator[T]):
             # Default behavior: convert each Pydantic model to a dict
             for item_model in all_items_collected:
                 processed_data_for_df.append(item_model.model_dump())
-        
+
         return pl.from_dicts(processed_data_for_df)
 
 
@@ -169,7 +169,7 @@ class AsyncPaginatedIterator(Generic[T], AsyncIterator[T]):
         page = self.buffer.copy()
         self.buffer.clear()
         return page
-    
+
     async def to_polars(self) -> pl.DataFrame:
         """
         Asynchronously fetches all items from all pages, applies an optional transformation,
@@ -184,10 +184,12 @@ class AsyncPaginatedIterator(Generic[T], AsyncIterator[T]):
 
         # Fetch and collect all remaining items from subsequent pages
         while not self.finished:
-            await self._fetch_next_page()  # Fetches new page into self.buffer, updates self.finished
+            await (
+                self._fetch_next_page()
+            )  # Fetches new page into self.buffer, updates self.finished
             all_items_collected.extend(self.buffer)
             self.buffer.clear()  # Clear buffer after processing its contents
-            
+
         if not all_items_collected:
             return pl.DataFrame()  # Return empty DataFrame if no data
 
@@ -200,6 +202,5 @@ class AsyncPaginatedIterator(Generic[T], AsyncIterator[T]):
             # Default behavior: convert each Pydantic model to a dict
             for item_model in all_items_collected:
                 processed_data_for_df.append(item_model.model_dump())
-        
-        return pl.from_dicts(processed_data_for_df)
 
+        return pl.from_dicts(processed_data_for_df)
