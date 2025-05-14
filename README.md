@@ -117,6 +117,20 @@ for country_score in client.markets.aggregate_index_asset_climate_scores_by_coun
     print(f"{country_score.country}: {country_score.dcr_score}")
 ```
 
+### Climate
+
+Some helpers are provided for climate related information. For example, the below helpers can inform the available options for providing horizon and pathway parameters used in accessing climate data.
+
+```python
+# List the available horizons
+horizons = client.climate.list_horizons()
+
+# List the available pathways
+pathways = client.climate.list_pathways()
+
+print(horizons, pathways)
+```
+
 ### Direct API Access
 
 For advanced use cases, you can make direct HTTP requests to any endpoint while still using your authentication credentials:
