@@ -59,6 +59,18 @@ def fetch_page() -> list[T]
 
 Fetches the next page of results and returns them as a list.
 
+<a id="velo_sdk.api.pagination.PaginatedIterator.to_polars"></a>
+
+#### to\_polars
+
+```python
+def to_polars() -> pl.DataFrame
+```
+
+Fetches all items from all pages, applies an optional transformation,
+and returns them as a Polars DataFrame.
+This method will consume the iterator.
+
 <a id="velo_sdk.api.pagination.AsyncPaginatedIterator"></a>
 
 ## AsyncPaginatedIterator Objects
@@ -77,9 +89,49 @@ async def afetch_page() -> list[T]
 
 Asynchronously fetches the next page of results and returns them as a list.
 
+<a id="velo_sdk.api.pagination.AsyncPaginatedIterator.to_polars"></a>
+
+#### to\_polars
+
+```python
+async def to_polars() -> pl.DataFrame
+```
+
+Asynchronously fetches all items from all pages, applies an optional transformation,
+and returns them as a Polars DataFrame.
+This method will consume the iterator.
+
 <a id="velo_sdk.api.climate"></a>
 
 # velo\_sdk.api.climate
+
+<a id="velo_sdk.api.climate.Climate"></a>
+
+## Climate Objects
+
+```python
+class Climate()
+```
+
+<a id="velo_sdk.api.climate.Climate.list_horizons"></a>
+
+#### list\_horizons
+
+```python
+def list_horizons() -> list[int]
+```
+
+List the available horizons for climate analysis.
+
+<a id="velo_sdk.api.climate.Climate.list_pathways"></a>
+
+#### list\_pathways
+
+```python
+def list_pathways() -> list[Pathway]
+```
+
+List the available pathways for climate analysis.
 
 <a id="velo_sdk.api.assets"></a>
 
@@ -103,6 +155,15 @@ def get_asset(asset_id: str) -> Asset
 
 Get an asset by its unique ID.
 
+**Arguments**:
+
+- `asset_id` _str_ - The unique identifier of the asset.
+  
+
+**Returns**:
+
+- `Asset` - The Asset object.
+
 <a id="velo_sdk.api.assets.Assets.get_asset_async"></a>
 
 #### get\_asset\_async
@@ -113,6 +174,15 @@ async def get_asset_async(asset_id: str) -> Asset
 
 Get an asset by its unique ID asynchronously.
 
+**Arguments**:
+
+- `asset_id` _str_ - The unique identifier of the asset.
+  
+
+**Returns**:
+
+- `Asset` - The Asset object.
+
 <a id="velo_sdk.api.assets.Assets.list_assets"></a>
 
 #### list\_assets
@@ -122,6 +192,15 @@ def list_assets(**extra_params: Any) -> PaginatedIterator[Asset]
 ```
 
 List all assets.
+
+**Arguments**:
+
+- `**extra_params` _Any_ - Additional parameters to pass to the API.
+  
+
+**Returns**:
+
+- `PaginatedIterator[Asset]` - An iterator over Asset objects.
 
 <a id="velo_sdk.api.assets.Assets.list_assets_async"></a>
 
@@ -134,6 +213,15 @@ async def list_assets_async(**extra_params: Any
 
 List all assets asynchronously.
 
+**Arguments**:
+
+- `**extra_params` _Any_ - Additional parameters to pass to the API.
+  
+
+**Returns**:
+
+- `AsyncPaginatedIterator[Asset]` - An asynchronous iterator over Asset objects.
+
 <a id="velo_sdk.api.assets.Assets.get_asset_owner"></a>
 
 #### get\_asset\_owner
@@ -144,6 +232,15 @@ def get_asset_owner(asset_id: str) -> Company
 
 Get the company that owns an asset.
 
+**Arguments**:
+
+- `asset_id` _str_ - The unique identifier of the asset.
+  
+
+**Returns**:
+
+- `Company` - The Company object that owns the asset.
+
 <a id="velo_sdk.api.assets.Assets.get_asset_owner_async"></a>
 
 #### get\_asset\_owner\_async
@@ -153,6 +250,15 @@ async def get_asset_owner_async(asset_id: str) -> Company
 ```
 
 Get the company that owns an asset asynchronously.
+
+**Arguments**:
+
+- `asset_id` _str_ - The unique identifier of the asset.
+  
+
+**Returns**:
+
+- `Company` - The Company object that owns the asset.
 
 <a id="velo_sdk.api.assets.Assets.search_assets"></a>
 
@@ -170,19 +276,19 @@ Search for assets.
 
 **Arguments**:
 
-- `query` - The search query string. Asset names and addresses are searched for.
-- `scope` - The scope of the search. Can be "public", "company", or "organization".
+- `query` _str_ - The search query string. Asset names and addresses are searched for.
+- `scope` _Literal["public", "company", "organization"]_ - The scope of the search.
   "public" is the default scope and searches all available assets in VELO.
   "organization" searches all private assets uploaded to the organization.
   If "company" is selected, `company_id` must also be provided.
-- `company_id` - The ID of the company to scope the search to.
+- `company_id` _Optional[str]_ - The ID of the company to scope the search to.
   Required if `scope` is "company".
-- `**extra_params` - Additional parameters to pass to the API.
+- `**extra_params` _Any_ - Additional parameters to pass to the API.
   
 
 **Returns**:
 
-  A paginated iterator of assets matching the search criteria.
+- `PaginatedIterator[Asset]` - A paginated iterator of assets matching the search criteria.
 
 <a id="velo_sdk.api.assets.Assets.search_assets_async"></a>
 
@@ -200,19 +306,19 @@ Search for assets asynchronously.
 
 **Arguments**:
 
-- `query` - The search query string. Asset names and addresses are searched for.
-- `scope` - The scope of the search. Can be "public", "company", or "organization".
+- `query` _str_ - The search query string. Asset names and addresses are searched for.
+- `scope` _Literal["public", "company", "organization"]_ - The scope of the search.
   "public" is the default scope and searches all available assets in VELO.
   "organization" searches all private assets uploaded to the organization.
   If "company" is selected, `company_id` must also be provided.
-- `company_id` - The ID of the company to scope the search to.
+- `company_id` _Optional[str]_ - The ID of the company to scope the search to.
   Required if `scope` is "company".
-- `**extra_params` - Additional parameters to pass to the API.
+- `**extra_params` _Any_ - Additional parameters to pass to the API.
   
 
 **Returns**:
 
-  A paginated iterator of assets matching the search criteria.
+- `AsyncPaginatedIterator[Asset]` - An asynchronous paginated iterator of assets matching the search criteria.
 
 <a id="velo_sdk.api.markets"></a>
 
@@ -238,6 +344,16 @@ def search_indexes(*,
 
 Search for market indexes by name.
 
+**Arguments**:
+
+- `name` _Optional[str]_ - The name of the market index to search for.
+- `**extra_params` _Any_ - Additional parameters to pass to the API.
+  
+
+**Returns**:
+
+- `list[MarketIndex]` - A list of MarketIndex objects matching the search criteria.
+
 <a id="velo_sdk.api.markets.Markets.search_indexes_async"></a>
 
 #### search\_indexes\_async
@@ -250,6 +366,16 @@ async def search_indexes_async(*,
 
 Search for market indexes by name asynchronously.
 
+**Arguments**:
+
+- `name` _Optional[str]_ - The name of the market index to search for.
+- `**extra_params` _Any_ - Additional parameters to pass to the API.
+  
+
+**Returns**:
+
+- `list[MarketIndex]` - A list of MarketIndex objects matching the search criteria.
+
 <a id="velo_sdk.api.markets.Markets.list_indexes"></a>
 
 #### list\_indexes
@@ -259,6 +385,10 @@ def list_indexes() -> PaginatedIterator[MarketIndex]
 ```
 
 List all market indexes.
+
+**Returns**:
+
+- `PaginatedIterator[MarketIndex]` - An iterator over MarketIndex objects.
 
 <a id="velo_sdk.api.markets.Markets.list_indexes_async"></a>
 
@@ -270,6 +400,10 @@ async def list_indexes_async() -> AsyncPaginatedIterator[MarketIndex]
 
 List all market indexes asynchronously.
 
+**Returns**:
+
+- `AsyncPaginatedIterator[MarketIndex]` - An asynchronous iterator over MarketIndex objects.
+
 <a id="velo_sdk.api.markets.Markets.get_index"></a>
 
 #### get\_index
@@ -279,6 +413,15 @@ def get_index(index_id: str) -> MarketIndex
 ```
 
 Get a market index by its unique ID.
+
+**Arguments**:
+
+- `index_id` _str_ - The unique identifier of the market index.
+  
+
+**Returns**:
+
+- `MarketIndex` - The MarketIndex object.
 
 <a id="velo_sdk.api.markets.Markets.get_index_async"></a>
 
@@ -290,6 +433,15 @@ async def get_index_async(index_id: str) -> MarketIndex
 
 Get a market index by its unique ID asynchronously.
 
+**Arguments**:
+
+- `index_id` _str_ - The unique identifier of the market index.
+  
+
+**Returns**:
+
+- `MarketIndex` - The MarketIndex object.
+
 <a id="velo_sdk.api.markets.Markets.get_index_companies"></a>
 
 #### get\_index\_companies
@@ -299,6 +451,15 @@ def get_index_companies(index_id: str) -> PaginatedIterator[Company]
 ```
 
 Get all companies in a market index.
+
+**Arguments**:
+
+- `index_id` _str_ - The unique identifier of the market index.
+  
+
+**Returns**:
+
+- `PaginatedIterator[Company]` - An iterator over Company objects in the index.
 
 <a id="velo_sdk.api.markets.Markets.get_index_companies_async"></a>
 
@@ -311,38 +472,81 @@ async def get_index_companies_async(
 
 Get all companies in a market index asynchronously.
 
+**Arguments**:
+
+- `index_id` _str_ - The unique identifier of the market index.
+  
+
+**Returns**:
+
+- `AsyncPaginatedIterator[Company]` - An asynchronous iterator over Company objects in the index.
+
 <a id="velo_sdk.api.markets.Markets.get_index_climate_scores"></a>
 
 #### get\_index\_climate\_scores
 
 ```python
-def get_index_climate_scores(index_id: str, pathway: str,
-                             horizon: int) -> ClimateScore
+def get_index_climate_scores(index_id: str, pathway: Pathway,
+                             horizon: HorizonYear) -> ClimateScore
 ```
 
 Get the climate scores for a market index.
+
+**Arguments**:
+
+- `index_id` _str_ - The unique identifier of the market index.
+- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
+- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
+  
+
+**Returns**:
+
+- `ClimateScore` - The ClimateScore object for the market index.
 
 <a id="velo_sdk.api.markets.Markets.get_index_climate_scores_async"></a>
 
 #### get\_index\_climate\_scores\_async
 
 ```python
-async def get_index_climate_scores_async(index_id: str, pathway: str,
-                                         horizon: int) -> ClimateScore
+async def get_index_climate_scores_async(index_id: str, pathway: Pathway,
+                                         horizon: HorizonYear) -> ClimateScore
 ```
 
 Get the climate scores for a market index asynchronously.
+
+**Arguments**:
+
+- `index_id` _str_ - The unique identifier of the market index.
+- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
+- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
+  
+
+**Returns**:
+
+- `ClimateScore` - The ClimateScore object for the market index.
 
 <a id="velo_sdk.api.markets.Markets.get_index_impact_scores"></a>
 
 #### get\_index\_impact\_scores
 
 ```python
-def get_index_impact_scores(index_id: str, pathway: str,
-                            horizon: int) -> StaticListIterator[ImpactScore]
+def get_index_impact_scores(
+        index_id: str, pathway: Pathway,
+        horizon: HorizonYear) -> StaticListIterator[ImpactScore]
 ```
 
 Get the impact scores for a market index.
+
+**Arguments**:
+
+- `index_id` _str_ - The unique identifier of the market index.
+- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
+- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
+  
+
+**Returns**:
+
+- `StaticListIterator[ImpactScore]` - An iterator over ImpactScore objects for the market index.
 
 <a id="velo_sdk.api.markets.Markets.get_index_impact_scores_async"></a>
 
@@ -350,11 +554,118 @@ Get the impact scores for a market index.
 
 ```python
 async def get_index_impact_scores_async(
-        index_id: str, pathway: str,
-        horizon: int) -> StaticListIterator[ImpactScore]
+        index_id: str, pathway: Pathway,
+        horizon: HorizonYear) -> StaticListIterator[ImpactScore]
 ```
 
 Get the impact scores for a market index asynchronously.
+
+**Arguments**:
+
+- `index_id` _str_ - The unique identifier of the market index.
+- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
+- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
+  
+
+**Returns**:
+
+- `StaticListIterator[ImpactScore]` - An asynchronous iterator over ImpactScore objects for the market index.
+
+<a id="velo_sdk.api.markets.Markets.list_index_asset_impact_scores"></a>
+
+#### list\_index\_asset\_impact\_scores
+
+```python
+def list_index_asset_impact_scores(
+        index_id: str, pathway: Pathway, horizon: HorizonYear,
+        **extra_params: Any) -> PaginatedIterator[AssetImpactScore]
+```
+
+Get the impact scores for all assets of a market index.
+
+**Arguments**:
+
+- `index_id` _str_ - The unique identifier of the market index.
+- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
+- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
+- `**extra_params` _Any_ - Additional parameters to pass to the API.
+  
+
+**Returns**:
+
+- `PaginatedIterator[AssetImpactScore]` - An iterator over AssetImpactScore objects for the index's assets.
+
+<a id="velo_sdk.api.markets.Markets.list_index_asset_climate_scores"></a>
+
+#### list\_index\_asset\_climate\_scores
+
+```python
+def list_index_asset_climate_scores(
+        index_id: str, pathway: Pathway, horizon: HorizonYear,
+        **extra_params: Any) -> PaginatedIterator[AssetClimateScore]
+```
+
+Get the climate scores for all assets of a market index.
+
+**Arguments**:
+
+- `index_id` _str_ - The unique identifier of the market index.
+- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
+- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
+- `**extra_params` _Any_ - Additional parameters to pass to the API.
+  
+
+**Returns**:
+
+- `PaginatedIterator[AssetClimateScore]` - An iterator over AssetClimateScore objects for the index's assets.
+
+<a id="velo_sdk.api.markets.Markets.list_index_asset_climate_scores_async"></a>
+
+#### list\_index\_asset\_climate\_scores\_async
+
+```python
+async def list_index_asset_climate_scores_async(
+        index_id: str, pathway: Pathway, horizon: HorizonYear,
+        **extra_params: Any) -> AsyncPaginatedIterator[AssetClimateScore]
+```
+
+Get the climate scores for all assets of a market index asynchronously.
+
+**Arguments**:
+
+- `index_id` _str_ - The unique identifier of the market index.
+- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
+- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
+- `**extra_params` _Any_ - Additional parameters to pass to the API.
+  
+
+**Returns**:
+
+- `AsyncPaginatedIterator[AssetClimateScore]` - An asynchronous iterator over AssetClimateScore objects for the index's assets.
+
+<a id="velo_sdk.api.markets.Markets.list_index_asset_impact_scores_async"></a>
+
+#### list\_index\_asset\_impact\_scores\_async
+
+```python
+async def list_index_asset_impact_scores_async(
+        index_id: str, pathway: Pathway, horizon: HorizonYear,
+        **extra_params: Any) -> AsyncPaginatedIterator[AssetImpactScore]
+```
+
+Get the impact scores for all assets of a market index asynchronously.
+
+**Arguments**:
+
+- `index_id` _str_ - The unique identifier of the market index.
+- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
+- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
+- `**extra_params` _Any_ - Additional parameters to pass to the API.
+  
+
+**Returns**:
+
+- `AsyncPaginatedIterator[AssetImpactScore]` - An asynchronous iterator over AssetImpactScore objects for the index's assets.
 
 <a id="velo_sdk.api.markets.Markets.aggregate_index_asset_climate_scores_by_country"></a>
 
@@ -362,11 +673,22 @@ Get the impact scores for a market index asynchronously.
 
 ```python
 def aggregate_index_asset_climate_scores_by_country(
-        index_id: str, pathway: str,
-        horizon: int) -> StaticListIterator[CountryClimateScore]
+        index_id: str, pathway: Pathway,
+        horizon: HorizonYear) -> StaticListIterator[CountryClimateScore]
 ```
 
 Get the climate scores for all assets in a market index aggregated by country.
+
+**Arguments**:
+
+- `index_id` _str_ - The unique identifier of the market index.
+- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
+- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
+  
+
+**Returns**:
+
+- `StaticListIterator[CountryClimateScore]` - An iterator over CountryClimateScore objects, aggregated by country.
 
 <a id="velo_sdk.api.markets.Markets.aggregate_index_asset_climate_scores_by_country_async"></a>
 
@@ -374,11 +696,22 @@ Get the climate scores for all assets in a market index aggregated by country.
 
 ```python
 async def aggregate_index_asset_climate_scores_by_country_async(
-        index_id: str, pathway: str,
-        horizon: int) -> StaticListIterator[CountryClimateScore]
+        index_id: str, pathway: Pathway,
+        horizon: HorizonYear) -> StaticListIterator[CountryClimateScore]
 ```
 
 Get the climate scores for all assets in a market index aggregated by country asynchronously.
+
+**Arguments**:
+
+- `index_id` _str_ - The unique identifier of the market index.
+- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
+- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
+  
+
+**Returns**:
+
+- `StaticListIterator[CountryClimateScore]` - An asynchronous iterator over CountryClimateScore objects, aggregated by country.
 
 <a id="velo_sdk.api.markets.Markets.aggregate_index_asset_impact_scores_by_country"></a>
 
@@ -386,11 +719,22 @@ Get the climate scores for all assets in a market index aggregated by country as
 
 ```python
 def aggregate_index_asset_impact_scores_by_country(
-        index_id: str, pathway: str,
-        horizon: int) -> StaticListIterator[CountryImpactScore]
+        index_id: str, pathway: Pathway,
+        horizon: HorizonYear) -> StaticListIterator[CountryImpactScore]
 ```
 
 Get the impact scores for all assets in a market index aggregated by country.
+
+**Arguments**:
+
+- `index_id` _str_ - The unique identifier of the market index.
+- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
+- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
+  
+
+**Returns**:
+
+- `StaticListIterator[CountryImpactScore]` - An iterator over CountryImpactScore objects, aggregated by country.
 
 <a id="velo_sdk.api.markets.Markets.aggregate_index_asset_impact_scores_by_country_async"></a>
 
@@ -398,11 +742,22 @@ Get the impact scores for all assets in a market index aggregated by country.
 
 ```python
 async def aggregate_index_asset_impact_scores_by_country_async(
-        index_id: str, pathway: str,
-        horizon: int) -> StaticListIterator[CountryImpactScore]
+        index_id: str, pathway: Pathway,
+        horizon: HorizonYear) -> StaticListIterator[CountryImpactScore]
 ```
 
 Get the impact scores for all assets in a market index aggregated by country asynchronously.
+
+**Arguments**:
+
+- `index_id` _str_ - The unique identifier of the market index.
+- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
+- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
+  
+
+**Returns**:
+
+- `StaticListIterator[CountryImpactScore]` - An asynchronous iterator over CountryImpactScore objects, aggregated by country.
 
 <a id="velo_sdk.api.markets.Markets.aggregate_index_asset_climate_scores_by_asset_type"></a>
 
@@ -410,11 +765,22 @@ Get the impact scores for all assets in a market index aggregated by country asy
 
 ```python
 def aggregate_index_asset_climate_scores_by_asset_type(
-        index_id: str, pathway: str,
-        horizon: int) -> StaticListIterator[AssetTypeClimateScore]
+        index_id: str, pathway: Pathway,
+        horizon: HorizonYear) -> StaticListIterator[AssetTypeClimateScore]
 ```
 
 Get the climate scores for all assets in a market index aggregated by asset type.
+
+**Arguments**:
+
+- `index_id` _str_ - The unique identifier of the market index.
+- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
+- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
+  
+
+**Returns**:
+
+- `StaticListIterator[AssetTypeClimateScore]` - An iterator over AssetTypeClimateScore objects, aggregated by asset type.
 
 <a id="velo_sdk.api.markets.Markets.aggregate_index_asset_climate_scores_by_asset_type_async"></a>
 
@@ -422,11 +788,22 @@ Get the climate scores for all assets in a market index aggregated by asset type
 
 ```python
 async def aggregate_index_asset_climate_scores_by_asset_type_async(
-        index_id: str, pathway: str,
-        horizon: int) -> StaticListIterator[AssetTypeClimateScore]
+        index_id: str, pathway: Pathway,
+        horizon: HorizonYear) -> StaticListIterator[AssetTypeClimateScore]
 ```
 
 Get the climate scores for all assets in a market index aggregated by asset type asynchronously.
+
+**Arguments**:
+
+- `index_id` _str_ - The unique identifier of the market index.
+- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
+- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
+  
+
+**Returns**:
+
+- `StaticListIterator[AssetTypeClimateScore]` - An asynchronous iterator over AssetTypeClimateScore objects, aggregated by asset type.
 
 <a id="velo_sdk.api.markets.Markets.aggregate_index_asset_impact_scores_by_asset_type"></a>
 
@@ -434,11 +811,22 @@ Get the climate scores for all assets in a market index aggregated by asset type
 
 ```python
 def aggregate_index_asset_impact_scores_by_asset_type(
-        index_id: str, pathway: str,
-        horizon: int) -> StaticListIterator[AssetTypeImpactScore]
+        index_id: str, pathway: Pathway,
+        horizon: HorizonYear) -> StaticListIterator[AssetTypeImpactScore]
 ```
 
 Get the impact scores for all assets in a market index aggregated by asset type.
+
+**Arguments**:
+
+- `index_id` _str_ - The unique identifier of the market index.
+- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
+- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
+  
+
+**Returns**:
+
+- `StaticListIterator[AssetTypeImpactScore]` - An iterator over AssetTypeImpactScore objects, aggregated by asset type.
 
 <a id="velo_sdk.api.markets.Markets.aggregate_index_asset_impact_scores_by_asset_type_async"></a>
 
@@ -446,11 +834,22 @@ Get the impact scores for all assets in a market index aggregated by asset type.
 
 ```python
 async def aggregate_index_asset_impact_scores_by_asset_type_async(
-        index_id: str, pathway: str,
-        horizon: int) -> StaticListIterator[AssetTypeImpactScore]
+        index_id: str, pathway: Pathway,
+        horizon: HorizonYear) -> StaticListIterator[AssetTypeImpactScore]
 ```
 
 Get the impact scores for all assets in a market index aggregated by asset type asynchronously.
+
+**Arguments**:
+
+- `index_id` _str_ - The unique identifier of the market index.
+- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
+- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
+  
+
+**Returns**:
+
+- `StaticListIterator[AssetTypeImpactScore]` - An asynchronous iterator over AssetTypeImpactScore objects, aggregated by asset type.
 
 <a id="velo_sdk.api.static_list"></a>
 
@@ -927,6 +1326,15 @@ def get_company(company_id: str) -> Company
 
 Get a company by its unique ID.
 
+**Arguments**:
+
+- `company_id` _str_ - The unique identifier of the company.
+  
+
+**Returns**:
+
+- `Company` - The Company object.
+
 <a id="velo_sdk.api.companies.Companies.get_company_async"></a>
 
 #### get\_company\_async
@@ -937,17 +1345,38 @@ async def get_company_async(company_id: str) -> Company
 
 Get a company by its unique ID asynchronously.
 
+**Arguments**:
+
+- `company_id` _str_ - The unique identifier of the company.
+  
+
+**Returns**:
+
+- `Company` - The Company object.
+
 <a id="velo_sdk.api.companies.Companies.list_companies"></a>
 
 #### list\_companies
 
 ```python
 def list_companies(*,
-                   scope: Optional[str] = None,
+                   scope: Literal["public", "organization"] = "public",
                    **extra_params: Any) -> PaginatedIterator[Company]
 ```
 
 List all companies.
+
+**Arguments**:
+
+- `scope` _Literal["public", "organization"]_ - The scope to filter companies by
+  "public" is the default scope and searches all available companies in VELO.
+  "organization" searches all private companies uploaded to the organization.
+- `**extra_params` _Any_ - Additional parameters to pass to the API.
+  
+
+**Returns**:
+
+- `PaginatedIterator[Company]` - An iterator over Company objects.
 
 <a id="velo_sdk.api.companies.Companies.list_companies_async"></a>
 
@@ -956,11 +1385,23 @@ List all companies.
 ```python
 async def list_companies_async(
         *,
-        scope: Optional[str] = None,
+        scope: Literal["public", "organization"] = "public",
         **extra_params: Any) -> AsyncPaginatedIterator[Company]
 ```
 
 List all companies asynchronously.
+
+**Arguments**:
+
+- `scope` _Literal["public", "organization"]_ - The scope to filter companies by
+  "public" is the default scope and searches all available companies in VELO.
+  "organization" searches all private companies uploaded to the organization.
+- `**extra_params` _Any_ - Additional parameters to pass to the API.
+  
+
+**Returns**:
+
+- `AsyncPaginatedIterator[Company]` - An asynchronous iterator over Company objects.
 
 <a id="velo_sdk.api.companies.Companies.search_companies"></a>
 
@@ -974,6 +1415,16 @@ def search_companies(*,
 
 Search for companies by name.
 
+**Arguments**:
+
+- `name` _Optional[str]_ - The name of the company to search for.
+- `**extra_params` _Any_ - Additional parameters to pass to the API.
+  
+
+**Returns**:
+
+- `list[Company]` - A list of Company objects matching the search criteria.
+
 <a id="velo_sdk.api.companies.Companies.search_companies_async"></a>
 
 #### search\_companies\_async
@@ -986,6 +1437,16 @@ async def search_companies_async(*,
 
 Search for companies by name asynchronously.
 
+**Arguments**:
+
+- `name` _Optional[str]_ - The name of the company to search for.
+- `**extra_params` _Any_ - Additional parameters to pass to the API.
+  
+
+**Returns**:
+
+- `list[Company]` - A list of Company objects matching the search criteria.
+
 <a id="velo_sdk.api.companies.Companies.list_company_assets"></a>
 
 #### list\_company\_assets
@@ -996,6 +1457,16 @@ def list_company_assets(company_id: str,
 ```
 
 List all assets for a company.
+
+**Arguments**:
+
+- `company_id` _str_ - The unique identifier of the company.
+- `**extra_params` _Any_ - Additional parameters to pass to the API.
+  
+
+**Returns**:
+
+- `PaginatedIterator[Asset]` - An iterator over Asset objects belonging to the company.
 
 <a id="velo_sdk.api.companies.Companies.list_company_assets_async"></a>
 
@@ -1008,17 +1479,40 @@ async def list_company_assets_async(
 
 List all assets for a company asynchronously.
 
+**Arguments**:
+
+- `company_id` _str_ - The unique identifier of the company.
+- `**extra_params` _Any_ - Additional parameters to pass to the API.
+  
+
+**Returns**:
+
+- `AsyncPaginatedIterator[Asset]` - An asynchronous iterator over Asset objects belonging to the company.
+
 <a id="velo_sdk.api.companies.Companies.list_uninsurable_company_assets"></a>
 
 #### list\_uninsurable\_company\_assets
 
 ```python
 def list_uninsurable_company_assets(
-        company_id: str, pathway: str, horizon: int,
+        company_id: str, pathway: Pathway, horizon: HorizonYear,
         **extra_params: Any) -> PaginatedIterator[AssetClimateScore]
 ```
 
 List all uninsurable assets for a company.
+Uninsurable assets are defined as those with cvar_95 >= 0.35.
+
+**Arguments**:
+
+- `company_id` _str_ - The unique identifier of the company.
+- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
+- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
+- `**extra_params` _Any_ - Additional parameters to pass to the API.
+  
+
+**Returns**:
+
+- `PaginatedIterator[AssetClimateScore]` - An iterator over AssetClimateScore objects for uninsurable assets.
 
 <a id="velo_sdk.api.companies.Companies.list_uninsurable_company_assets_async"></a>
 
@@ -1026,11 +1520,24 @@ List all uninsurable assets for a company.
 
 ```python
 async def list_uninsurable_company_assets_async(
-        company_id: str, pathway: str, horizon: int,
+        company_id: str, pathway: Pathway, horizon: HorizonYear,
         **extra_params: Any) -> AsyncPaginatedIterator[AssetClimateScore]
 ```
 
 List all uninsurable assets for a company asynchronously.
+Uninsurable assets are defined as those with cvar_95 >= 0.35.
+
+**Arguments**:
+
+- `company_id` _str_ - The unique identifier of the company.
+- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
+- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
+- `**extra_params` _Any_ - Additional parameters to pass to the API.
+  
+
+**Returns**:
+
+- `AsyncPaginatedIterator[AssetClimateScore]` - An asynchronous iterator over AssetClimateScore objects for uninsurable assets.
 
 <a id="velo_sdk.api.companies.Companies.list_stranded_company_assets"></a>
 
@@ -1038,11 +1545,24 @@ List all uninsurable assets for a company asynchronously.
 
 ```python
 def list_stranded_company_assets(
-        company_id: str, pathway: str, horizon: int,
+        company_id: str, pathway: Pathway, horizon: HorizonYear,
         **extra_params: Any) -> PaginatedIterator[AssetClimateScore]
 ```
 
 List all stranded assets for a company.
+Stranded assets are defined as those with cvar_95 >= 0.75.
+
+**Arguments**:
+
+- `company_id` _str_ - The unique identifier of the company.
+- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
+- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
+- `**extra_params` _Any_ - Additional parameters to pass to the API.
+  
+
+**Returns**:
+
+- `PaginatedIterator[AssetClimateScore]` - An iterator over AssetClimateScore objects for stranded assets.
 
 <a id="velo_sdk.api.companies.Companies.list_stranded_company_assets_async"></a>
 
@@ -1050,44 +1570,92 @@ List all stranded assets for a company.
 
 ```python
 async def list_stranded_company_assets_async(
-        company_id: str, pathway: str, horizon: int,
+        company_id: str, pathway: Pathway, horizon: HorizonYear,
         **extra_params: Any) -> AsyncPaginatedIterator[AssetClimateScore]
 ```
 
 List all stranded assets for a company asynchronously.
+Stranded assets are defined as those with cvar_95 >= 0.75.
+
+**Arguments**:
+
+- `company_id` _str_ - The unique identifier of the company.
+- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
+- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
+- `**extra_params` _Any_ - Additional parameters to pass to the API.
+  
+
+**Returns**:
+
+- `AsyncPaginatedIterator[AssetClimateScore]` - An asynchronous iterator over AssetClimateScore objects for stranded assets.
 
 <a id="velo_sdk.api.companies.Companies.get_company_climate_scores"></a>
 
 #### get\_company\_climate\_scores
 
 ```python
-def get_company_climate_scores(company_id: str, pathway: str,
-                               horizon: int) -> ClimateScore
+def get_company_climate_scores(company_id: str, pathway: Pathway,
+                               horizon: HorizonYear) -> ClimateScore
 ```
 
 Get the climate scores for a company.
+
+**Arguments**:
+
+- `company_id` _str_ - The unique identifier of the company.
+- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
+- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
+  
+
+**Returns**:
+
+- `ClimateScore` - The ClimateScore object for the company.
 
 <a id="velo_sdk.api.companies.Companies.get_company_climate_scores_async"></a>
 
 #### get\_company\_climate\_scores\_async
 
 ```python
-async def get_company_climate_scores_async(company_id: str, pathway: str,
-                                           horizon: int) -> ClimateScore
+async def get_company_climate_scores_async(
+        company_id: str, pathway: Pathway,
+        horizon: HorizonYear) -> ClimateScore
 ```
 
 Get the climate scores for a company asynchronously.
+
+**Arguments**:
+
+- `company_id` _str_ - The unique identifier of the company.
+- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
+- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
+  
+
+**Returns**:
+
+- `ClimateScore` - The ClimateScore object for the company.
 
 <a id="velo_sdk.api.companies.Companies.get_company_impact_scores"></a>
 
 #### get\_company\_impact\_scores
 
 ```python
-def get_company_impact_scores(company_id: str, pathway: str,
-                              horizon: int) -> StaticListIterator[ImpactScore]
+def get_company_impact_scores(
+        company_id: str, pathway: Pathway,
+        horizon: HorizonYear) -> StaticListIterator[ImpactScore]
 ```
 
 Get the impact scores for a company.
+
+**Arguments**:
+
+- `company_id` _str_ - The unique identifier of the company.
+- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
+- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
+  
+
+**Returns**:
+
+- `StaticListIterator[ImpactScore]` - An iterator over ImpactScore objects for the company.
 
 <a id="velo_sdk.api.companies.Companies.get_company_impact_scores_async"></a>
 
@@ -1095,11 +1663,22 @@ Get the impact scores for a company.
 
 ```python
 async def get_company_impact_scores_async(
-        company_id: str, pathway: str,
-        horizon: int) -> StaticListIterator[ImpactScore]
+        company_id: str, pathway: Pathway,
+        horizon: HorizonYear) -> StaticListIterator[ImpactScore]
 ```
 
 Get the impact scores for a company asynchronously.
+
+**Arguments**:
+
+- `company_id` _str_ - The unique identifier of the company.
+- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
+- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
+  
+
+**Returns**:
+
+- `StaticListIterator[ImpactScore]` - An asynchronous iterator over ImpactScore objects for the company.
 
 <a id="velo_sdk.api.companies.Companies.list_company_asset_climate_scores"></a>
 
@@ -1107,11 +1686,23 @@ Get the impact scores for a company asynchronously.
 
 ```python
 def list_company_asset_climate_scores(
-        company_id: str, pathway: str, horizon: int,
+        company_id: str, pathway: Pathway, horizon: HorizonYear,
         **extra_params: Any) -> PaginatedIterator[AssetClimateScore]
 ```
 
 Get the climate scores for all assets of a company.
+
+**Arguments**:
+
+- `company_id` _str_ - The unique identifier of the company.
+- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
+- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
+- `**extra_params` _Any_ - Additional parameters to pass to the API.
+  
+
+**Returns**:
+
+- `PaginatedIterator[AssetClimateScore]` - An iterator over AssetClimateScore objects for the company's assets.
 
 <a id="velo_sdk.api.companies.Companies.list_company_asset_climate_scores_async"></a>
 
@@ -1119,11 +1710,23 @@ Get the climate scores for all assets of a company.
 
 ```python
 async def list_company_asset_climate_scores_async(
-        company_id: str, pathway: str, horizon: int,
+        company_id: str, pathway: Pathway, horizon: HorizonYear,
         **extra_params: Any) -> AsyncPaginatedIterator[AssetClimateScore]
 ```
 
 Get the climate scores for all assets of a company asynchronously.
+
+**Arguments**:
+
+- `company_id` _str_ - The unique identifier of the company.
+- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
+- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
+- `**extra_params` _Any_ - Additional parameters to pass to the API.
+  
+
+**Returns**:
+
+- `AsyncPaginatedIterator[AssetClimateScore]` - An asynchronous iterator over AssetClimateScore objects for the company's assets.
 
 <a id="velo_sdk.api.companies.Companies.list_company_asset_impact_scores"></a>
 
@@ -1131,11 +1734,23 @@ Get the climate scores for all assets of a company asynchronously.
 
 ```python
 def list_company_asset_impact_scores(
-        company_id: str, pathway: str, horizon: int,
+        company_id: str, pathway: Pathway, horizon: HorizonYear,
         **extra_params: Any) -> PaginatedIterator[AssetImpactScore]
 ```
 
 Get the impact scores for all assets of a company.
+
+**Arguments**:
+
+- `company_id` _str_ - The unique identifier of the company.
+- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
+- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
+- `**extra_params` _Any_ - Additional parameters to pass to the API.
+  
+
+**Returns**:
+
+- `PaginatedIterator[AssetImpactScore]` - An iterator over AssetImpactScore objects for the company's assets.
 
 <a id="velo_sdk.api.companies.Companies.list_company_asset_impact_scores_async"></a>
 
@@ -1143,11 +1758,23 @@ Get the impact scores for all assets of a company.
 
 ```python
 async def list_company_asset_impact_scores_async(
-        company_id: str, pathway: str, horizon: int,
+        company_id: str, pathway: Pathway, horizon: HorizonYear,
         **extra_params: Any) -> AsyncPaginatedIterator[AssetImpactScore]
 ```
 
 Get the impact scores for all assets of a company asynchronously.
+
+**Arguments**:
+
+- `company_id` _str_ - The unique identifier of the company.
+- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
+- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
+- `**extra_params` _Any_ - Additional parameters to pass to the API.
+  
+
+**Returns**:
+
+- `AsyncPaginatedIterator[AssetImpactScore]` - An asynchronous iterator over AssetImpactScore objects for the company's assets.
 
 <a id="velo_sdk.api.companies.Companies.aggregate_company_asset_climate_scores_by_country"></a>
 
@@ -1155,11 +1782,22 @@ Get the impact scores for all assets of a company asynchronously.
 
 ```python
 def aggregate_company_asset_climate_scores_by_country(
-        company_id: str, pathway: str,
-        horizon: int) -> StaticListIterator[CountryClimateScore]
+        company_id: str, pathway: Pathway,
+        horizon: HorizonYear) -> StaticListIterator[CountryClimateScore]
 ```
 
 Get the climate scores for all assets of a company aggregated by country.
+
+**Arguments**:
+
+- `company_id` _str_ - The unique identifier of the company.
+- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
+- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
+  
+
+**Returns**:
+
+- `StaticListIterator[CountryClimateScore]` - An iterator over CountryClimateScore objects, aggregated by country.
 
 <a id="velo_sdk.api.companies.Companies.aggregate_company_asset_climate_scores_by_country_async"></a>
 
@@ -1167,11 +1805,22 @@ Get the climate scores for all assets of a company aggregated by country.
 
 ```python
 async def aggregate_company_asset_climate_scores_by_country_async(
-        company_id: str, pathway: str,
-        horizon: int) -> StaticListIterator[CountryClimateScore]
+        company_id: str, pathway: Pathway,
+        horizon: HorizonYear) -> StaticListIterator[CountryClimateScore]
 ```
 
 Get the climate scores for all assets of a company aggregated by country asynchronously.
+
+**Arguments**:
+
+- `company_id` _str_ - The unique identifier of the company.
+- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
+- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
+  
+
+**Returns**:
+
+- `StaticListIterator[CountryClimateScore]` - An asynchronous iterator over CountryClimateScore objects, aggregated by country.
 
 <a id="velo_sdk.api.companies.Companies.aggregate_company_asset_impact_scores_by_country"></a>
 
@@ -1179,11 +1828,22 @@ Get the climate scores for all assets of a company aggregated by country asynchr
 
 ```python
 def aggregate_company_asset_impact_scores_by_country(
-        company_id: str, pathway: str,
-        horizon: int) -> StaticListIterator[CountryImpactScore]
+        company_id: str, pathway: Pathway,
+        horizon: HorizonYear) -> StaticListIterator[CountryImpactScore]
 ```
 
 Get the impact scores for all assets of a company aggregated by country.
+
+**Arguments**:
+
+- `company_id` _str_ - The unique identifier of the company.
+- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
+- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
+  
+
+**Returns**:
+
+- `StaticListIterator[CountryImpactScore]` - An iterator over CountryImpactScore objects, aggregated by country.
 
 <a id="velo_sdk.api.companies.Companies.aggregate_company_asset_impact_scores_by_country_async"></a>
 
@@ -1191,11 +1851,22 @@ Get the impact scores for all assets of a company aggregated by country.
 
 ```python
 async def aggregate_company_asset_impact_scores_by_country_async(
-        company_id: str, pathway: str,
-        horizon: int) -> StaticListIterator[CountryImpactScore]
+        company_id: str, pathway: Pathway,
+        horizon: HorizonYear) -> StaticListIterator[CountryImpactScore]
 ```
 
 Get the impact scores for all assets of a company aggregated by country asynchronously.
+
+**Arguments**:
+
+- `company_id` _str_ - The unique identifier of the company.
+- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
+- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
+  
+
+**Returns**:
+
+- `StaticListIterator[CountryImpactScore]` - An asynchronous iterator over CountryImpactScore objects, aggregated by country.
 
 <a id="velo_sdk.api.companies.Companies.aggregate_company_asset_climate_scores_by_asset_type"></a>
 
@@ -1203,11 +1874,22 @@ Get the impact scores for all assets of a company aggregated by country asynchro
 
 ```python
 def aggregate_company_asset_climate_scores_by_asset_type(
-        company_id: str, pathway: str,
-        horizon: int) -> StaticListIterator[AssetTypeClimateScore]
+        company_id: str, pathway: Pathway,
+        horizon: HorizonYear) -> StaticListIterator[AssetTypeClimateScore]
 ```
 
 Get the climate scores for all assets of a company aggregated by asset type.
+
+**Arguments**:
+
+- `company_id` _str_ - The unique identifier of the company.
+- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
+- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
+  
+
+**Returns**:
+
+- `StaticListIterator[AssetTypeClimateScore]` - An iterator over AssetTypeClimateScore objects, aggregated by asset type.
 
 <a id="velo_sdk.api.companies.Companies.aggregate_company_asset_climate_scores_by_asset_type_async"></a>
 
@@ -1215,11 +1897,22 @@ Get the climate scores for all assets of a company aggregated by asset type.
 
 ```python
 async def aggregate_company_asset_climate_scores_by_asset_type_async(
-        company_id: str, pathway: str,
-        horizon: int) -> StaticListIterator[AssetTypeClimateScore]
+        company_id: str, pathway: Pathway,
+        horizon: HorizonYear) -> StaticListIterator[AssetTypeClimateScore]
 ```
 
 Get the climate scores for all assets of a company aggregated by asset type asynchronously.
+
+**Arguments**:
+
+- `company_id` _str_ - The unique identifier of the company.
+- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
+- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
+  
+
+**Returns**:
+
+- `StaticListIterator[AssetTypeClimateScore]` - An asynchronous iterator over AssetTypeClimateScore objects, aggregated by asset type.
 
 <a id="velo_sdk.api.companies.Companies.aggregate_company_asset_impact_scores_by_asset_type"></a>
 
@@ -1227,11 +1920,22 @@ Get the climate scores for all assets of a company aggregated by asset type asyn
 
 ```python
 def aggregate_company_asset_impact_scores_by_asset_type(
-        company_id: str, pathway: str,
-        horizon: int) -> StaticListIterator[AssetTypeImpactScore]
+        company_id: str, pathway: Pathway,
+        horizon: HorizonYear) -> StaticListIterator[AssetTypeImpactScore]
 ```
 
 Get the impact scores for all assets of a company aggregated by asset type.
+
+**Arguments**:
+
+- `company_id` _str_ - The unique identifier of the company.
+- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
+- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
+  
+
+**Returns**:
+
+- `StaticListIterator[AssetTypeImpactScore]` - An iterator over AssetTypeImpactScore objects, aggregated by asset type.
 
 <a id="velo_sdk.api.companies.Companies.aggregate_company_asset_impact_scores_by_asset_type_async"></a>
 
@@ -1239,9 +1943,20 @@ Get the impact scores for all assets of a company aggregated by asset type.
 
 ```python
 async def aggregate_company_asset_impact_scores_by_asset_type_async(
-        company_id: str, pathway: str,
-        horizon: int) -> StaticListIterator[AssetTypeImpactScore]
+        company_id: str, pathway: Pathway,
+        horizon: HorizonYear) -> StaticListIterator[AssetTypeImpactScore]
 ```
 
 Get the impact scores for all assets of a company aggregated by asset type asynchronously.
+
+**Arguments**:
+
+- `company_id` _str_ - The unique identifier of the company.
+- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
+- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
+  
+
+**Returns**:
+
+- `StaticListIterator[AssetTypeImpactScore]` - An asynchronous iterator over AssetTypeImpactScore objects, aggregated by asset type.
 
