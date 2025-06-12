@@ -2,137 +2,6 @@
 
 # velo\_sdk.api
 
-<a id="velo_sdk.api.errors"></a>
-
-# velo\_sdk.api.errors
-
-<a id="velo_sdk.api.errors.APIError"></a>
-
-## APIError Objects
-
-```python
-class APIError(Exception)
-```
-
-General exception for API errors.
-
-**Attributes**:
-
-- `message` - The error message.
-- `code` - HTTP status code.
-- `status` - HTTP status text.
-- `timestamp` - When the error occurred.
-
-<a id="velo_sdk.api.errors.RateLimitError"></a>
-
-## RateLimitError Objects
-
-```python
-class RateLimitError(APIError)
-```
-
-Exception raised when rate limiting is exceeded.
-
-<a id="velo_sdk.api.api_client"></a>
-
-# velo\_sdk.api.api\_client
-
-<a id="velo_sdk.api.pagination"></a>
-
-# velo\_sdk.api.pagination
-
-<a id="velo_sdk.api.pagination.PaginatedIterator"></a>
-
-## PaginatedIterator Objects
-
-```python
-class PaginatedIterator(Generic[T], Iterator[T])
-```
-
-<a id="velo_sdk.api.pagination.PaginatedIterator.fetch_page"></a>
-
-#### fetch\_page
-
-```python
-def fetch_page() -> list[T]
-```
-
-Fetches the next page of results and returns them as a list.
-
-<a id="velo_sdk.api.pagination.PaginatedIterator.to_polars"></a>
-
-#### to\_polars
-
-```python
-def to_polars() -> pl.DataFrame
-```
-
-Fetches all items from all pages, applies an optional transformation,
-and returns them as a Polars DataFrame.
-This method will consume the iterator.
-
-<a id="velo_sdk.api.pagination.AsyncPaginatedIterator"></a>
-
-## AsyncPaginatedIterator Objects
-
-```python
-class AsyncPaginatedIterator(Generic[T], AsyncIterator[T])
-```
-
-<a id="velo_sdk.api.pagination.AsyncPaginatedIterator.afetch_page"></a>
-
-#### afetch\_page
-
-```python
-async def afetch_page() -> list[T]
-```
-
-Asynchronously fetches the next page of results and returns them as a list.
-
-<a id="velo_sdk.api.pagination.AsyncPaginatedIterator.to_polars"></a>
-
-#### to\_polars
-
-```python
-async def to_polars() -> pl.DataFrame
-```
-
-Asynchronously fetches all items from all pages, applies an optional transformation,
-and returns them as a Polars DataFrame.
-This method will consume the iterator.
-
-<a id="velo_sdk.api.climate"></a>
-
-# velo\_sdk.api.climate
-
-<a id="velo_sdk.api.climate.Climate"></a>
-
-## Climate Objects
-
-```python
-class Climate()
-```
-
-<a id="velo_sdk.api.climate.Climate.list_horizons"></a>
-
-#### list\_horizons
-
-```python
-def list_horizons() -> list[int]
-```
-
-List the available horizons for climate analysis.
-
-<a id="velo_sdk.api.climate.Climate.list_pathways"></a>
-
-#### list\_pathways
-
-```python
-def list_pathways() -> list[Pathway]
-```
-
-List the available pathways for climate analysis.
-
 <a id="velo_sdk.api.assets"></a>
 
 # velo\_sdk.api.assets
@@ -319,6 +188,70 @@ Search for assets asynchronously.
 **Returns**:
 
 - `AsyncPaginatedIterator[Asset]` - An asynchronous paginated iterator of assets matching the search criteria.
+
+<a id="velo_sdk.api.pagination"></a>
+
+# velo\_sdk.api.pagination
+
+<a id="velo_sdk.api.pagination.PaginatedIterator"></a>
+
+## PaginatedIterator Objects
+
+```python
+class PaginatedIterator(Generic[T], Iterator[T])
+```
+
+<a id="velo_sdk.api.pagination.PaginatedIterator.fetch_page"></a>
+
+#### fetch\_page
+
+```python
+def fetch_page() -> list[T]
+```
+
+Fetches the next page of results and returns them as a list.
+
+<a id="velo_sdk.api.pagination.PaginatedIterator.to_polars"></a>
+
+#### to\_polars
+
+```python
+def to_polars() -> pl.DataFrame
+```
+
+Fetches all items from all pages, applies an optional transformation,
+and returns them as a Polars DataFrame.
+This method will consume the iterator.
+
+<a id="velo_sdk.api.pagination.AsyncPaginatedIterator"></a>
+
+## AsyncPaginatedIterator Objects
+
+```python
+class AsyncPaginatedIterator(Generic[T], AsyncIterator[T])
+```
+
+<a id="velo_sdk.api.pagination.AsyncPaginatedIterator.afetch_page"></a>
+
+#### afetch\_page
+
+```python
+async def afetch_page() -> list[T]
+```
+
+Asynchronously fetches the next page of results and returns them as a list.
+
+<a id="velo_sdk.api.pagination.AsyncPaginatedIterator.to_polars"></a>
+
+#### to\_polars
+
+```python
+async def to_polars() -> pl.DataFrame
+```
+
+Asynchronously fetches all items from all pages, applies an optional transformation,
+and returns them as a Polars DataFrame.
+This method will consume the iterator.
 
 <a id="velo_sdk.api.markets"></a>
 
@@ -851,223 +784,6 @@ Get the impact scores for all assets in a market index aggregated by asset type 
 
 - `StaticListIterator[AssetTypeImpactScore]` - An asynchronous iterator over AssetTypeImpactScore objects, aggregated by asset type.
 
-<a id="velo_sdk.api.static_list"></a>
-
-# velo\_sdk.api.static\_list
-
-<a id="velo_sdk.api.static_list.StaticListIterator"></a>
-
-## StaticListIterator Objects
-
-```python
-class StaticListIterator(Generic[T], Iterator[T], AsyncIterator[T])
-```
-
-Helper to fetch, parse, and iterate over a list of items from an API endpoint
-that returns the full list under a 'results' key without pagination.
-
-<a id="velo_sdk.api.static_list.StaticListIterator.fetch_all"></a>
-
-#### fetch\_all
-
-```python
-def fetch_all() -> List[T]
-```
-
-Synchronously fetches all results from the endpoint and parses them.
-If data has already been fetched for iteration, returns the cached data.
-
-**Returns**:
-
-  A list of parsed items of type T.
-
-<a id="velo_sdk.api.static_list.StaticListIterator.__iter__"></a>
-
-#### \_\_iter\_\_
-
-```python
-def __iter__() -> Self
-```
-
-Returns the iterator object itself, fetching data if needed.
-
-<a id="velo_sdk.api.static_list.StaticListIterator.__next__"></a>
-
-#### \_\_next\_\_
-
-```python
-def __next__() -> T
-```
-
-Returns the next item in the fetched list.
-
-<a id="velo_sdk.api.static_list.StaticListIterator.afetch_all"></a>
-
-#### afetch\_all
-
-```python
-async def afetch_all() -> List[T]
-```
-
-Asynchronously fetches all results from the endpoint and parses them.
-If data has already been fetched for iteration, returns the cached data.
-
-**Returns**:
-
-  A list of parsed items of type T.
-
-<a id="velo_sdk.api.static_list.StaticListIterator.__aiter__"></a>
-
-#### \_\_aiter\_\_
-
-```python
-def __aiter__() -> Self
-```
-
-Returns the async iterator object itself.
-
-<a id="velo_sdk.api.static_list.StaticListIterator.__anext__"></a>
-
-#### \_\_anext\_\_
-
-```python
-async def __anext__() -> T
-```
-
-Returns the next item, fetching data asynchronously if needed.
-
-<a id="velo_sdk.api.static_list.StaticListIterator.to_polars"></a>
-
-#### to\_polars
-
-```python
-def to_polars() -> pl.DataFrame
-```
-
-Fetches all results (if not already fetched) and converts them
-into a Polars DataFrame.
-
-Assumes that the generic type T is a Pydantic model.
-
-**Returns**:
-
-  A Polars DataFrame containing the fetched data.
-
-<a id="velo_sdk.api.types"></a>
-
-# velo\_sdk.api.types
-
-<a id="velo_sdk.api.types.Company"></a>
-
-## Company Objects
-
-```python
-class Company(BaseModel)
-```
-
-A company is an entity that has assets and identifying information.
-
-<a id="velo_sdk.api.types.Asset"></a>
-
-## Asset Objects
-
-```python
-class Asset(BaseModel)
-```
-
-An asset represents aphysical asset that is subject to climate risk.
-
-<a id="velo_sdk.api.types.MarketIndex"></a>
-
-## MarketIndex Objects
-
-```python
-class MarketIndex(BaseModel)
-```
-
-A market index is a collection of companies.
-
-<a id="velo_sdk.api.types.ClimateScore"></a>
-
-## ClimateScore Objects
-
-```python
-class ClimateScore(BaseModel)
-```
-
-The cimate risk metrics that represent the likelihood of a company or asset to be impacted by climate risk.
-
-<a id="velo_sdk.api.types.ImpactScore"></a>
-
-## ImpactScore Objects
-
-```python
-class ImpactScore(BaseModel)
-```
-
-The impact risk metrics that represent the potential impact of a company or asset to be impacted by climate risk.
-These metrics represent an individual risk factor and its attribution to the total climate risk metrics.
-
-<a id="velo_sdk.api.types.CountryClimateScore"></a>
-
-## CountryClimateScore Objects
-
-```python
-class CountryClimateScore(ClimateScore)
-```
-
-Climate risk metrics aggregated for a country.
-
-<a id="velo_sdk.api.types.CountryImpactScore"></a>
-
-## CountryImpactScore Objects
-
-```python
-class CountryImpactScore(ImpactScore)
-```
-
-Impact risk metrics aggregated for a country.
-
-<a id="velo_sdk.api.types.AssetTypeClimateScore"></a>
-
-## AssetTypeClimateScore Objects
-
-```python
-class AssetTypeClimateScore(ClimateScore)
-```
-
-Climate risk metrics aggregated for an asset type.
-
-<a id="velo_sdk.api.types.AssetTypeImpactScore"></a>
-
-## AssetTypeImpactScore Objects
-
-```python
-class AssetTypeImpactScore(ImpactScore)
-```
-
-Impact risk metrics aggregated for an asset type.
-
-<a id="velo_sdk.api.types.AssetClimateScore"></a>
-
-## AssetClimateScore Objects
-
-```python
-class AssetClimateScore(ClimateScore)
-```
-
-Climate risk metrics for an asset.
-
-<a id="velo_sdk.api.types.AssetImpactScore"></a>
-
-## AssetImpactScore Objects
-
-```python
-class AssetImpactScore(BaseModel)
-```
-
-Impact risk metrics for an asset.
-
 <a id="velo_sdk.api.base"></a>
 
 # velo\_sdk.api.base
@@ -1303,6 +1019,140 @@ The version /v3 is automatically added to the path.
 **Returns**:
 
   API response data as JSON deserialized into a dictionary
+
+<a id="velo_sdk.api.static_list"></a>
+
+# velo\_sdk.api.static\_list
+
+<a id="velo_sdk.api.static_list.StaticListIterator"></a>
+
+## StaticListIterator Objects
+
+```python
+class StaticListIterator(Generic[T], Iterator[T], AsyncIterator[T])
+```
+
+Helper to fetch, parse, and iterate over a list of items from an API endpoint
+that returns the full list under a 'results' key without pagination.
+
+<a id="velo_sdk.api.static_list.StaticListIterator.fetch_all"></a>
+
+#### fetch\_all
+
+```python
+def fetch_all() -> List[T]
+```
+
+Synchronously fetches all results from the endpoint and parses them.
+If data has already been fetched for iteration, returns the cached data.
+
+**Returns**:
+
+  A list of parsed items of type T.
+
+<a id="velo_sdk.api.static_list.StaticListIterator.__iter__"></a>
+
+#### \_\_iter\_\_
+
+```python
+def __iter__() -> Self
+```
+
+Returns the iterator object itself, fetching data if needed.
+
+<a id="velo_sdk.api.static_list.StaticListIterator.__next__"></a>
+
+#### \_\_next\_\_
+
+```python
+def __next__() -> T
+```
+
+Returns the next item in the fetched list.
+
+<a id="velo_sdk.api.static_list.StaticListIterator.afetch_all"></a>
+
+#### afetch\_all
+
+```python
+async def afetch_all() -> List[T]
+```
+
+Asynchronously fetches all results from the endpoint and parses them.
+If data has already been fetched for iteration, returns the cached data.
+
+**Returns**:
+
+  A list of parsed items of type T.
+
+<a id="velo_sdk.api.static_list.StaticListIterator.__aiter__"></a>
+
+#### \_\_aiter\_\_
+
+```python
+def __aiter__() -> Self
+```
+
+Returns the async iterator object itself.
+
+<a id="velo_sdk.api.static_list.StaticListIterator.__anext__"></a>
+
+#### \_\_anext\_\_
+
+```python
+async def __anext__() -> T
+```
+
+Returns the next item, fetching data asynchronously if needed.
+
+<a id="velo_sdk.api.static_list.StaticListIterator.to_polars"></a>
+
+#### to\_polars
+
+```python
+def to_polars() -> pl.DataFrame
+```
+
+Fetches all results (if not already fetched) and converts them
+into a Polars DataFrame.
+
+Assumes that the generic type T is a Pydantic model.
+
+**Returns**:
+
+  A Polars DataFrame containing the fetched data.
+
+<a id="velo_sdk.api.climate"></a>
+
+# velo\_sdk.api.climate
+
+<a id="velo_sdk.api.climate.Climate"></a>
+
+## Climate Objects
+
+```python
+class Climate()
+```
+
+<a id="velo_sdk.api.climate.Climate.list_horizons"></a>
+
+#### list\_horizons
+
+```python
+def list_horizons() -> list[int]
+```
+
+List the available horizons for climate analysis.
+
+<a id="velo_sdk.api.climate.Climate.list_pathways"></a>
+
+#### list\_pathways
+
+```python
+def list_pathways() -> list[Pathway]
+```
+
+List the available pathways for climate analysis.
 
 <a id="velo_sdk.api.companies"></a>
 
@@ -1959,4 +1809,154 @@ Get the impact scores for all assets of a company aggregated by asset type async
 **Returns**:
 
 - `StaticListIterator[AssetTypeImpactScore]` - An asynchronous iterator over AssetTypeImpactScore objects, aggregated by asset type.
+
+<a id="velo_sdk.api.api_client"></a>
+
+# velo\_sdk.api.api\_client
+
+<a id="velo_sdk.api.types"></a>
+
+# velo\_sdk.api.types
+
+<a id="velo_sdk.api.types.Company"></a>
+
+## Company Objects
+
+```python
+class Company(BaseModel)
+```
+
+A company is an entity that has assets and identifying information.
+
+<a id="velo_sdk.api.types.Asset"></a>
+
+## Asset Objects
+
+```python
+class Asset(BaseModel)
+```
+
+An asset represents aphysical asset that is subject to climate risk.
+
+<a id="velo_sdk.api.types.MarketIndex"></a>
+
+## MarketIndex Objects
+
+```python
+class MarketIndex(BaseModel)
+```
+
+A market index is a collection of companies.
+
+<a id="velo_sdk.api.types.ClimateScore"></a>
+
+## ClimateScore Objects
+
+```python
+class ClimateScore(BaseModel)
+```
+
+The cimate risk metrics that represent the likelihood of a company or asset to be impacted by climate risk.
+
+<a id="velo_sdk.api.types.ImpactScore"></a>
+
+## ImpactScore Objects
+
+```python
+class ImpactScore(BaseModel)
+```
+
+The impact risk metrics that represent the potential impact of a company or asset to be impacted by climate risk.
+These metrics represent an individual risk factor and its attribution to the total climate risk metrics.
+
+<a id="velo_sdk.api.types.CountryClimateScore"></a>
+
+## CountryClimateScore Objects
+
+```python
+class CountryClimateScore(ClimateScore)
+```
+
+Climate risk metrics aggregated for a country.
+
+<a id="velo_sdk.api.types.CountryImpactScore"></a>
+
+## CountryImpactScore Objects
+
+```python
+class CountryImpactScore(ImpactScore)
+```
+
+Impact risk metrics aggregated for a country.
+
+<a id="velo_sdk.api.types.AssetTypeClimateScore"></a>
+
+## AssetTypeClimateScore Objects
+
+```python
+class AssetTypeClimateScore(ClimateScore)
+```
+
+Climate risk metrics aggregated for an asset type.
+
+<a id="velo_sdk.api.types.AssetTypeImpactScore"></a>
+
+## AssetTypeImpactScore Objects
+
+```python
+class AssetTypeImpactScore(ImpactScore)
+```
+
+Impact risk metrics aggregated for an asset type.
+
+<a id="velo_sdk.api.types.AssetClimateScore"></a>
+
+## AssetClimateScore Objects
+
+```python
+class AssetClimateScore(ClimateScore)
+```
+
+Climate risk metrics for an asset.
+
+<a id="velo_sdk.api.types.AssetImpactScore"></a>
+
+## AssetImpactScore Objects
+
+```python
+class AssetImpactScore(BaseModel)
+```
+
+Impact risk metrics for an asset.
+
+<a id="velo_sdk.api.errors"></a>
+
+# velo\_sdk.api.errors
+
+<a id="velo_sdk.api.errors.APIError"></a>
+
+## APIError Objects
+
+```python
+class APIError(Exception)
+```
+
+General exception for API errors.
+
+**Attributes**:
+
+- `message` - The error message.
+- `code` - HTTP status code.
+- `status` - HTTP status text.
+- `timestamp` - When the error occurred.
+
+<a id="velo_sdk.api.errors.RateLimitError"></a>
+
+## RateLimitError Objects
+
+```python
+class RateLimitError(APIError)
+```
+
+Exception raised when rate limiting is exceeded.
 
