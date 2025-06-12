@@ -24,7 +24,7 @@ class BaseClient:
 
         self._base_url = BASE_URL if not base_url else base_url
         if not self._base_url.endswith("/v3"):
-            self._base_url = self._base_url + "/v3"
+            self._base_url = str(self._base_url) + "/v3"
 
         headers = {
             "Authorization": f"Bearer {self._api_key}",

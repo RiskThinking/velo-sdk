@@ -442,7 +442,7 @@ class Companies:
         params["pathway"] = pathway
         params["horizon"] = horizon
         params["metric"] = (
-            "cvar_99,var_99,cvar_95,var_95,cvar_50,var_50,expected_impact"
+            "dcr_score,cvar_99,var_99,cvar_95,var_95,cvar_50,var_50,expected_impact"
         )
         params.update(extra_params)
         return PaginatedIterator(
@@ -475,7 +475,7 @@ class Companies:
         params["pathway"] = pathway
         params["horizon"] = horizon
         params["metric"] = (
-            "cvar_99,var_99,cvar_95,var_95,cvar_50,var_50,expected_impact"
+            "dcr_score,cvar_99,var_99,cvar_95,var_95,cvar_50,var_50,expected_impact"
         )
         params.update(extra_params)
         return AsyncPaginatedIterator(
@@ -508,7 +508,7 @@ class Companies:
         params["pathway"] = pathway
         params["horizon"] = horizon
         params["metric"] = (
-            "cvar_99,var_99,cvar_95,var_95,cvar_50,var_50,expected_impact"
+            "dcr_score,cvar_99,var_99,cvar_95,var_95,cvar_50,var_50,expected_impact"
         )
         params.update(extra_params)
         return PaginatedIterator(
@@ -550,7 +550,7 @@ class Companies:
         params["pathway"] = pathway
         params["horizon"] = horizon
         params["metric"] = (
-            "cvar_99,var_99,cvar_95,var_95,cvar_50,var_50,expected_impact"
+            "dcr_score,cvar_99,var_99,cvar_95,var_95,cvar_50,var_50,expected_impact"
         )
         params.update(extra_params)
         return AsyncPaginatedIterator(
@@ -642,7 +642,7 @@ class Companies:
                 "by": "country",
                 "pathway": pathway,
                 "horizon": horizon,
-                "metric": "cvar_99,var_99,cvar_95,var_95,cvar_50,var_50,expected_impact",
+                "metric": "dcr_score,cvar_99,var_99,cvar_95,var_95,cvar_50,var_50,expected_impact",
             },
             item_class=CountryImpactScore,
         )
@@ -668,7 +668,7 @@ class Companies:
                 "by": "country",
                 "pathway": pathway,
                 "horizon": horizon,
-                "metric": "cvar_99,var_99,cvar_95,var_95,cvar_50,var_50,expected_impact",
+                "metric": "dcr_score,cvar_99,var_99,cvar_95,var_95,cvar_50,var_50,expected_impact",
             },
             item_class=CountryImpactScore,
         )
@@ -746,7 +746,7 @@ class Companies:
                 "by": "asset_type",
                 "pathway": pathway,
                 "horizon": horizon,
-                "metric": "cvar_99,var_99,cvar_95,var_95,cvar_50,var_50,expected_impact",
+                "metric": "dcr_score,cvar_99,var_99,cvar_95,var_95,cvar_50,var_50,expected_impact",
             },
             item_class=AssetTypeImpactScore,
         )
@@ -772,7 +772,7 @@ class Companies:
                 "by": "asset_type",
                 "pathway": pathway,
                 "horizon": horizon,
-                "metric": "cvar_99,var_99,cvar_95,var_95,cvar_50,var_50,expected_impact",
+                "metric": "dcr_score,cvar_99,var_99,cvar_95,var_95,cvar_50,var_50,expected_impact",
             },
             item_class=AssetTypeImpactScore,
         )
