@@ -1810,6 +1810,63 @@ Get the impact scores for all assets of a company aggregated by asset type async
 
 - `StaticListIterator[AssetTypeImpactScore]` - An asynchronous iterator over AssetTypeImpactScore objects, aggregated by asset type.
 
+<a id="velo_sdk.api.companies.Companies.upload_company_assets"></a>
+
+#### upload\_company\_assets
+
+```python
+def upload_company_assets(company_id: str,
+                          assets: list[Dict] | pl.DataFrame | Any)
+```
+
+Upload new assets to a company.
+
+**Arguments**:
+
+- `company_id` _str_ - The unique identifier of the company.
+- `assets` _list[Dict] | pl.DataFrame | pandas.DataFrame_ - A list of Asset objects to upload,
+  or a DataFrame (pandas or polars) that will be converted to a list of dictionaries.
+
+<a id="velo_sdk.api.companies.Companies.create_company"></a>
+
+#### create\_company
+
+```python
+def create_company(name: str, sector: Sector) -> Company
+```
+
+Create a new company.
+
+**Arguments**:
+
+- `name` _str_ - The name of the company.
+- `sector` _Sector_ - The sector of the company.
+  
+
+**Returns**:
+
+- `Company` - The newly created Company object.
+
+<a id="velo_sdk.api.companies.Companies.create_company_async"></a>
+
+#### create\_company\_async
+
+```python
+async def create_company_async(name: str, sector: Sector) -> Company
+```
+
+Create a new company asynchronously.
+
+**Arguments**:
+
+- `name` _str_ - The name of the company.
+- `sector` _Sector_ - The GICS sector of the company.
+  
+
+**Returns**:
+
+- `Company` - The newly created Company object.
+
 <a id="velo_sdk.api.api_client"></a>
 
 # velo\_sdk.api.api\_client
