@@ -31,6 +31,20 @@ HorizonYear = Literal[
     2095,
 ]
 
+Sector = Literal[
+    "Communications",
+    "Consumer Discretionary",
+    "Consumer Staples",
+    "Energy",
+    "Financials",
+    "Health Care",
+    "Industrials",
+    "Information Technology",
+    "Materials",
+    "Real Estate",
+    "Utilities",
+]
+
 
 class Company(BaseModel):
     """
