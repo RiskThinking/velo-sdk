@@ -350,6 +350,7 @@ class Companies:
             params={
                 "pathway": pathway,
                 "horizon": horizon,
+                "metric": "dcr_score,cvar_99,var_99,cvar_95,var_95,cvar_50,var_50,expected_impact"
             },
         )
         return ClimateScore(**response)
@@ -374,6 +375,7 @@ class Companies:
             params={
                 "pathway": pathway,
                 "horizon": horizon,
+                "metric": "dcr_score,cvar_99,var_99,cvar_95,var_95,cvar_50,var_50,expected_impact"
             },
         )
         return ClimateScore(**response)
@@ -398,6 +400,7 @@ class Companies:
             {
                 "pathway": pathway,
                 "horizon": horizon,
+                "metric": "dcr_score,cvar_99,var_99,cvar_95,var_95,cvar_50,var_50,expected_impact"
             },
             item_class=ImpactScore,
         )
@@ -422,6 +425,7 @@ class Companies:
             {
                 "pathway": pathway,
                 "horizon": horizon,
+                "metric": "dcr_score,cvar_99,var_99,cvar_95,var_95,cvar_50,var_50,expected_impact"
             },
             item_class=ImpactScore,
         )
