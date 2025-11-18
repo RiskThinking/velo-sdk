@@ -2,6 +2,7 @@ from typing import Any, Dict
 import backoff
 import httpx
 import os
+from datetime import datetime
 
 from .errors import RateLimitError, APIError
 
@@ -55,12 +56,20 @@ class BaseClient:
 
     def _handle_response_sync(self, response: httpx.Response) -> Dict[str, Any]:
         if response.status_code == 429:
-            raise RateLimitError("Rate limit exceeded")
+            try:
+                error = response.json().get("error", {})
+            except Exception:
+                error = {'timestamp': datetime.now()}
+            raise RateLimitError(
+                message=error.get("message", "Rate limit exceeded"),
+                status=error.get("status", f"{response.status_code} Error"),
+                timestamp=error.get("timestamp"),
+            )
         if response.status_code >= 400:
             try:
                 error = response.json().get("error", {})
             except Exception:
-                error = {}
+                error = {'timestamp': datetime.now()}
             raise APIError(
                 message=error.get("message", "Unknown error"),
                 code=error.get("code", response.status_code),
@@ -71,13 +80,21 @@ class BaseClient:
 
     async def _handle_response_async(self, response: httpx.Response) -> Dict[str, Any]:
         if response.status_code == 429:
-            raise RateLimitError("Rate limit exceeded")
+            try:
+                error = response.json().get("error", {})
+            except Exception:
+                error = {'timestamp': datetime.now()}
+            raise RateLimitError(
+                message=error.get("message", "Rate limit exceeded"),
+                status=error.get("status", f"{response.status_code} Error"),
+                timestamp=error.get("timestamp"),
+            )
         if response.status_code >= 400:
             try:
                 json_data = await response.json()
                 error = json_data.get("error", {})
             except Exception:
-                error = {}
+                error = {'timestamp': datetime.now()}
             raise APIError(
                 message=error.get("message", "Unknown error"),
                 code=error.get("code", response.status_code),
