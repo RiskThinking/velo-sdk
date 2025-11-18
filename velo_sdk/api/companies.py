@@ -1,10 +1,11 @@
+from datetime import datetime
 from typing import Any, Dict, Literal, Optional
 import polars as pl
 import io
 import csv
 import httpx
 
-from velo_sdk.api.errors import APIError
+from velo_sdk.api.errors import APIError, RateLimitError
 
 from .base import BaseClient
 from .types import (
@@ -889,9 +890,15 @@ class Companies:
 
                 # Handle the response the same way as BaseClient
                 if response.status_code == 429:
-                    from .errors import RateLimitError
-
-                    raise RateLimitError("Rate limit exceeded")
+                    try:
+                        error = response.json().get("error", {})
+                    except Exception:
+                        error = {'timestamp': datetime.now()}
+                    raise RateLimitError(
+                        message=error.get("message", "Rate limit exceeded"),
+                        status=error.get("status", f"{response.status_code} Error"),
+                        timestamp=error.get("timestamp"),
+                    )
                 if response.status_code >= 400:
                     try:
                         error_data = response.json()
@@ -903,7 +910,7 @@ class Companies:
                             message = f"{message}: {detail}"
                     except Exception:
                         message = f"HTTP {response.status_code}: {response.text}"
-                        error_data = {}
+                        error_data = {'timestamp': datetime.now()}
 
                     raise APIError(
                         message=message,
@@ -916,7 +923,7 @@ class Companies:
 
                 upload_result = response.json()
 
-        except APIError:
+        except APIError | RateLimitError:
             raise
         except Exception as e:
             raise APIError(f"Failed to upload assets: {e}") from e
