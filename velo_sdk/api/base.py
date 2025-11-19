@@ -5,7 +5,7 @@ import os
 from datetime import datetime
 from importlib.metadata import version
 
-from .errors import RateLimitError, APIError
+from .errors import RateLimitError, APIError, InsufficientCreditsError
 
 BASE_URL = "https://api.riskthinking.ai/v3"
 
@@ -64,8 +64,20 @@ class BaseClient:
                 error = response.json().get("error", {})
             except Exception:
                 error = {'timestamp': datetime.now()}
+            
+            message = str(error.get("message", "Rate limit exceeded"))
+            
+            # Check if it's a credits error (non-retryable)
+            if "Insufficient API credits" in message:
+                raise InsufficientCreditsError(
+                    message=message,
+                    status=error.get("status", f"{response.status_code} Error"),
+                    timestamp=error.get("timestamp"),
+                )
+            
+            # Otherwise it's a rate limit (retryable)
             raise RateLimitError(
-                message=error.get("message", "Rate limit exceeded"),
+                message=message,
                 status=error.get("status", f"{response.status_code} Error"),
                 timestamp=error.get("timestamp"),
             )
@@ -88,8 +100,20 @@ class BaseClient:
                 error = response.json().get("error", {})
             except Exception:
                 error = {'timestamp': datetime.now()}
+            
+            message = str(error.get("message", "Rate limit exceeded"))
+            
+            # Check if it's a credits error (non-retryable)
+            if "Insufficient API credits" in message:
+                raise InsufficientCreditsError(
+                    message=message,
+                    status=error.get("status", f"{response.status_code} Error"),
+                    timestamp=error.get("timestamp"),
+                )
+            
+            # Otherwise it's a rate limit (retryable)
             raise RateLimitError(
-                message=error.get("message", "Rate limit exceeded"),
+                message=message,
                 status=error.get("status", f"{response.status_code} Error"),
                 timestamp=error.get("timestamp"),
             )
