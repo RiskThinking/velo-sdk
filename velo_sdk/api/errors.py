@@ -30,3 +30,17 @@ class RateLimitError(APIError):
         self.status = status or "Error"
         self.timestamp = timestamp or datetime.now()
         super().__init__(message=message, code=429, status=status, timestamp=timestamp)
+
+
+class InsufficientCreditsError(APIError):
+    """
+    Exception raised when the user has insufficient API credits.
+    This is a non-retryable error that requires the user to add credits.
+    """
+
+    def __init__(self, message, status=None, timestamp=None):
+        self.message = message
+        self.code = 429
+        self.status = status or "Error"
+        self.timestamp = timestamp or datetime.now()
+        super().__init__(message=message, code=429, status=status, timestamp=timestamp)
