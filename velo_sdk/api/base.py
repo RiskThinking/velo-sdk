@@ -3,6 +3,7 @@ import backoff
 import httpx
 import os
 from datetime import datetime
+from importlib.metadata import version
 
 from .errors import RateLimitError, APIError
 
@@ -27,9 +28,12 @@ class BaseClient:
         if not self._base_url.endswith("/v3"):
             self._base_url = str(self._base_url) + "/v3"
 
+        sdk_version = version("velo-sdk")
+
         headers = {
             "Authorization": f"Bearer {self._api_key}",
             "Content-Type": "application/json",
+            "User-Agent": f"velo-sdk/{sdk_version}",
         }
         self._sync_client = httpx.Client(
             base_url=self._base_url, headers=headers, timeout=timeout
