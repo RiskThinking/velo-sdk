@@ -92,7 +92,7 @@ Returns the next item, fetching data asynchronously if needed.
 #### to\_polars
 
 ```python
-def to_polars() -> pl.DataFrame
+def to_polars()
 ```
 
 Fetches all results (if not already fetched) and converts them
@@ -103,6 +103,11 @@ Assumes that the generic type T is a Pydantic model.
 **Returns**:
 
   A Polars DataFrame containing the fetched data.
+  
+
+**Raises**:
+
+- `ImportError` - If Polars is not installed. Install it with: pip install velo-sdk[polars]
 
 <a id="velo_sdk.api.types"></a>
 
@@ -964,12 +969,16 @@ Fetches the next page of results and returns them as a list.
 #### to\_polars
 
 ```python
-def to_polars() -> pl.DataFrame
+def to_polars()
 ```
 
 Fetches all items from all pages, applies an optional transformation,
 and returns them as a Polars DataFrame.
 This method will consume the iterator.
+
+**Raises**:
+
+- `ImportError` - If Polars is not installed. Install it with: pip install velo-sdk[polars]
 
 <a id="velo_sdk.api.pagination.AsyncPaginatedIterator"></a>
 
@@ -994,12 +1003,16 @@ Asynchronously fetches the next page of results and returns them as a list.
 #### to\_polars
 
 ```python
-async def to_polars() -> pl.DataFrame
+async def to_polars()
 ```
 
 Asynchronously fetches all items from all pages, applies an optional transformation,
 and returns them as a Polars DataFrame.
 This method will consume the iterator.
+
+**Raises**:
+
+- `ImportError` - If Polars is not installed. Install it with: pip install velo-sdk[polars]
 
 <a id="velo_sdk.api.companies"></a>
 
@@ -1662,8 +1675,7 @@ Get the impact scores for all assets of a company aggregated by asset type async
 #### upload\_company\_assets
 
 ```python
-def upload_company_assets(company_id: str,
-                          assets: list[Dict] | pl.DataFrame | Any)
+def upload_company_assets(company_id: str, assets: list[Dict] | Any)
 ```
 
 Upload new assets to a company.
@@ -1780,6 +1792,17 @@ class RateLimitError(APIError)
 ```
 
 Exception raised when rate limiting is exceeded.
+
+<a id="velo_sdk.api.errors.InsufficientCreditsError"></a>
+
+## InsufficientCreditsError Objects
+
+```python
+class InsufficientCreditsError(APIError)
+```
+
+Exception raised when the user has insufficient API credits.
+This is a non-retryable error that requires the user to add credits.
 
 <a id="velo_sdk.api.base"></a>
 
