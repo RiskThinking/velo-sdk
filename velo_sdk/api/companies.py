@@ -1,9 +1,16 @@
 from datetime import datetime
-from typing import Any, Dict, Literal, Optional
-import polars as pl
+from typing import Any, Dict, Literal, Optional, TYPE_CHECKING
 import io
 import csv
 import httpx
+
+if TYPE_CHECKING:
+    import polars as pl
+else:
+    try:
+        import polars as pl
+    except ImportError:
+        pl = None
 
 from velo_sdk.api.errors import APIError, RateLimitError
 
@@ -790,7 +797,7 @@ class Companies:
         )
 
     def upload_company_assets(
-        self, company_id: str, assets: list[Dict] | pl.DataFrame | Any
+        self, company_id: str, assets: list[Dict] | Any
     ):
         """
         Upload new assets to a company.
@@ -833,7 +840,7 @@ class Companies:
             pass
 
         # Handle polars DataFrame
-        if isinstance(assets, pl.DataFrame):
+        if pl is not None and isinstance(assets, pl.DataFrame):
             # Map only the columns that exist in both the DataFrame and our expected headers
             for header in required_headers:
                 if header not in assets.columns:
