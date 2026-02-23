@@ -9,9 +9,17 @@ from typing import (
     Type,
     TypeVar,
     AsyncIterator,
+    TYPE_CHECKING,
 )
 from pydantic import BaseModel
-import polars as pl
+
+if TYPE_CHECKING:
+    import polars as pl
+else:
+    try:
+        import polars as pl
+    except ImportError:
+        pl = None
 
 T = TypeVar("T", bound=BaseModel)
 
@@ -76,12 +84,21 @@ class PaginatedIterator(Generic[T], Iterator[T]):
         self.buffer.clear()  # Clear the buffer after returning the page.
         return page
 
-    def to_polars(self) -> pl.DataFrame:
+    def to_polars(self):
         """
         Fetches all items from all pages, applies an optional transformation,
         and returns them as a Polars DataFrame.
         This method will consume the iterator.
+
+        Raises:
+            ImportError: If Polars is not installed. Install it with: pip install velo-sdk[polars]
         """
+        if pl is None:
+            raise ImportError(
+                "Polars is not installed. To use this method, install Polars with: "
+                "pip install velo-sdk[polars] or pip install polars>=1.20"
+            )
+
         all_items_collected: list[T] = []
 
         # Consume items currently in the buffer from any previous partial iteration
@@ -170,12 +187,21 @@ class AsyncPaginatedIterator(Generic[T], AsyncIterator[T]):
         self.buffer.clear()
         return page
 
-    async def to_polars(self) -> pl.DataFrame:
+    async def to_polars(self):
         """
         Asynchronously fetches all items from all pages, applies an optional transformation,
         and returns them as a Polars DataFrame.
         This method will consume the iterator.
+
+        Raises:
+            ImportError: If Polars is not installed. Install it with: pip install velo-sdk[polars]
         """
+        if pl is None:
+            raise ImportError(
+                "Polars is not installed. To use this method, install Polars with: "
+                "pip install velo-sdk[polars] or pip install polars>=1.20"
+            )
+
         all_items_collected: list[T] = []
 
         # Consume items currently in the buffer from any previous partial iteration

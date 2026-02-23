@@ -10,9 +10,17 @@ from typing import (
     Iterator,
     AsyncIterator,
     Self,
+    TYPE_CHECKING,
 )
 from pydantic import BaseModel
-import polars as pl
+
+if TYPE_CHECKING:
+    import polars as pl
+else:
+    try:
+        import polars as pl
+    except ImportError:
+        pl = None
 
 T = TypeVar("T", bound=BaseModel)
 
@@ -146,7 +154,7 @@ class StaticListIterator(Generic[T], Iterator[T], AsyncIterator[T]):
         else:
             raise StopAsyncIteration
 
-    def to_polars(self) -> pl.DataFrame:
+    def to_polars(self):
         """
         Fetches all results (if not already fetched) and converts them
         into a Polars DataFrame.
@@ -155,7 +163,16 @@ class StaticListIterator(Generic[T], Iterator[T], AsyncIterator[T]):
 
         Returns:
             A Polars DataFrame containing the fetched data.
+
+        Raises:
+            ImportError: If Polars is not installed. Install it with: pip install velo-sdk[polars]
         """
+        if pl is None:
+            raise ImportError(
+                "Polars is not installed. To use this method, install Polars with: "
+                "pip install velo-sdk[polars] or pip install polars>=1.20"
+            )
+
         self._fetch_sync_if_needed()  # Ensure data is available
 
         if self._fetched_data is None or not self._fetched_data:
