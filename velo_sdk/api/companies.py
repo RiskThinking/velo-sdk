@@ -14,7 +14,7 @@ else:
 
 from velo_sdk.api.errors import APIError, RateLimitError
 
-from .base import BaseClient
+from .base import BaseClient, _normalize_path
 from .types import (
     AssetClimateScore,
     AssetTypeClimateScore,
@@ -890,8 +890,11 @@ class Companies:
             with httpx.Client(
                 base_url=self.client._base_url, headers=upload_headers
             ) as upload_client:
+                upload_path = _normalize_path(
+                    f"/companies/{company_id}/assets/upload"
+                )
                 response = upload_client.post(
-                    f"/companies/{company_id}/assets/upload",
+                    upload_path,
                     files={"file": ("assets.csv", file_obj, "text/csv")},
                 )
 
