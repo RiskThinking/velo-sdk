@@ -1,3 +1,4 @@
+import re
 from typing import Any, Dict
 import backoff
 import httpx
@@ -7,7 +8,24 @@ from importlib.metadata import version
 
 from .errors import RateLimitError, APIError, InsufficientCreditsError
 
-BASE_URL = "https://api.riskthinking.ai/v3"
+BASE_URL = "https://api.riskthinking.ai"
+
+# Matches path prefixes like /v3, /v4, /v10 (version segment at start)
+VERSION_PREFIX_PATTERN = re.compile(r"^/v\d+(/|$)")
+
+
+def _normalize_path(path: str) -> str:
+    """
+    Normalize the request path for API versioning.
+    - Absolute URLs (http:// or https://) are returned as-is (base URL is ignored by httpx).
+    - Paths with a version prefix (e.g. /v3/assets, /v4/climate/metrics) are returned as-is.
+    - Paths without a version prefix (e.g. /markets/groups) are prefixed with /v3.
+    """
+    if path.startswith(("http://", "https://")):
+        return path
+    if VERSION_PREFIX_PATTERN.match(path):
+        return path
+    return f"/v3{path}" if path.startswith("/") else f"/v3/{path}"
 
 
 class BaseClient:
@@ -23,10 +41,7 @@ class BaseClient:
             raise Exception("API key is required to initialize the sdk")
 
         self._api_key = api_key
-
-        self._base_url = BASE_URL if not base_url else base_url
-        if not self._base_url.endswith("/v3"):
-            self._base_url = str(self._base_url) + "/v3"
+        self._base_url = (base_url or BASE_URL).rstrip("/")
 
         sdk_version = version("velo-sdk")
 
@@ -44,17 +59,13 @@ class BaseClient:
 
     @backoff.on_exception(backoff.expo, RateLimitError, max_tries=5)
     def _request_sync(self, method: str, path: str, **kwargs) -> Dict[str, Any]:
-        # Remove the /v3 prefix since it's part of the base URL
-        if path.startswith("/v3"):
-            path = path[3:]
+        path = _normalize_path(path)
         response = self._sync_client.request(method, path, **kwargs)
         return self._handle_response_sync(response)
 
     @backoff.on_exception(backoff.expo, RateLimitError, max_tries=5)
     async def _request_async(self, method: str, path: str, **kwargs) -> Dict[str, Any]:
-        # Remove the /v3 prefix since it's part of the base URL
-        if path.startswith("/v3"):
-            path = path[3:]
+        path = _normalize_path(path)
         response = await self._async_client.request(method, path, **kwargs)
         return await self._handle_response_async(response)
 
@@ -137,7 +148,9 @@ class BaseClient:
     ) -> Dict[str, Any]:
         """
         Make a GET request to the API.
-        The version /v3 is automatically added to the path.
+        Version prefix /v3 is added only when the endpoint has no version prefix.
+        Paths like /v3/assets or /v4/climate/metrics are used as-is.
+        Absolute URLs are also supported and used as-is.
 
         Args:
             path: API endpoint path
@@ -154,7 +167,9 @@ class BaseClient:
     ) -> Dict[str, Any]:
         """
         Make an asynchronous GET request to the API.
-        The version /v3 is automatically added to the path.
+        Version prefix /v3 is added only when the endpoint has no version prefix.
+        Paths like /v3/assets or /v4/climate/metrics are used as-is.
+        Absolute URLs are also supported and used as-is.
 
         Args:
             path: API endpoint path
@@ -171,7 +186,9 @@ class BaseClient:
     ) -> Dict[str, Any]:
         """
         Make a POST request to the API.
-        The version /v3 is automatically added to the path.
+        Version prefix /v3 is added only when the endpoint has no version prefix.
+        Paths like /v3/assets or /v4/climate/metrics are used as-is.
+        Absolute URLs are also supported and used as-is.
         Args:
             path: API endpoint path
             json: JSON body data
@@ -187,7 +204,9 @@ class BaseClient:
     ) -> Dict[str, Any]:
         """
         Make an asynchronous POST request to the API.
-        The version /v3 is automatically added to the path.
+        Version prefix /v3 is added only when the endpoint has no version prefix.
+        Paths like /v3/assets or /v4/climate/metrics are used as-is.
+        Absolute URLs are also supported and used as-is.
 
         Args:
             path: API endpoint path
@@ -202,7 +221,9 @@ class BaseClient:
     def put(self, path: str, json: Dict[str, Any] = dict(), **kwargs) -> Dict[str, Any]:
         """
         Make a PUT request to the API.
-        The version /v3 is automatically added to the path.
+        Version prefix /v3 is added only when the endpoint has no version prefix.
+        Paths like /v3/assets or /v4/climate/metrics are used as-is.
+        Absolute URLs are also supported and used as-is.
 
         Args:
             path: API endpoint path
@@ -219,7 +240,9 @@ class BaseClient:
     ) -> Dict[str, Any]:
         """
         Make an asynchronous PUT request to the API.
-        The version /v3 is automatically added to the path.
+        Version prefix /v3 is added only when the endpoint has no version prefix.
+        Paths like /v3/assets or /v4/climate/metrics are used as-is.
+        Absolute URLs are also supported and used as-is.
 
         Args:
             path: API endpoint path
@@ -234,7 +257,9 @@ class BaseClient:
     def delete(self, path: str, **kwargs) -> Dict[str, Any]:
         """
         Make a DELETE request to the API.
-        The version /v3 is automatically added to the path.
+        Version prefix /v3 is added only when the endpoint has no version prefix.
+        Paths like /v3/assets or /v4/climate/metrics are used as-is.
+        Absolute URLs are also supported and used as-is.
 
         Args:
             path: API endpoint path
@@ -248,7 +273,9 @@ class BaseClient:
     async def delete_async(self, path: str, **kwargs) -> Dict[str, Any]:
         """
         Make an asynchronous DELETE request to the API.
-        The version /v3 is automatically added to the path.
+        Version prefix /v3 is added only when the endpoint has no version prefix.
+        Paths like /v3/assets or /v4/climate/metrics are used as-is.
+        Absolute URLs are also supported and used as-is.
 
         Args:
             path: API endpoint path
@@ -264,7 +291,9 @@ class BaseClient:
     ) -> Dict[str, Any]:
         """
         Make a PATCH request to the API.
-        The version /v3 is automatically added to the path.
+        Version prefix /v3 is added only when the endpoint has no version prefix.
+        Paths like /v3/assets or /v4/climate/metrics are used as-is.
+        Absolute URLs are also supported and used as-is.
 
         Args:
             path: API endpoint path
@@ -281,7 +310,9 @@ class BaseClient:
     ) -> Dict[str, Any]:
         """
         Make an asynchronous PATCH request to the API.
-        The version /v3 is automatically added to the path.
+        Version prefix /v3 is added only when the endpoint has no version prefix.
+        Paths like /v3/assets or /v4/climate/metrics are used as-is.
+        Absolute URLs are also supported and used as-is.
 
         Args:
             path: API endpoint path
