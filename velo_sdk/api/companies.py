@@ -891,7 +891,8 @@ class Companies:
                 base_url=self.client._base_url, headers=upload_headers
             ) as upload_client:
                 upload_path = _normalize_path(
-                    f"/companies/{company_id}/assets/upload"
+                    f"/companies/{company_id}/assets/upload",
+                    self.client._base_url,
                 )
                 response = upload_client.post(
                     upload_path,

@@ -13,18 +13,25 @@ BASE_URL = "https://api.riskthinking.ai"
 # Matches path prefixes like /v3, /v4, /v10 (version segment at start)
 VERSION_PREFIX_PATTERN = re.compile(r"^/v\d+(/|$)")
 
+# Matches base URLs that already include a version segment (e.g. .../v3 or .../v3/)
+BASE_URL_HAS_VERSION_PATTERN = re.compile(r"/v\d+($|/)")
 
-def _normalize_path(path: str) -> str:
+
+def _normalize_path(path: str, base_url: str | None = None) -> str:
     """
     Normalize the request path for API versioning.
     - Absolute URLs (http:// or https://) are returned as-is (base URL is ignored by httpx).
     - Paths with a version prefix (e.g. /v3/assets, /v4/climate/metrics) are returned as-is.
-    - Paths without a version prefix (e.g. /markets/groups) are prefixed with /v3.
+    - Paths without a version prefix: prefixed with /v3 unless base_url already has a version
+      (e.g. https://proxy.example.com/v3), to avoid doubled paths like .../v3/v3/...
     """
     if path.startswith(("http://", "https://")):
         return path
     if VERSION_PREFIX_PATTERN.match(path):
         return path
+    # If base_url already includes a version segment, don't add one (backward compat)
+    if base_url and BASE_URL_HAS_VERSION_PATTERN.search(base_url):
+        return path if path.startswith("/") else f"/{path}"
     return f"/v3{path}" if path.startswith("/") else f"/v3/{path}"
 
 
@@ -59,13 +66,13 @@ class BaseClient:
 
     @backoff.on_exception(backoff.expo, RateLimitError, max_tries=5)
     def _request_sync(self, method: str, path: str, **kwargs) -> Dict[str, Any]:
-        path = _normalize_path(path)
+        path = _normalize_path(path, self._base_url)
         response = self._sync_client.request(method, path, **kwargs)
         return self._handle_response_sync(response)
 
     @backoff.on_exception(backoff.expo, RateLimitError, max_tries=5)
     async def _request_async(self, method: str, path: str, **kwargs) -> Dict[str, Any]:
-        path = _normalize_path(path)
+        path = _normalize_path(path, self._base_url)
         response = await self._async_client.request(method, path, **kwargs)
         return await self._handle_response_async(response)
 
