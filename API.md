@@ -2,6 +2,408 @@
 
 # velo\_sdk.api
 
+<a id="velo_sdk.api.errors"></a>
+
+# velo\_sdk.api.errors
+
+<a id="velo_sdk.api.errors.APIError"></a>
+
+## APIError Objects
+
+```python
+class APIError(Exception)
+```
+
+General exception for API errors.
+
+**Attributes**:
+
+- `message` - The error message.
+- `code` - HTTP status code.
+- `status` - HTTP status text.
+- `timestamp` - When the error occurred.
+
+<a id="velo_sdk.api.errors.RateLimitError"></a>
+
+## RateLimitError Objects
+
+```python
+class RateLimitError(APIError)
+```
+
+Exception raised when rate limiting is exceeded.
+
+<a id="velo_sdk.api.errors.InsufficientCreditsError"></a>
+
+## InsufficientCreditsError Objects
+
+```python
+class InsufficientCreditsError(APIError)
+```
+
+Exception raised when the user has insufficient API credits.
+This is a non-retryable error that requires the user to add credits.
+
+<a id="velo_sdk.api.climate"></a>
+
+# velo\_sdk.api.climate
+
+<a id="velo_sdk.api.climate.Climate"></a>
+
+## Climate Objects
+
+```python
+class Climate()
+```
+
+<a id="velo_sdk.api.climate.Climate.list_horizons"></a>
+
+#### list\_horizons
+
+```python
+def list_horizons() -> list[int]
+```
+
+List the available horizons for climate analysis.
+
+<a id="velo_sdk.api.climate.Climate.list_pathways"></a>
+
+#### list\_pathways
+
+```python
+def list_pathways() -> list[Pathway]
+```
+
+List the available pathways for climate analysis.
+
+<a id="velo_sdk.api.base"></a>
+
+# velo\_sdk.api.base
+
+<a id="velo_sdk.api.base.BaseClient"></a>
+
+## BaseClient Objects
+
+```python
+class BaseClient()
+```
+
+<a id="velo_sdk.api.base.BaseClient.get"></a>
+
+#### get
+
+```python
+def get(path: str, params: Dict[str, Any] = dict(),
+        **kwargs) -> Dict[str, Any]
+```
+
+Make a GET request to the API.
+Version prefix /v3 is added only when the endpoint has no version prefix.
+Paths like /v3/assets or /v4/climate/metrics are used as-is.
+Absolute URLs are also supported and used as-is.
+
+**Arguments**:
+
+- `path` - API endpoint path
+- `params` - Query parameters
+- `**kwargs` - Additional arguments to pass to the request
+  
+
+**Returns**:
+
+  API response data as JSON deserialized into a dictionary
+
+<a id="velo_sdk.api.base.BaseClient.get_async"></a>
+
+#### get\_async
+
+```python
+async def get_async(path: str, params: Dict[str, Any] = dict(),
+                    **kwargs) -> Dict[str, Any]
+```
+
+Make an asynchronous GET request to the API.
+Version prefix /v3 is added only when the endpoint has no version prefix.
+Paths like /v3/assets or /v4/climate/metrics are used as-is.
+Absolute URLs are also supported and used as-is.
+
+**Arguments**:
+
+- `path` - API endpoint path
+- `params` - Query parameters
+- `**kwargs` - Additional arguments to pass to the request
+  
+
+**Returns**:
+
+  API response data as JSON deserialized into a dictionary
+
+<a id="velo_sdk.api.base.BaseClient.post"></a>
+
+#### post
+
+```python
+def post(path: str, json: Dict[str, Any] = dict(), **kwargs) -> Dict[str, Any]
+```
+
+Make a POST request to the API.
+Version prefix /v3 is added only when the endpoint has no version prefix.
+Paths like /v3/assets or /v4/climate/metrics are used as-is.
+Absolute URLs are also supported and used as-is.
+
+**Arguments**:
+
+- `path` - API endpoint path
+- `json` - JSON body data
+- `**kwargs` - Additional arguments to pass to the request
+  
+
+**Returns**:
+
+  API response data as JSON deserialized into a dictionary
+
+<a id="velo_sdk.api.base.BaseClient.post_async"></a>
+
+#### post\_async
+
+```python
+async def post_async(path: str, json: Dict[str, Any] = dict(),
+                     **kwargs) -> Dict[str, Any]
+```
+
+Make an asynchronous POST request to the API.
+Version prefix /v3 is added only when the endpoint has no version prefix.
+Paths like /v3/assets or /v4/climate/metrics are used as-is.
+Absolute URLs are also supported and used as-is.
+
+**Arguments**:
+
+- `path` - API endpoint path
+- `json` - JSON body data
+- `**kwargs` - Additional arguments to pass to the request
+  
+
+**Returns**:
+
+  API response data as JSON deserialized into a dictionary
+
+<a id="velo_sdk.api.base.BaseClient.put"></a>
+
+#### put
+
+```python
+def put(path: str, json: Dict[str, Any] = dict(), **kwargs) -> Dict[str, Any]
+```
+
+Make a PUT request to the API.
+Version prefix /v3 is added only when the endpoint has no version prefix.
+Paths like /v3/assets or /v4/climate/metrics are used as-is.
+Absolute URLs are also supported and used as-is.
+
+**Arguments**:
+
+- `path` - API endpoint path
+- `json` - JSON body data
+- `**kwargs` - Additional arguments to pass to the request
+  
+
+**Returns**:
+
+  API response data as JSON deserialized into a dictionary
+
+<a id="velo_sdk.api.base.BaseClient.put_async"></a>
+
+#### put\_async
+
+```python
+async def put_async(path: str, json: Dict[str, Any] = dict(),
+                    **kwargs) -> Dict[str, Any]
+```
+
+Make an asynchronous PUT request to the API.
+Version prefix /v3 is added only when the endpoint has no version prefix.
+Paths like /v3/assets or /v4/climate/metrics are used as-is.
+Absolute URLs are also supported and used as-is.
+
+**Arguments**:
+
+- `path` - API endpoint path
+- `json` - JSON body data
+- `**kwargs` - Additional arguments to pass to the request
+  
+
+**Returns**:
+
+  API response data as JSON deserialized into a dictionary
+
+<a id="velo_sdk.api.base.BaseClient.delete"></a>
+
+#### delete
+
+```python
+def delete(path: str, **kwargs) -> Dict[str, Any]
+```
+
+Make a DELETE request to the API.
+Version prefix /v3 is added only when the endpoint has no version prefix.
+Paths like /v3/assets or /v4/climate/metrics are used as-is.
+Absolute URLs are also supported and used as-is.
+
+**Arguments**:
+
+- `path` - API endpoint path
+- `**kwargs` - Additional arguments to pass to the request
+  
+
+**Returns**:
+
+  API response data as JSON deserialized into a dictionary
+
+<a id="velo_sdk.api.base.BaseClient.delete_async"></a>
+
+#### delete\_async
+
+```python
+async def delete_async(path: str, **kwargs) -> Dict[str, Any]
+```
+
+Make an asynchronous DELETE request to the API.
+Version prefix /v3 is added only when the endpoint has no version prefix.
+Paths like /v3/assets or /v4/climate/metrics are used as-is.
+Absolute URLs are also supported and used as-is.
+
+**Arguments**:
+
+- `path` - API endpoint path
+- `**kwargs` - Additional arguments to pass to the request
+  
+
+**Returns**:
+
+  API response data as JSON deserialized into a dictionary
+
+<a id="velo_sdk.api.base.BaseClient.patch"></a>
+
+#### patch
+
+```python
+def patch(path: str, json: Dict[str, Any] = dict(),
+          **kwargs) -> Dict[str, Any]
+```
+
+Make a PATCH request to the API.
+Version prefix /v3 is added only when the endpoint has no version prefix.
+Paths like /v3/assets or /v4/climate/metrics are used as-is.
+Absolute URLs are also supported and used as-is.
+
+**Arguments**:
+
+- `path` - API endpoint path
+- `json` - JSON body data
+- `**kwargs` - Additional arguments to pass to the request
+  
+
+**Returns**:
+
+  API response data as JSON deserialized into a dictionary
+
+<a id="velo_sdk.api.base.BaseClient.patch_async"></a>
+
+#### patch\_async
+
+```python
+async def patch_async(path: str, json: Dict[str, Any] = dict(),
+                      **kwargs) -> Dict[str, Any]
+```
+
+Make an asynchronous PATCH request to the API.
+Version prefix /v3 is added only when the endpoint has no version prefix.
+Paths like /v3/assets or /v4/climate/metrics are used as-is.
+Absolute URLs are also supported and used as-is.
+
+**Arguments**:
+
+- `path` - API endpoint path
+- `json` - JSON body data
+- `**kwargs` - Additional arguments to pass to the request
+  
+
+**Returns**:
+
+  API response data as JSON deserialized into a dictionary
+
+<a id="velo_sdk.api.pagination"></a>
+
+# velo\_sdk.api.pagination
+
+<a id="velo_sdk.api.pagination.PaginatedIterator"></a>
+
+## PaginatedIterator Objects
+
+```python
+class PaginatedIterator(Generic[T], Iterator[T])
+```
+
+<a id="velo_sdk.api.pagination.PaginatedIterator.fetch_page"></a>
+
+#### fetch\_page
+
+```python
+def fetch_page() -> list[T]
+```
+
+Fetches the next page of results and returns them as a list.
+
+<a id="velo_sdk.api.pagination.PaginatedIterator.to_polars"></a>
+
+#### to\_polars
+
+```python
+def to_polars()
+```
+
+Fetches all items from all pages, applies an optional transformation,
+and returns them as a Polars DataFrame.
+This method will consume the iterator.
+
+**Raises**:
+
+- `ImportError` - If Polars is not installed. Install it with: pip install velo-sdk[polars]
+
+<a id="velo_sdk.api.pagination.AsyncPaginatedIterator"></a>
+
+## AsyncPaginatedIterator Objects
+
+```python
+class AsyncPaginatedIterator(Generic[T], AsyncIterator[T])
+```
+
+<a id="velo_sdk.api.pagination.AsyncPaginatedIterator.afetch_page"></a>
+
+#### afetch\_page
+
+```python
+async def afetch_page() -> list[T]
+```
+
+Asynchronously fetches the next page of results and returns them as a list.
+
+<a id="velo_sdk.api.pagination.AsyncPaginatedIterator.to_polars"></a>
+
+#### to\_polars
+
+```python
+async def to_polars()
+```
+
+Asynchronously fetches all items from all pages, applies an optional transformation,
+and returns them as a Polars DataFrame.
+This method will consume the iterator.
+
+**Raises**:
+
+- `ImportError` - If Polars is not installed. Install it with: pip install velo-sdk[polars]
+
 <a id="velo_sdk.api.static_list"></a>
 
 # velo\_sdk.api.static\_list
@@ -104,911 +506,6 @@ Assumes that the generic type T is a Pydantic model.
 
   A Polars DataFrame containing the fetched data.
   
-
-**Raises**:
-
-- `ImportError` - If Polars is not installed. Install it with: pip install velo-sdk[polars]
-
-<a id="velo_sdk.api.types"></a>
-
-# velo\_sdk.api.types
-
-<a id="velo_sdk.api.types.Company"></a>
-
-## Company Objects
-
-```python
-class Company(BaseModel)
-```
-
-A company is an entity that has assets and identifying information.
-
-<a id="velo_sdk.api.types.Asset"></a>
-
-## Asset Objects
-
-```python
-class Asset(BaseModel)
-```
-
-An asset represents aphysical asset that is subject to climate risk.
-
-<a id="velo_sdk.api.types.MarketIndex"></a>
-
-## MarketIndex Objects
-
-```python
-class MarketIndex(BaseModel)
-```
-
-A market index is a collection of companies.
-
-<a id="velo_sdk.api.types.ClimateScore"></a>
-
-## ClimateScore Objects
-
-```python
-class ClimateScore(BaseModel)
-```
-
-The cimate risk metrics that represent the likelihood of a company or asset to be impacted by climate risk.
-
-<a id="velo_sdk.api.types.ImpactScore"></a>
-
-## ImpactScore Objects
-
-```python
-class ImpactScore(BaseModel)
-```
-
-The impact risk metrics that represent the potential impact of a company or asset to be impacted by climate risk.
-These metrics represent an individual risk factor and its attribution to the total climate risk metrics.
-
-<a id="velo_sdk.api.types.CountryClimateScore"></a>
-
-## CountryClimateScore Objects
-
-```python
-class CountryClimateScore(ClimateScore)
-```
-
-Climate risk metrics aggregated for a country.
-
-<a id="velo_sdk.api.types.CountryImpactScore"></a>
-
-## CountryImpactScore Objects
-
-```python
-class CountryImpactScore(ImpactScore)
-```
-
-Impact risk metrics aggregated for a country.
-
-<a id="velo_sdk.api.types.AssetTypeClimateScore"></a>
-
-## AssetTypeClimateScore Objects
-
-```python
-class AssetTypeClimateScore(ClimateScore)
-```
-
-Climate risk metrics aggregated for an asset type.
-
-<a id="velo_sdk.api.types.AssetTypeImpactScore"></a>
-
-## AssetTypeImpactScore Objects
-
-```python
-class AssetTypeImpactScore(ImpactScore)
-```
-
-Impact risk metrics aggregated for an asset type.
-
-<a id="velo_sdk.api.types.AssetClimateScore"></a>
-
-## AssetClimateScore Objects
-
-```python
-class AssetClimateScore(ClimateScore)
-```
-
-Climate risk metrics for an asset.
-
-<a id="velo_sdk.api.types.AssetImpactScore"></a>
-
-## AssetImpactScore Objects
-
-```python
-class AssetImpactScore(BaseModel)
-```
-
-Impact risk metrics for an asset.
-
-<a id="velo_sdk.api.markets"></a>
-
-# velo\_sdk.api.markets
-
-<a id="velo_sdk.api.markets.Markets"></a>
-
-## Markets Objects
-
-```python
-class Markets()
-```
-
-<a id="velo_sdk.api.markets.Markets.search_indexes"></a>
-
-#### search\_indexes
-
-```python
-def search_indexes(*,
-                   name: Optional[str] = None,
-                   **extra_params: Any) -> list[MarketIndex]
-```
-
-Search for market indexes by name.
-
-**Arguments**:
-
-- `name` _Optional[str]_ - The name of the market index to search for.
-- `**extra_params` _Any_ - Additional parameters to pass to the API.
-  
-
-**Returns**:
-
-- `list[MarketIndex]` - A list of MarketIndex objects matching the search criteria.
-
-<a id="velo_sdk.api.markets.Markets.search_indexes_async"></a>
-
-#### search\_indexes\_async
-
-```python
-async def search_indexes_async(*,
-                               name: Optional[str] = None,
-                               **extra_params: Any) -> list[MarketIndex]
-```
-
-Search for market indexes by name asynchronously.
-
-**Arguments**:
-
-- `name` _Optional[str]_ - The name of the market index to search for.
-- `**extra_params` _Any_ - Additional parameters to pass to the API.
-  
-
-**Returns**:
-
-- `list[MarketIndex]` - A list of MarketIndex objects matching the search criteria.
-
-<a id="velo_sdk.api.markets.Markets.list_indexes"></a>
-
-#### list\_indexes
-
-```python
-def list_indexes() -> PaginatedIterator[MarketIndex]
-```
-
-List all market indexes.
-
-**Returns**:
-
-- `PaginatedIterator[MarketIndex]` - An iterator over MarketIndex objects.
-
-<a id="velo_sdk.api.markets.Markets.list_indexes_async"></a>
-
-#### list\_indexes\_async
-
-```python
-async def list_indexes_async() -> AsyncPaginatedIterator[MarketIndex]
-```
-
-List all market indexes asynchronously.
-
-**Returns**:
-
-- `AsyncPaginatedIterator[MarketIndex]` - An asynchronous iterator over MarketIndex objects.
-
-<a id="velo_sdk.api.markets.Markets.get_index"></a>
-
-#### get\_index
-
-```python
-def get_index(index_id: str) -> MarketIndex
-```
-
-Get a market index by its unique ID.
-
-**Arguments**:
-
-- `index_id` _str_ - The unique identifier of the market index.
-  
-
-**Returns**:
-
-- `MarketIndex` - The MarketIndex object.
-
-<a id="velo_sdk.api.markets.Markets.get_index_async"></a>
-
-#### get\_index\_async
-
-```python
-async def get_index_async(index_id: str) -> MarketIndex
-```
-
-Get a market index by its unique ID asynchronously.
-
-**Arguments**:
-
-- `index_id` _str_ - The unique identifier of the market index.
-  
-
-**Returns**:
-
-- `MarketIndex` - The MarketIndex object.
-
-<a id="velo_sdk.api.markets.Markets.get_index_companies"></a>
-
-#### get\_index\_companies
-
-```python
-def get_index_companies(index_id: str) -> PaginatedIterator[Company]
-```
-
-Get all companies in a market index.
-
-**Arguments**:
-
-- `index_id` _str_ - The unique identifier of the market index.
-  
-
-**Returns**:
-
-- `PaginatedIterator[Company]` - An iterator over Company objects in the index.
-
-<a id="velo_sdk.api.markets.Markets.get_index_companies_async"></a>
-
-#### get\_index\_companies\_async
-
-```python
-async def get_index_companies_async(
-        index_id: str) -> AsyncPaginatedIterator[Company]
-```
-
-Get all companies in a market index asynchronously.
-
-**Arguments**:
-
-- `index_id` _str_ - The unique identifier of the market index.
-  
-
-**Returns**:
-
-- `AsyncPaginatedIterator[Company]` - An asynchronous iterator over Company objects in the index.
-
-<a id="velo_sdk.api.markets.Markets.get_index_climate_scores"></a>
-
-#### get\_index\_climate\_scores
-
-```python
-def get_index_climate_scores(index_id: str, pathway: Pathway,
-                             horizon: HorizonYear) -> ClimateScore
-```
-
-Get the climate scores for a market index.
-
-**Arguments**:
-
-- `index_id` _str_ - The unique identifier of the market index.
-- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
-- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
-  
-
-**Returns**:
-
-- `ClimateScore` - The ClimateScore object for the market index.
-
-<a id="velo_sdk.api.markets.Markets.get_index_climate_scores_async"></a>
-
-#### get\_index\_climate\_scores\_async
-
-```python
-async def get_index_climate_scores_async(index_id: str, pathway: Pathway,
-                                         horizon: HorizonYear) -> ClimateScore
-```
-
-Get the climate scores for a market index asynchronously.
-
-**Arguments**:
-
-- `index_id` _str_ - The unique identifier of the market index.
-- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
-- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
-  
-
-**Returns**:
-
-- `ClimateScore` - The ClimateScore object for the market index.
-
-<a id="velo_sdk.api.markets.Markets.get_index_impact_scores"></a>
-
-#### get\_index\_impact\_scores
-
-```python
-def get_index_impact_scores(
-        index_id: str, pathway: Pathway,
-        horizon: HorizonYear) -> StaticListIterator[ImpactScore]
-```
-
-Get the impact scores for a market index.
-
-**Arguments**:
-
-- `index_id` _str_ - The unique identifier of the market index.
-- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
-- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
-  
-
-**Returns**:
-
-- `StaticListIterator[ImpactScore]` - An iterator over ImpactScore objects for the market index.
-
-<a id="velo_sdk.api.markets.Markets.get_index_impact_scores_async"></a>
-
-#### get\_index\_impact\_scores\_async
-
-```python
-async def get_index_impact_scores_async(
-        index_id: str, pathway: Pathway,
-        horizon: HorizonYear) -> StaticListIterator[ImpactScore]
-```
-
-Get the impact scores for a market index asynchronously.
-
-**Arguments**:
-
-- `index_id` _str_ - The unique identifier of the market index.
-- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
-- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
-  
-
-**Returns**:
-
-- `StaticListIterator[ImpactScore]` - An asynchronous iterator over ImpactScore objects for the market index.
-
-<a id="velo_sdk.api.markets.Markets.list_index_asset_impact_scores"></a>
-
-#### list\_index\_asset\_impact\_scores
-
-```python
-def list_index_asset_impact_scores(
-        index_id: str, pathway: Pathway, horizon: HorizonYear,
-        **extra_params: Any) -> PaginatedIterator[AssetImpactScore]
-```
-
-Get the impact scores for all assets of a market index.
-
-**Arguments**:
-
-- `index_id` _str_ - The unique identifier of the market index.
-- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
-- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
-- `**extra_params` _Any_ - Additional parameters to pass to the API.
-  
-
-**Returns**:
-
-- `PaginatedIterator[AssetImpactScore]` - An iterator over AssetImpactScore objects for the index's assets.
-
-<a id="velo_sdk.api.markets.Markets.list_index_asset_climate_scores"></a>
-
-#### list\_index\_asset\_climate\_scores
-
-```python
-def list_index_asset_climate_scores(
-        index_id: str, pathway: Pathway, horizon: HorizonYear,
-        **extra_params: Any) -> PaginatedIterator[AssetClimateScore]
-```
-
-Get the climate scores for all assets of a market index.
-
-**Arguments**:
-
-- `index_id` _str_ - The unique identifier of the market index.
-- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
-- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
-- `**extra_params` _Any_ - Additional parameters to pass to the API.
-  
-
-**Returns**:
-
-- `PaginatedIterator[AssetClimateScore]` - An iterator over AssetClimateScore objects for the index's assets.
-
-<a id="velo_sdk.api.markets.Markets.list_index_asset_climate_scores_async"></a>
-
-#### list\_index\_asset\_climate\_scores\_async
-
-```python
-async def list_index_asset_climate_scores_async(
-        index_id: str, pathway: Pathway, horizon: HorizonYear,
-        **extra_params: Any) -> AsyncPaginatedIterator[AssetClimateScore]
-```
-
-Get the climate scores for all assets of a market index asynchronously.
-
-**Arguments**:
-
-- `index_id` _str_ - The unique identifier of the market index.
-- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
-- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
-- `**extra_params` _Any_ - Additional parameters to pass to the API.
-  
-
-**Returns**:
-
-- `AsyncPaginatedIterator[AssetClimateScore]` - An asynchronous iterator over AssetClimateScore objects for the index's assets.
-
-<a id="velo_sdk.api.markets.Markets.list_index_asset_impact_scores_async"></a>
-
-#### list\_index\_asset\_impact\_scores\_async
-
-```python
-async def list_index_asset_impact_scores_async(
-        index_id: str, pathway: Pathway, horizon: HorizonYear,
-        **extra_params: Any) -> AsyncPaginatedIterator[AssetImpactScore]
-```
-
-Get the impact scores for all assets of a market index asynchronously.
-
-**Arguments**:
-
-- `index_id` _str_ - The unique identifier of the market index.
-- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
-- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
-- `**extra_params` _Any_ - Additional parameters to pass to the API.
-  
-
-**Returns**:
-
-- `AsyncPaginatedIterator[AssetImpactScore]` - An asynchronous iterator over AssetImpactScore objects for the index's assets.
-
-<a id="velo_sdk.api.markets.Markets.aggregate_index_asset_climate_scores_by_country"></a>
-
-#### aggregate\_index\_asset\_climate\_scores\_by\_country
-
-```python
-def aggregate_index_asset_climate_scores_by_country(
-        index_id: str, pathway: Pathway,
-        horizon: HorizonYear) -> StaticListIterator[CountryClimateScore]
-```
-
-Get the climate scores for all assets in a market index aggregated by country.
-
-**Arguments**:
-
-- `index_id` _str_ - The unique identifier of the market index.
-- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
-- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
-  
-
-**Returns**:
-
-- `StaticListIterator[CountryClimateScore]` - An iterator over CountryClimateScore objects, aggregated by country.
-
-<a id="velo_sdk.api.markets.Markets.aggregate_index_asset_climate_scores_by_country_async"></a>
-
-#### aggregate\_index\_asset\_climate\_scores\_by\_country\_async
-
-```python
-async def aggregate_index_asset_climate_scores_by_country_async(
-        index_id: str, pathway: Pathway,
-        horizon: HorizonYear) -> StaticListIterator[CountryClimateScore]
-```
-
-Get the climate scores for all assets in a market index aggregated by country asynchronously.
-
-**Arguments**:
-
-- `index_id` _str_ - The unique identifier of the market index.
-- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
-- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
-  
-
-**Returns**:
-
-- `StaticListIterator[CountryClimateScore]` - An asynchronous iterator over CountryClimateScore objects, aggregated by country.
-
-<a id="velo_sdk.api.markets.Markets.aggregate_index_asset_impact_scores_by_country"></a>
-
-#### aggregate\_index\_asset\_impact\_scores\_by\_country
-
-```python
-def aggregate_index_asset_impact_scores_by_country(
-        index_id: str, pathway: Pathway,
-        horizon: HorizonYear) -> StaticListIterator[CountryImpactScore]
-```
-
-Get the impact scores for all assets in a market index aggregated by country.
-
-**Arguments**:
-
-- `index_id` _str_ - The unique identifier of the market index.
-- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
-- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
-  
-
-**Returns**:
-
-- `StaticListIterator[CountryImpactScore]` - An iterator over CountryImpactScore objects, aggregated by country.
-
-<a id="velo_sdk.api.markets.Markets.aggregate_index_asset_impact_scores_by_country_async"></a>
-
-#### aggregate\_index\_asset\_impact\_scores\_by\_country\_async
-
-```python
-async def aggregate_index_asset_impact_scores_by_country_async(
-        index_id: str, pathway: Pathway,
-        horizon: HorizonYear) -> StaticListIterator[CountryImpactScore]
-```
-
-Get the impact scores for all assets in a market index aggregated by country asynchronously.
-
-**Arguments**:
-
-- `index_id` _str_ - The unique identifier of the market index.
-- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
-- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
-  
-
-**Returns**:
-
-- `StaticListIterator[CountryImpactScore]` - An asynchronous iterator over CountryImpactScore objects, aggregated by country.
-
-<a id="velo_sdk.api.markets.Markets.aggregate_index_asset_climate_scores_by_asset_type"></a>
-
-#### aggregate\_index\_asset\_climate\_scores\_by\_asset\_type
-
-```python
-def aggregate_index_asset_climate_scores_by_asset_type(
-        index_id: str, pathway: Pathway,
-        horizon: HorizonYear) -> StaticListIterator[AssetTypeClimateScore]
-```
-
-Get the climate scores for all assets in a market index aggregated by asset type.
-
-**Arguments**:
-
-- `index_id` _str_ - The unique identifier of the market index.
-- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
-- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
-  
-
-**Returns**:
-
-- `StaticListIterator[AssetTypeClimateScore]` - An iterator over AssetTypeClimateScore objects, aggregated by asset type.
-
-<a id="velo_sdk.api.markets.Markets.aggregate_index_asset_climate_scores_by_asset_type_async"></a>
-
-#### aggregate\_index\_asset\_climate\_scores\_by\_asset\_type\_async
-
-```python
-async def aggregate_index_asset_climate_scores_by_asset_type_async(
-        index_id: str, pathway: Pathway,
-        horizon: HorizonYear) -> StaticListIterator[AssetTypeClimateScore]
-```
-
-Get the climate scores for all assets in a market index aggregated by asset type asynchronously.
-
-**Arguments**:
-
-- `index_id` _str_ - The unique identifier of the market index.
-- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
-- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
-  
-
-**Returns**:
-
-- `StaticListIterator[AssetTypeClimateScore]` - An asynchronous iterator over AssetTypeClimateScore objects, aggregated by asset type.
-
-<a id="velo_sdk.api.markets.Markets.aggregate_index_asset_impact_scores_by_asset_type"></a>
-
-#### aggregate\_index\_asset\_impact\_scores\_by\_asset\_type
-
-```python
-def aggregate_index_asset_impact_scores_by_asset_type(
-        index_id: str, pathway: Pathway,
-        horizon: HorizonYear) -> StaticListIterator[AssetTypeImpactScore]
-```
-
-Get the impact scores for all assets in a market index aggregated by asset type.
-
-**Arguments**:
-
-- `index_id` _str_ - The unique identifier of the market index.
-- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
-- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
-  
-
-**Returns**:
-
-- `StaticListIterator[AssetTypeImpactScore]` - An iterator over AssetTypeImpactScore objects, aggregated by asset type.
-
-<a id="velo_sdk.api.markets.Markets.aggregate_index_asset_impact_scores_by_asset_type_async"></a>
-
-#### aggregate\_index\_asset\_impact\_scores\_by\_asset\_type\_async
-
-```python
-async def aggregate_index_asset_impact_scores_by_asset_type_async(
-        index_id: str, pathway: Pathway,
-        horizon: HorizonYear) -> StaticListIterator[AssetTypeImpactScore]
-```
-
-Get the impact scores for all assets in a market index aggregated by asset type asynchronously.
-
-**Arguments**:
-
-- `index_id` _str_ - The unique identifier of the market index.
-- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
-- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
-  
-
-**Returns**:
-
-- `StaticListIterator[AssetTypeImpactScore]` - An asynchronous iterator over AssetTypeImpactScore objects, aggregated by asset type.
-
-<a id="velo_sdk.api.assets"></a>
-
-# velo\_sdk.api.assets
-
-<a id="velo_sdk.api.assets.Assets"></a>
-
-## Assets Objects
-
-```python
-class Assets()
-```
-
-<a id="velo_sdk.api.assets.Assets.get_asset"></a>
-
-#### get\_asset
-
-```python
-def get_asset(asset_id: str) -> Asset
-```
-
-Get an asset by its unique ID.
-
-**Arguments**:
-
-- `asset_id` _str_ - The unique identifier of the asset.
-  
-
-**Returns**:
-
-- `Asset` - The Asset object.
-
-<a id="velo_sdk.api.assets.Assets.get_asset_async"></a>
-
-#### get\_asset\_async
-
-```python
-async def get_asset_async(asset_id: str) -> Asset
-```
-
-Get an asset by its unique ID asynchronously.
-
-**Arguments**:
-
-- `asset_id` _str_ - The unique identifier of the asset.
-  
-
-**Returns**:
-
-- `Asset` - The Asset object.
-
-<a id="velo_sdk.api.assets.Assets.list_assets"></a>
-
-#### list\_assets
-
-```python
-def list_assets(**extra_params: Any) -> PaginatedIterator[Asset]
-```
-
-List all assets.
-
-**Arguments**:
-
-- `**extra_params` _Any_ - Additional parameters to pass to the API.
-  
-
-**Returns**:
-
-- `PaginatedIterator[Asset]` - An iterator over Asset objects.
-
-<a id="velo_sdk.api.assets.Assets.list_assets_async"></a>
-
-#### list\_assets\_async
-
-```python
-async def list_assets_async(**extra_params: Any
-                            ) -> AsyncPaginatedIterator[Asset]
-```
-
-List all assets asynchronously.
-
-**Arguments**:
-
-- `**extra_params` _Any_ - Additional parameters to pass to the API.
-  
-
-**Returns**:
-
-- `AsyncPaginatedIterator[Asset]` - An asynchronous iterator over Asset objects.
-
-<a id="velo_sdk.api.assets.Assets.get_asset_owner"></a>
-
-#### get\_asset\_owner
-
-```python
-def get_asset_owner(asset_id: str) -> Company
-```
-
-Get the company that owns an asset.
-
-**Arguments**:
-
-- `asset_id` _str_ - The unique identifier of the asset.
-  
-
-**Returns**:
-
-- `Company` - The Company object that owns the asset.
-
-<a id="velo_sdk.api.assets.Assets.get_asset_owner_async"></a>
-
-#### get\_asset\_owner\_async
-
-```python
-async def get_asset_owner_async(asset_id: str) -> Company
-```
-
-Get the company that owns an asset asynchronously.
-
-**Arguments**:
-
-- `asset_id` _str_ - The unique identifier of the asset.
-  
-
-**Returns**:
-
-- `Company` - The Company object that owns the asset.
-
-<a id="velo_sdk.api.assets.Assets.search_assets"></a>
-
-#### search\_assets
-
-```python
-def search_assets(query: str,
-                  scope: Literal["public", "company",
-                                 "organization"] = "public",
-                  company_id: str | None = None,
-                  **extra_params: Any) -> PaginatedIterator[Asset]
-```
-
-Search for assets.
-
-**Arguments**:
-
-- `query` _str_ - The search query string. Asset names and addresses are searched for.
-- `scope` _Literal["public", "company", "organization"]_ - The scope of the search.
-  "public" is the default scope and searches all available assets in VELO.
-  "organization" searches all private assets uploaded to the organization.
-  If "company" is selected, `company_id` must also be provided.
-- `company_id` _Optional[str]_ - The ID of the company to scope the search to.
-  Required if `scope` is "company".
-- `**extra_params` _Any_ - Additional parameters to pass to the API.
-  
-
-**Returns**:
-
-- `PaginatedIterator[Asset]` - A paginated iterator of assets matching the search criteria.
-
-<a id="velo_sdk.api.assets.Assets.search_assets_async"></a>
-
-#### search\_assets\_async
-
-```python
-async def search_assets_async(
-        query: str,
-        scope: Literal["public", "company", "organization"] = "public",
-        company_id: str | None = None,
-        **extra_params: Any) -> AsyncPaginatedIterator[Asset]
-```
-
-Search for assets asynchronously.
-
-**Arguments**:
-
-- `query` _str_ - The search query string. Asset names and addresses are searched for.
-- `scope` _Literal["public", "company", "organization"]_ - The scope of the search.
-  "public" is the default scope and searches all available assets in VELO.
-  "organization" searches all private assets uploaded to the organization.
-  If "company" is selected, `company_id` must also be provided.
-- `company_id` _Optional[str]_ - The ID of the company to scope the search to.
-  Required if `scope` is "company".
-- `**extra_params` _Any_ - Additional parameters to pass to the API.
-  
-
-**Returns**:
-
-- `AsyncPaginatedIterator[Asset]` - An asynchronous paginated iterator of assets matching the search criteria.
-
-<a id="velo_sdk.api.pagination"></a>
-
-# velo\_sdk.api.pagination
-
-<a id="velo_sdk.api.pagination.PaginatedIterator"></a>
-
-## PaginatedIterator Objects
-
-```python
-class PaginatedIterator(Generic[T], Iterator[T])
-```
-
-<a id="velo_sdk.api.pagination.PaginatedIterator.fetch_page"></a>
-
-#### fetch\_page
-
-```python
-def fetch_page() -> list[T]
-```
-
-Fetches the next page of results and returns them as a list.
-
-<a id="velo_sdk.api.pagination.PaginatedIterator.to_polars"></a>
-
-#### to\_polars
-
-```python
-def to_polars()
-```
-
-Fetches all items from all pages, applies an optional transformation,
-and returns them as a Polars DataFrame.
-This method will consume the iterator.
-
-**Raises**:
-
-- `ImportError` - If Polars is not installed. Install it with: pip install velo-sdk[polars]
-
-<a id="velo_sdk.api.pagination.AsyncPaginatedIterator"></a>
-
-## AsyncPaginatedIterator Objects
-
-```python
-class AsyncPaginatedIterator(Generic[T], AsyncIterator[T])
-```
-
-<a id="velo_sdk.api.pagination.AsyncPaginatedIterator.afetch_page"></a>
-
-#### afetch\_page
-
-```python
-async def afetch_page() -> list[T]
-```
-
-Asynchronously fetches the next page of results and returns them as a list.
-
-<a id="velo_sdk.api.pagination.AsyncPaginatedIterator.to_polars"></a>
-
-#### to\_polars
-
-```python
-async def to_polars()
-```
-
-Asynchronously fetches all items from all pages, applies an optional transformation,
-and returns them as a Polars DataFrame.
-This method will consume the iterator.
 
 **Raises**:
 
@@ -1726,317 +1223,840 @@ Create a new company asynchronously.
 
 - `Company` - The newly created Company object.
 
+<a id="velo_sdk.api.assets"></a>
+
+# velo\_sdk.api.assets
+
+<a id="velo_sdk.api.assets.Assets"></a>
+
+## Assets Objects
+
+```python
+class Assets()
+```
+
+<a id="velo_sdk.api.assets.Assets.get_asset"></a>
+
+#### get\_asset
+
+```python
+def get_asset(asset_id: str) -> Asset
+```
+
+Get an asset by its unique ID.
+
+**Arguments**:
+
+- `asset_id` _str_ - The unique identifier of the asset.
+  
+
+**Returns**:
+
+- `Asset` - The Asset object.
+
+<a id="velo_sdk.api.assets.Assets.get_asset_async"></a>
+
+#### get\_asset\_async
+
+```python
+async def get_asset_async(asset_id: str) -> Asset
+```
+
+Get an asset by its unique ID asynchronously.
+
+**Arguments**:
+
+- `asset_id` _str_ - The unique identifier of the asset.
+  
+
+**Returns**:
+
+- `Asset` - The Asset object.
+
+<a id="velo_sdk.api.assets.Assets.list_assets"></a>
+
+#### list\_assets
+
+```python
+def list_assets(**extra_params: Any) -> PaginatedIterator[Asset]
+```
+
+List all assets.
+
+**Arguments**:
+
+- `**extra_params` _Any_ - Additional parameters to pass to the API.
+  
+
+**Returns**:
+
+- `PaginatedIterator[Asset]` - An iterator over Asset objects.
+
+<a id="velo_sdk.api.assets.Assets.list_assets_async"></a>
+
+#### list\_assets\_async
+
+```python
+async def list_assets_async(**extra_params: Any
+                            ) -> AsyncPaginatedIterator[Asset]
+```
+
+List all assets asynchronously.
+
+**Arguments**:
+
+- `**extra_params` _Any_ - Additional parameters to pass to the API.
+  
+
+**Returns**:
+
+- `AsyncPaginatedIterator[Asset]` - An asynchronous iterator over Asset objects.
+
+<a id="velo_sdk.api.assets.Assets.get_asset_owner"></a>
+
+#### get\_asset\_owner
+
+```python
+def get_asset_owner(asset_id: str) -> Company
+```
+
+Get the company that owns an asset.
+
+**Arguments**:
+
+- `asset_id` _str_ - The unique identifier of the asset.
+  
+
+**Returns**:
+
+- `Company` - The Company object that owns the asset.
+
+<a id="velo_sdk.api.assets.Assets.get_asset_owner_async"></a>
+
+#### get\_asset\_owner\_async
+
+```python
+async def get_asset_owner_async(asset_id: str) -> Company
+```
+
+Get the company that owns an asset asynchronously.
+
+**Arguments**:
+
+- `asset_id` _str_ - The unique identifier of the asset.
+  
+
+**Returns**:
+
+- `Company` - The Company object that owns the asset.
+
+<a id="velo_sdk.api.assets.Assets.search_assets"></a>
+
+#### search\_assets
+
+```python
+def search_assets(query: str,
+                  scope: Literal["public", "company",
+                                 "organization"] = "public",
+                  company_id: str | None = None,
+                  **extra_params: Any) -> PaginatedIterator[Asset]
+```
+
+Search for assets.
+
+**Arguments**:
+
+- `query` _str_ - The search query string. Asset names and addresses are searched for.
+- `scope` _Literal["public", "company", "organization"]_ - The scope of the search.
+  "public" is the default scope and searches all available assets in VELO.
+  "organization" searches all private assets uploaded to the organization.
+  If "company" is selected, `company_id` must also be provided.
+- `company_id` _Optional[str]_ - The ID of the company to scope the search to.
+  Required if `scope` is "company".
+- `**extra_params` _Any_ - Additional parameters to pass to the API.
+  
+
+**Returns**:
+
+- `PaginatedIterator[Asset]` - A paginated iterator of assets matching the search criteria.
+
+<a id="velo_sdk.api.assets.Assets.search_assets_async"></a>
+
+#### search\_assets\_async
+
+```python
+async def search_assets_async(
+        query: str,
+        scope: Literal["public", "company", "organization"] = "public",
+        company_id: str | None = None,
+        **extra_params: Any) -> AsyncPaginatedIterator[Asset]
+```
+
+Search for assets asynchronously.
+
+**Arguments**:
+
+- `query` _str_ - The search query string. Asset names and addresses are searched for.
+- `scope` _Literal["public", "company", "organization"]_ - The scope of the search.
+  "public" is the default scope and searches all available assets in VELO.
+  "organization" searches all private assets uploaded to the organization.
+  If "company" is selected, `company_id` must also be provided.
+- `company_id` _Optional[str]_ - The ID of the company to scope the search to.
+  Required if `scope` is "company".
+- `**extra_params` _Any_ - Additional parameters to pass to the API.
+  
+
+**Returns**:
+
+- `AsyncPaginatedIterator[Asset]` - An asynchronous paginated iterator of assets matching the search criteria.
+
 <a id="velo_sdk.api.api_client"></a>
 
 # velo\_sdk.api.api\_client
 
-<a id="velo_sdk.api.climate"></a>
+<a id="velo_sdk.api.types"></a>
 
-# velo\_sdk.api.climate
+# velo\_sdk.api.types
 
-<a id="velo_sdk.api.climate.Climate"></a>
+<a id="velo_sdk.api.types.Company"></a>
 
-## Climate Objects
-
-```python
-class Climate()
-```
-
-<a id="velo_sdk.api.climate.Climate.list_horizons"></a>
-
-#### list\_horizons
+## Company Objects
 
 ```python
-def list_horizons() -> list[int]
+class Company(BaseModel)
 ```
 
-List the available horizons for climate analysis.
+A company is an entity that has assets and identifying information.
 
-<a id="velo_sdk.api.climate.Climate.list_pathways"></a>
+<a id="velo_sdk.api.types.Asset"></a>
 
-#### list\_pathways
+## Asset Objects
 
 ```python
-def list_pathways() -> list[Pathway]
+class Asset(BaseModel)
 ```
 
-List the available pathways for climate analysis.
+An asset represents aphysical asset that is subject to climate risk.
 
-<a id="velo_sdk.api.errors"></a>
+<a id="velo_sdk.api.types.MarketIndex"></a>
 
-# velo\_sdk.api.errors
-
-<a id="velo_sdk.api.errors.APIError"></a>
-
-## APIError Objects
+## MarketIndex Objects
 
 ```python
-class APIError(Exception)
+class MarketIndex(BaseModel)
 ```
 
-General exception for API errors.
+A market index is a collection of companies.
 
-**Attributes**:
+<a id="velo_sdk.api.types.ClimateScore"></a>
 
-- `message` - The error message.
-- `code` - HTTP status code.
-- `status` - HTTP status text.
-- `timestamp` - When the error occurred.
-
-<a id="velo_sdk.api.errors.RateLimitError"></a>
-
-## RateLimitError Objects
+## ClimateScore Objects
 
 ```python
-class RateLimitError(APIError)
+class ClimateScore(BaseModel)
 ```
 
-Exception raised when rate limiting is exceeded.
+The cimate risk metrics that represent the likelihood of a company or asset to be impacted by climate risk.
 
-<a id="velo_sdk.api.errors.InsufficientCreditsError"></a>
+<a id="velo_sdk.api.types.ImpactScore"></a>
 
-## InsufficientCreditsError Objects
+## ImpactScore Objects
 
 ```python
-class InsufficientCreditsError(APIError)
+class ImpactScore(BaseModel)
 ```
 
-Exception raised when the user has insufficient API credits.
-This is a non-retryable error that requires the user to add credits.
+The impact risk metrics that represent the potential impact of a company or asset to be impacted by climate risk.
+These metrics represent an individual risk factor and its attribution to the total climate risk metrics.
 
-<a id="velo_sdk.api.base"></a>
+<a id="velo_sdk.api.types.CountryClimateScore"></a>
 
-# velo\_sdk.api.base
-
-<a id="velo_sdk.api.base.BaseClient"></a>
-
-## BaseClient Objects
+## CountryClimateScore Objects
 
 ```python
-class BaseClient()
+class CountryClimateScore(ClimateScore)
 ```
 
-<a id="velo_sdk.api.base.BaseClient.get"></a>
+Climate risk metrics aggregated for a country.
 
-#### get
+<a id="velo_sdk.api.types.CountryImpactScore"></a>
+
+## CountryImpactScore Objects
 
 ```python
-def get(path: str, params: Dict[str, Any] = dict(),
-        **kwargs) -> Dict[str, Any]
+class CountryImpactScore(ImpactScore)
 ```
 
-Make a GET request to the API.
-The version /v3 is automatically added to the path.
+Impact risk metrics aggregated for a country.
+
+<a id="velo_sdk.api.types.AssetTypeClimateScore"></a>
+
+## AssetTypeClimateScore Objects
+
+```python
+class AssetTypeClimateScore(ClimateScore)
+```
+
+Climate risk metrics aggregated for an asset type.
+
+<a id="velo_sdk.api.types.AssetTypeImpactScore"></a>
+
+## AssetTypeImpactScore Objects
+
+```python
+class AssetTypeImpactScore(ImpactScore)
+```
+
+Impact risk metrics aggregated for an asset type.
+
+<a id="velo_sdk.api.types.AssetClimateScore"></a>
+
+## AssetClimateScore Objects
+
+```python
+class AssetClimateScore(ClimateScore)
+```
+
+Climate risk metrics for an asset.
+
+<a id="velo_sdk.api.types.AssetImpactScore"></a>
+
+## AssetImpactScore Objects
+
+```python
+class AssetImpactScore(BaseModel)
+```
+
+Impact risk metrics for an asset.
+
+<a id="velo_sdk.api.markets"></a>
+
+# velo\_sdk.api.markets
+
+<a id="velo_sdk.api.markets.Markets"></a>
+
+## Markets Objects
+
+```python
+class Markets()
+```
+
+<a id="velo_sdk.api.markets.Markets.search_indexes"></a>
+
+#### search\_indexes
+
+```python
+def search_indexes(*,
+                   name: Optional[str] = None,
+                   **extra_params: Any) -> list[MarketIndex]
+```
+
+Search for market indexes by name.
 
 **Arguments**:
 
-- `path` - API endpoint path
-- `params` - Query parameters
-- `**kwargs` - Additional arguments to pass to the request
+- `name` _Optional[str]_ - The name of the market index to search for.
+- `**extra_params` _Any_ - Additional parameters to pass to the API.
   
 
 **Returns**:
 
-  API response data as JSON deserialized into a dictionary
+- `list[MarketIndex]` - A list of MarketIndex objects matching the search criteria.
 
-<a id="velo_sdk.api.base.BaseClient.get_async"></a>
+<a id="velo_sdk.api.markets.Markets.search_indexes_async"></a>
 
-#### get\_async
+#### search\_indexes\_async
 
 ```python
-async def get_async(path: str, params: Dict[str, Any] = dict(),
-                    **kwargs) -> Dict[str, Any]
+async def search_indexes_async(*,
+                               name: Optional[str] = None,
+                               **extra_params: Any) -> list[MarketIndex]
 ```
 
-Make an asynchronous GET request to the API.
-The version /v3 is automatically added to the path.
+Search for market indexes by name asynchronously.
 
 **Arguments**:
 
-- `path` - API endpoint path
-- `params` - Query parameters
-- `**kwargs` - Additional arguments to pass to the request
+- `name` _Optional[str]_ - The name of the market index to search for.
+- `**extra_params` _Any_ - Additional parameters to pass to the API.
   
 
 **Returns**:
 
-  API response data as JSON deserialized into a dictionary
+- `list[MarketIndex]` - A list of MarketIndex objects matching the search criteria.
 
-<a id="velo_sdk.api.base.BaseClient.post"></a>
+<a id="velo_sdk.api.markets.Markets.list_indexes"></a>
 
-#### post
+#### list\_indexes
 
 ```python
-def post(path: str, json: Dict[str, Any] = dict(), **kwargs) -> Dict[str, Any]
+def list_indexes() -> PaginatedIterator[MarketIndex]
 ```
 
-Make a POST request to the API.
-The version /v3 is automatically added to the path.
+List all market indexes.
+
+**Returns**:
+
+- `PaginatedIterator[MarketIndex]` - An iterator over MarketIndex objects.
+
+<a id="velo_sdk.api.markets.Markets.list_indexes_async"></a>
+
+#### list\_indexes\_async
+
+```python
+async def list_indexes_async() -> AsyncPaginatedIterator[MarketIndex]
+```
+
+List all market indexes asynchronously.
+
+**Returns**:
+
+- `AsyncPaginatedIterator[MarketIndex]` - An asynchronous iterator over MarketIndex objects.
+
+<a id="velo_sdk.api.markets.Markets.get_index"></a>
+
+#### get\_index
+
+```python
+def get_index(index_id: str) -> MarketIndex
+```
+
+Get a market index by its unique ID.
 
 **Arguments**:
 
-- `path` - API endpoint path
-- `json` - JSON body data
-- `**kwargs` - Additional arguments to pass to the request
+- `index_id` _str_ - The unique identifier of the market index.
   
 
 **Returns**:
 
-  API response data as JSON deserialized into a dictionary
+- `MarketIndex` - The MarketIndex object.
 
-<a id="velo_sdk.api.base.BaseClient.post_async"></a>
+<a id="velo_sdk.api.markets.Markets.get_index_async"></a>
 
-#### post\_async
+#### get\_index\_async
 
 ```python
-async def post_async(path: str, json: Dict[str, Any] = dict(),
-                     **kwargs) -> Dict[str, Any]
+async def get_index_async(index_id: str) -> MarketIndex
 ```
 
-Make an asynchronous POST request to the API.
-The version /v3 is automatically added to the path.
+Get a market index by its unique ID asynchronously.
 
 **Arguments**:
 
-- `path` - API endpoint path
-- `json` - JSON body data
-- `**kwargs` - Additional arguments to pass to the request
+- `index_id` _str_ - The unique identifier of the market index.
   
 
 **Returns**:
 
-  API response data as JSON deserialized into a dictionary
+- `MarketIndex` - The MarketIndex object.
 
-<a id="velo_sdk.api.base.BaseClient.put"></a>
+<a id="velo_sdk.api.markets.Markets.get_index_companies"></a>
 
-#### put
+#### get\_index\_companies
 
 ```python
-def put(path: str, json: Dict[str, Any] = dict(), **kwargs) -> Dict[str, Any]
+def get_index_companies(index_id: str) -> PaginatedIterator[Company]
 ```
 
-Make a PUT request to the API.
-The version /v3 is automatically added to the path.
+Get all companies in a market index.
 
 **Arguments**:
 
-- `path` - API endpoint path
-- `json` - JSON body data
-- `**kwargs` - Additional arguments to pass to the request
+- `index_id` _str_ - The unique identifier of the market index.
   
 
 **Returns**:
 
-  API response data as JSON deserialized into a dictionary
+- `PaginatedIterator[Company]` - An iterator over Company objects in the index.
 
-<a id="velo_sdk.api.base.BaseClient.put_async"></a>
+<a id="velo_sdk.api.markets.Markets.get_index_companies_async"></a>
 
-#### put\_async
+#### get\_index\_companies\_async
 
 ```python
-async def put_async(path: str, json: Dict[str, Any] = dict(),
-                    **kwargs) -> Dict[str, Any]
+async def get_index_companies_async(
+        index_id: str) -> AsyncPaginatedIterator[Company]
 ```
 
-Make an asynchronous PUT request to the API.
-The version /v3 is automatically added to the path.
+Get all companies in a market index asynchronously.
 
 **Arguments**:
 
-- `path` - API endpoint path
-- `json` - JSON body data
-- `**kwargs` - Additional arguments to pass to the request
+- `index_id` _str_ - The unique identifier of the market index.
   
 
 **Returns**:
 
-  API response data as JSON deserialized into a dictionary
+- `AsyncPaginatedIterator[Company]` - An asynchronous iterator over Company objects in the index.
 
-<a id="velo_sdk.api.base.BaseClient.delete"></a>
+<a id="velo_sdk.api.markets.Markets.get_index_climate_scores"></a>
 
-#### delete
+#### get\_index\_climate\_scores
 
 ```python
-def delete(path: str, **kwargs) -> Dict[str, Any]
+def get_index_climate_scores(index_id: str, pathway: Pathway,
+                             horizon: HorizonYear) -> ClimateScore
 ```
 
-Make a DELETE request to the API.
-The version /v3 is automatically added to the path.
+Get the climate scores for a market index.
 
 **Arguments**:
 
-- `path` - API endpoint path
-- `**kwargs` - Additional arguments to pass to the request
+- `index_id` _str_ - The unique identifier of the market index.
+- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
+- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
   
 
 **Returns**:
 
-  API response data as JSON deserialized into a dictionary
+- `ClimateScore` - The ClimateScore object for the market index.
 
-<a id="velo_sdk.api.base.BaseClient.delete_async"></a>
+<a id="velo_sdk.api.markets.Markets.get_index_climate_scores_async"></a>
 
-#### delete\_async
+#### get\_index\_climate\_scores\_async
 
 ```python
-async def delete_async(path: str, **kwargs) -> Dict[str, Any]
+async def get_index_climate_scores_async(index_id: str, pathway: Pathway,
+                                         horizon: HorizonYear) -> ClimateScore
 ```
 
-Make an asynchronous DELETE request to the API.
-The version /v3 is automatically added to the path.
+Get the climate scores for a market index asynchronously.
 
 **Arguments**:
 
-- `path` - API endpoint path
-- `**kwargs` - Additional arguments to pass to the request
+- `index_id` _str_ - The unique identifier of the market index.
+- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
+- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
   
 
 **Returns**:
 
-  API response data as JSON deserialized into a dictionary
+- `ClimateScore` - The ClimateScore object for the market index.
 
-<a id="velo_sdk.api.base.BaseClient.patch"></a>
+<a id="velo_sdk.api.markets.Markets.get_index_impact_scores"></a>
 
-#### patch
+#### get\_index\_impact\_scores
 
 ```python
-def patch(path: str, json: Dict[str, Any] = dict(),
-          **kwargs) -> Dict[str, Any]
+def get_index_impact_scores(
+        index_id: str, pathway: Pathway,
+        horizon: HorizonYear) -> StaticListIterator[ImpactScore]
 ```
 
-Make a PATCH request to the API.
-The version /v3 is automatically added to the path.
+Get the impact scores for a market index.
 
 **Arguments**:
 
-- `path` - API endpoint path
-- `json` - JSON body data
-- `**kwargs` - Additional arguments to pass to the request
+- `index_id` _str_ - The unique identifier of the market index.
+- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
+- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
   
 
 **Returns**:
 
-  API response data as JSON deserialized into a dictionary
+- `StaticListIterator[ImpactScore]` - An iterator over ImpactScore objects for the market index.
 
-<a id="velo_sdk.api.base.BaseClient.patch_async"></a>
+<a id="velo_sdk.api.markets.Markets.get_index_impact_scores_async"></a>
 
-#### patch\_async
+#### get\_index\_impact\_scores\_async
 
 ```python
-async def patch_async(path: str, json: Dict[str, Any] = dict(),
-                      **kwargs) -> Dict[str, Any]
+async def get_index_impact_scores_async(
+        index_id: str, pathway: Pathway,
+        horizon: HorizonYear) -> StaticListIterator[ImpactScore]
 ```
 
-Make an asynchronous PATCH request to the API.
-The version /v3 is automatically added to the path.
+Get the impact scores for a market index asynchronously.
 
 **Arguments**:
 
-- `path` - API endpoint path
-- `json` - JSON body data
-- `**kwargs` - Additional arguments to pass to the request
+- `index_id` _str_ - The unique identifier of the market index.
+- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
+- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
   
 
 **Returns**:
 
-  API response data as JSON deserialized into a dictionary
+- `StaticListIterator[ImpactScore]` - An asynchronous iterator over ImpactScore objects for the market index.
+
+<a id="velo_sdk.api.markets.Markets.list_index_asset_impact_scores"></a>
+
+#### list\_index\_asset\_impact\_scores
+
+```python
+def list_index_asset_impact_scores(
+        index_id: str, pathway: Pathway, horizon: HorizonYear,
+        **extra_params: Any) -> PaginatedIterator[AssetImpactScore]
+```
+
+Get the impact scores for all assets of a market index.
+
+**Arguments**:
+
+- `index_id` _str_ - The unique identifier of the market index.
+- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
+- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
+- `**extra_params` _Any_ - Additional parameters to pass to the API.
+  
+
+**Returns**:
+
+- `PaginatedIterator[AssetImpactScore]` - An iterator over AssetImpactScore objects for the index's assets.
+
+<a id="velo_sdk.api.markets.Markets.list_index_asset_climate_scores"></a>
+
+#### list\_index\_asset\_climate\_scores
+
+```python
+def list_index_asset_climate_scores(
+        index_id: str, pathway: Pathway, horizon: HorizonYear,
+        **extra_params: Any) -> PaginatedIterator[AssetClimateScore]
+```
+
+Get the climate scores for all assets of a market index.
+
+**Arguments**:
+
+- `index_id` _str_ - The unique identifier of the market index.
+- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
+- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
+- `**extra_params` _Any_ - Additional parameters to pass to the API.
+  
+
+**Returns**:
+
+- `PaginatedIterator[AssetClimateScore]` - An iterator over AssetClimateScore objects for the index's assets.
+
+<a id="velo_sdk.api.markets.Markets.list_index_asset_climate_scores_async"></a>
+
+#### list\_index\_asset\_climate\_scores\_async
+
+```python
+async def list_index_asset_climate_scores_async(
+        index_id: str, pathway: Pathway, horizon: HorizonYear,
+        **extra_params: Any) -> AsyncPaginatedIterator[AssetClimateScore]
+```
+
+Get the climate scores for all assets of a market index asynchronously.
+
+**Arguments**:
+
+- `index_id` _str_ - The unique identifier of the market index.
+- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
+- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
+- `**extra_params` _Any_ - Additional parameters to pass to the API.
+  
+
+**Returns**:
+
+- `AsyncPaginatedIterator[AssetClimateScore]` - An asynchronous iterator over AssetClimateScore objects for the index's assets.
+
+<a id="velo_sdk.api.markets.Markets.list_index_asset_impact_scores_async"></a>
+
+#### list\_index\_asset\_impact\_scores\_async
+
+```python
+async def list_index_asset_impact_scores_async(
+        index_id: str, pathway: Pathway, horizon: HorizonYear,
+        **extra_params: Any) -> AsyncPaginatedIterator[AssetImpactScore]
+```
+
+Get the impact scores for all assets of a market index asynchronously.
+
+**Arguments**:
+
+- `index_id` _str_ - The unique identifier of the market index.
+- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
+- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
+- `**extra_params` _Any_ - Additional parameters to pass to the API.
+  
+
+**Returns**:
+
+- `AsyncPaginatedIterator[AssetImpactScore]` - An asynchronous iterator over AssetImpactScore objects for the index's assets.
+
+<a id="velo_sdk.api.markets.Markets.aggregate_index_asset_climate_scores_by_country"></a>
+
+#### aggregate\_index\_asset\_climate\_scores\_by\_country
+
+```python
+def aggregate_index_asset_climate_scores_by_country(
+        index_id: str, pathway: Pathway,
+        horizon: HorizonYear) -> StaticListIterator[CountryClimateScore]
+```
+
+Get the climate scores for all assets in a market index aggregated by country.
+
+**Arguments**:
+
+- `index_id` _str_ - The unique identifier of the market index.
+- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
+- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
+  
+
+**Returns**:
+
+- `StaticListIterator[CountryClimateScore]` - An iterator over CountryClimateScore objects, aggregated by country.
+
+<a id="velo_sdk.api.markets.Markets.aggregate_index_asset_climate_scores_by_country_async"></a>
+
+#### aggregate\_index\_asset\_climate\_scores\_by\_country\_async
+
+```python
+async def aggregate_index_asset_climate_scores_by_country_async(
+        index_id: str, pathway: Pathway,
+        horizon: HorizonYear) -> StaticListIterator[CountryClimateScore]
+```
+
+Get the climate scores for all assets in a market index aggregated by country asynchronously.
+
+**Arguments**:
+
+- `index_id` _str_ - The unique identifier of the market index.
+- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
+- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
+  
+
+**Returns**:
+
+- `StaticListIterator[CountryClimateScore]` - An asynchronous iterator over CountryClimateScore objects, aggregated by country.
+
+<a id="velo_sdk.api.markets.Markets.aggregate_index_asset_impact_scores_by_country"></a>
+
+#### aggregate\_index\_asset\_impact\_scores\_by\_country
+
+```python
+def aggregate_index_asset_impact_scores_by_country(
+        index_id: str, pathway: Pathway,
+        horizon: HorizonYear) -> StaticListIterator[CountryImpactScore]
+```
+
+Get the impact scores for all assets in a market index aggregated by country.
+
+**Arguments**:
+
+- `index_id` _str_ - The unique identifier of the market index.
+- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
+- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
+  
+
+**Returns**:
+
+- `StaticListIterator[CountryImpactScore]` - An iterator over CountryImpactScore objects, aggregated by country.
+
+<a id="velo_sdk.api.markets.Markets.aggregate_index_asset_impact_scores_by_country_async"></a>
+
+#### aggregate\_index\_asset\_impact\_scores\_by\_country\_async
+
+```python
+async def aggregate_index_asset_impact_scores_by_country_async(
+        index_id: str, pathway: Pathway,
+        horizon: HorizonYear) -> StaticListIterator[CountryImpactScore]
+```
+
+Get the impact scores for all assets in a market index aggregated by country asynchronously.
+
+**Arguments**:
+
+- `index_id` _str_ - The unique identifier of the market index.
+- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
+- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
+  
+
+**Returns**:
+
+- `StaticListIterator[CountryImpactScore]` - An asynchronous iterator over CountryImpactScore objects, aggregated by country.
+
+<a id="velo_sdk.api.markets.Markets.aggregate_index_asset_climate_scores_by_asset_type"></a>
+
+#### aggregate\_index\_asset\_climate\_scores\_by\_asset\_type
+
+```python
+def aggregate_index_asset_climate_scores_by_asset_type(
+        index_id: str, pathway: Pathway,
+        horizon: HorizonYear) -> StaticListIterator[AssetTypeClimateScore]
+```
+
+Get the climate scores for all assets in a market index aggregated by asset type.
+
+**Arguments**:
+
+- `index_id` _str_ - The unique identifier of the market index.
+- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
+- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
+  
+
+**Returns**:
+
+- `StaticListIterator[AssetTypeClimateScore]` - An iterator over AssetTypeClimateScore objects, aggregated by asset type.
+
+<a id="velo_sdk.api.markets.Markets.aggregate_index_asset_climate_scores_by_asset_type_async"></a>
+
+#### aggregate\_index\_asset\_climate\_scores\_by\_asset\_type\_async
+
+```python
+async def aggregate_index_asset_climate_scores_by_asset_type_async(
+        index_id: str, pathway: Pathway,
+        horizon: HorizonYear) -> StaticListIterator[AssetTypeClimateScore]
+```
+
+Get the climate scores for all assets in a market index aggregated by asset type asynchronously.
+
+**Arguments**:
+
+- `index_id` _str_ - The unique identifier of the market index.
+- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
+- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
+  
+
+**Returns**:
+
+- `StaticListIterator[AssetTypeClimateScore]` - An asynchronous iterator over AssetTypeClimateScore objects, aggregated by asset type.
+
+<a id="velo_sdk.api.markets.Markets.aggregate_index_asset_impact_scores_by_asset_type"></a>
+
+#### aggregate\_index\_asset\_impact\_scores\_by\_asset\_type
+
+```python
+def aggregate_index_asset_impact_scores_by_asset_type(
+        index_id: str, pathway: Pathway,
+        horizon: HorizonYear) -> StaticListIterator[AssetTypeImpactScore]
+```
+
+Get the impact scores for all assets in a market index aggregated by asset type.
+
+**Arguments**:
+
+- `index_id` _str_ - The unique identifier of the market index.
+- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
+- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
+  
+
+**Returns**:
+
+- `StaticListIterator[AssetTypeImpactScore]` - An iterator over AssetTypeImpactScore objects, aggregated by asset type.
+
+<a id="velo_sdk.api.markets.Markets.aggregate_index_asset_impact_scores_by_asset_type_async"></a>
+
+#### aggregate\_index\_asset\_impact\_scores\_by\_asset\_type\_async
+
+```python
+async def aggregate_index_asset_impact_scores_by_asset_type_async(
+        index_id: str, pathway: Pathway,
+        horizon: HorizonYear) -> StaticListIterator[AssetTypeImpactScore]
+```
+
+Get the impact scores for all assets in a market index aggregated by asset type asynchronously.
+
+**Arguments**:
+
+- `index_id` _str_ - The unique identifier of the market index.
+- `pathway` _Pathway_ - Climate scenario pathway powered by Climate Earth Digital Twin.
+- `horizon` _HorizonYear_ - Climatology year representing a decadal period.
+  
+
+**Returns**:
+
+- `StaticListIterator[AssetTypeImpactScore]` - An asynchronous iterator over AssetTypeImpactScore objects, aggregated by asset type.
 
